@@ -1,0 +1,68 @@
+# vim #
+*.sw*
+
+# python #
+*.pyc
+
+# Newsbeuter DB #
+cache.db
+history.cmdline
+history.search
+
+# python #
+*.pyc
+
+# misc #
+*.lock
+*.core
+*.log
+*.o
+
+# ignore vim bundles for now
+vim/.vim/bundle/
+# Ignore Pragmata Pro font because its not free #
+.fonts/
+.icons/
+# Ignore misc binaries
+dwm/dwm
+st/st
+
+bin/dstat/dstat
+
+# Ignore other configs
+.config/cmus/cache
+.config/cmus/command-history
+.config/cmus/search-history
+.config/cmus/autosave
+.config/mps-youtube/play_history.m3u
+.config/mps-youtube/input_history
+.config/mps-youtube/cache*
+.config/mimeapps.list
+.config/rtv
+.config/configstore
+.config/GIMP
+.config/Fritzing/
+.config/Thunar/
+.config/Trolltech.conf
+.config/chromium/
+.config/iridium/
+.config/dconf/
+.config/evince/
+.config/geeqie/
+.config/google-chrome/
+.config/google-googletalkplugin/
+.config/gthumb/
+.config/gtk-2.0/
+.config/gtk-3.0/
+.config/htop/
+.config/menus/
+.config/user-dirs.dirs
+.config/user-dirs.locale
+.config/vlc/
+.config/xfce4/
+.config/ripme/history.json
+.config/ripme/url_history.txt
+
+.cache/
+.mutt/.muttsecure
+.mutt/cache
