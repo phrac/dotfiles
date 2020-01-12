@@ -1,0 +1,13 @@
+#highlight  feedlist     "^.* N .*$"     color15   default  bold
+#highlight  articlelist  "^.* N .*$"     color15   default  bold
+highlight  article      "^Feed: .*$"    color3    default
+highlight  article      "^Title: .*$"   color13   default  bold
+highlight  article      "^Author: .*$"  color5    default
+highlight  article      "^Link: .*$"    color6    default
+highlight  article      "^Date: .*$"    color4    default
+color      listnormal                   default    default
+color      listfocus                    color15       yellow
+color      info                         color7    black
+color      article                      color12  default
+
+# vim: ft=conf

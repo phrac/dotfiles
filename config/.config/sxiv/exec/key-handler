@@ -1,0 +1,13 @@
+#!/bin/sh
+
+while read file
+    do
+        case "$1" in
+        "5")
+            rm "$file" ;;
+        
+        "6")
+            mv "$file" ~/p/fave ;;
+        esac
+    done
+

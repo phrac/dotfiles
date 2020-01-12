@@ -1,0 +1,5 @@
+highlight  feedlist     "^.* N .*$"     default        default
+highlight  articlelist  "^.* N .*$"     default        default
+color      listnormal                   default        default
+color      listfocus                    black       yellow
+color      info                         color11     black

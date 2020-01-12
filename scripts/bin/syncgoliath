@@ -1,0 +1,10 @@
+#!/bin/sh
+
+rsync -av --delete ~/p/fave goliath:/tank/p
+rsync -av ~/dotfiles goliath:/tank/backup
+rsync -av ~/Documents goliath:/tank/backup
+rsync -av --delete ~/notes goliath:/tank/backup
+rsync -av ~/ss goliath:/tank/backup
+rsync -av --delete ~/Downloads goliath:/tank/backup
+rsync -av ~/code goliath:/tank/backup
+rsync -av ~/go goliath:/tank/backup

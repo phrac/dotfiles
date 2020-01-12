@@ -1,0 +1,8 @@
+browser "firefox %u"
+auto-reload yes
+reload-time 15
+reload-threads 2
+refresh-on-startup yes
+feedlist-title-format     " Feeds"
+player "mpv --no-video"
+

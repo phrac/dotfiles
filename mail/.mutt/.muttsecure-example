@@ -1,0 +1,6 @@
+set smtp_pass = "application password"
+set imap_user = "your email"
+set imap_pass = "application password"
+
+set realname = "your full name"
+set from = "your email"

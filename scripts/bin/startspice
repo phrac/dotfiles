@@ -1,0 +1,4 @@
+#/bin/bash
+
+qemu-kvm -spice port=5900,addr=192.168.2.2,disable-ticketing -drive file=~/kvm/win7ultimate-64.img,if=ide -drive file=~/kvm/fake.qcow2,if=virtio -m 1024 -vga qxl
+

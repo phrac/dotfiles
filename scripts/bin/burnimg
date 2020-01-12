@@ -1,0 +1,4 @@
+#!/bin/bash
+
+growisofs -dvd-compat -Z /dev/cdrom=$1
+

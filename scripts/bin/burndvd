@@ -1,0 +1,3 @@
+#!/bin/sh
+cdrecord -dao -speed=12 -dev=/dev/cdrom $1
+#growisofs -Z /dev/scd0 -r -J $1

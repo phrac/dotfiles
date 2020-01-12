@@ -1,0 +1,27 @@
+
+
+				 dstat
+
+   Documentation and description of usage, can be found in dstat(1)
+   manual page.
+
+Installation Requirements
+
+   A C-compiler (for example GCC) and Make is needed to build and
+   install dstat.  Only supported platform is OpenBSD.
+
+Installation from Source
+
+   Extract and install dstat:
+
+    # tar xzf dstat-n.n.tar.gz
+    # cd dstat-n.n/
+    # make install
+
+Contributions
+
+   Thanks to the following people for contributing code and hints:
+
+   Stefan Verhaegh
+   Valère Monseur
+   xcko

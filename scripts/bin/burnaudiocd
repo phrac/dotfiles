@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for i in *.mp3; do lame --decode "$i" "`basename "$i" .mp3`".wav; done
+wodim -v -pad speed=1 dev=/dev/scd0 -dao -swab *.wav
+rm *.wav
+

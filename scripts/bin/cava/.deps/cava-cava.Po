@@ -1,0 +1,167 @@
+cava-cava.o cava-cava.o: cava.c /usr/include/locale.h \
+  /usr/include/sys/_null.h /usr/include/sys/cdefs.h \
+  /usr/include/machine/cdefs.h /usr/include/stdlib.h \
+  /usr/include/machine/_types.h /usr/include/stdio.h \
+  /usr/include/sys/_types.h /usr/include/sys/types.h \
+  /usr/include/sys/_endian.h /usr/include/machine/endian.h \
+  /usr/include/stddef.h /usr/include/stdbool.h /usr/include/termios.h \
+  /usr/include/math.h /usr/include/sys/limits.h \
+  /usr/include/machine/limits.h /usr/include/fcntl.h \
+  /usr/include/sys/ioctl.h /usr/include/sys/ttycom.h \
+  /usr/include/sys/ioccom.h /usr/include/sys/filio.h \
+  /usr/include/sys/sockio.h /usr/local/include/fftw3.h \
+  /usr/include/unistd.h /usr/include/sys/unistd.h /usr/include/signal.h \
+  /usr/include/sys/signal.h /usr/include/machine/signal.h \
+  /usr/include/sys/siginfo.h /usr/include/sys/time.h \
+  /usr/include/sys/select.h /usr/include/time.h /usr/include/sys/_time.h \
+  /usr/include/string.h /usr/include/sys/stat.h /usr/include/getopt.h \
+  /usr/include/pthread.h /usr/include/limits.h \
+  /usr/include/sys/syslimits.h /usr/include/sched.h /usr/include/dirent.h \
+  /usr/include/sys/dirent.h /usr/include/ctype.h \
+  output/terminal_ncurses.h output/terminal_ncurses.c \
+  /usr/include/curses.h /usr/include/ncurses.h /usr/include/unctrl.h \
+  /usr/include/stdarg.h /usr/include/wchar.h output/terminal_bcircle.h \
+  output/terminal_bcircle.c output/terminal_noncurses.h \
+  output/terminal_noncurses.c output/raw.h output/raw.c \
+  /usr/include/stdint.h input/fifo.h input/fifo.c input/sndio.c \
+  /usr/include/assert.h /usr/include/errno.h /usr/include/sys/errno.h \
+  /usr/include/sndio.h iniparser/src/iniparser.h \
+  iniparser/src/dictionary.h config.h config.c
+
+/usr/include/locale.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/machine/cdefs.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/stdio.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/_endian.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/stddef.h:
+
+/usr/include/stdbool.h:
+
+/usr/include/termios.h:
+
+/usr/include/math.h:
+
+/usr/include/sys/limits.h:
+
+/usr/include/machine/limits.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/sys/ioctl.h:
+
+/usr/include/sys/ttycom.h:
+
+/usr/include/sys/ioccom.h:
+
+/usr/include/sys/filio.h:
+
+/usr/include/sys/sockio.h:
+
+/usr/local/include/fftw3.h:
+
+/usr/include/unistd.h:
+
+/usr/include/sys/unistd.h:
+
+/usr/include/signal.h:
+
+/usr/include/sys/signal.h:
+
+/usr/include/machine/signal.h:
+
+/usr/include/sys/siginfo.h:
+
+/usr/include/sys/time.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/_time.h:
+
+/usr/include/string.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/getopt.h:
+
+/usr/include/pthread.h:
+
+/usr/include/limits.h:
+
+/usr/include/sys/syslimits.h:
+
+/usr/include/sched.h:
+
+/usr/include/dirent.h:
+
+/usr/include/sys/dirent.h:
+
+/usr/include/ctype.h:
+
+output/terminal_ncurses.h:
+
+output/terminal_ncurses.c:
+
+/usr/include/curses.h:
+
+/usr/include/ncurses.h:
+
+/usr/include/unctrl.h:
+
+/usr/include/stdarg.h:
+
+/usr/include/wchar.h:
+
+output/terminal_bcircle.h:
+
+output/terminal_bcircle.c:
+
+output/terminal_noncurses.h:
+
+output/terminal_noncurses.c:
+
+output/raw.h:
+
+output/raw.c:
+
+/usr/include/stdint.h:
+
+input/fifo.h:
+
+input/fifo.c:
+
+input/sndio.c:
+
+/usr/include/assert.h:
+
+/usr/include/errno.h:
+
+/usr/include/sys/errno.h:
+
+/usr/include/sndio.h:
+
+iniparser/src/iniparser.h:
+
+iniparser/src/dictionary.h:
+
+config.h:
+
+config.c:
