@@ -34,7 +34,7 @@ xidle -timeout 180 -program "/usr/X11R6/bin/xlock -mode blank -lockdelay 20 -dpm
 urxvtd &
 
 # dstat status bar
-~/dotfiles/bin/dstat/dstat iwm0 &
+~/dotfiles/scripts/bin/dstat/dstat iwm0 &
 
 # start the compositor
 #compton -b
