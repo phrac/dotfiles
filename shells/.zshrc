@@ -2,8 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games
 
-export BROWSER=chrome
-export EDITOR=nvim
+export BROWSER=firefox
+export EDITOR=vim
 export GOPATH=$HOME/go
 # Path to your oh-my-zsh installation.
 export ZSH="/home/derek/.oh-my-zsh"
