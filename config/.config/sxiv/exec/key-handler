@@ -8,6 +8,8 @@ while read file
         
         "6")
             mv "$file" ~/p/fave ;;
+        "7")
+            mv "$file" ~/p/obg ;;
         esac
     done
 

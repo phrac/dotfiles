@@ -17,5 +17,5 @@ filesize=$(du -Hh -- "$1" | cut -f 1)
 modified=$(stat -t "%F %R" -f "%Sm" "$1")
 geometry="${2}x${3}"
 
-echo "${filesize}${s}${geometry}${s}${filename}${s}${modified}"
+echo "${filesize}${s}${geometry}${s}${filename}${s}${modified}${s}x5=rm${s}x6=fave${s}x7=obg"
 
