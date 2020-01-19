@@ -52,10 +52,9 @@ config.h:
 	@echo "GEN $@"
 	cp $(srcdir)/config.def.h $@
 
-version.h: Makefile .git/index
+version.h: 
 	@echo "GEN $@"
-	v="$$(cd $(srcdir); git describe 2>/dev/null)"; \
-	echo "#define VERSION \"$${v:-$(version)}\"" >$@
+	echo "#define VERSION 25" $@
 
 .git/index:
 
