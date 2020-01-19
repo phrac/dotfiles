@@ -3,7 +3,7 @@ import os
 import sys
 import datetime
 
-save_path = os.environ['HOME'] + '/ss/'
+save_path = os.environ['SSDIR']
 
 out = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 if len(sys.argv) > 1:
