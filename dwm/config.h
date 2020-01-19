@@ -33,7 +33,7 @@ static const Bool showsystray       = 0;     /* False means no systray */
 };*/
 static const char colors[NUMCOLORS][MAXCOLORS][17] = {
     /* border    fg         bg */
-    { "#282828", "#928374", "#282828" },        /* [0]  01 - Client normal */
+    { "#484848", "#928374", "#282828" },        /* [0]  01 - Client normal */
     { "#ebdbb2", "#458588", "#282828" },        /* [1]  02 - Client selected */
     { "#83a598", "#fb4934", "#282828" },        /* [2]  03 - Client urgent */
     { "#83a598", "#83a598", "#282828" },        /* [3]  04 - Client occupied */
