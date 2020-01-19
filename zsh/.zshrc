@@ -9,6 +9,7 @@ export GOPATH=$HOME/go
 export ZSH="/home/derek/.oh-my-zsh"
 export AUTOMAKE_VERSION=1.16
 export AUTOCONF_VERSION=2.69
+export SSDIR=$HOME/ss/
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
