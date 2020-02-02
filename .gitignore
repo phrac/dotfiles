@@ -29,6 +29,9 @@ st/st
 
 bin/dstat/dstat
 
+# oh-my-zsh
+zsh/.oh-my-zsh
+
 # Ignore other configs
 .config/cmus/cache
 .config/cmus/command-history
