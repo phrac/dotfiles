@@ -1,7 +1,7 @@
 export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jre-1.8.0/bin
 
 # exports
-export BROWSER=firefox
+export BROWSER=chrome
 export EDITOR=vim
 export GOPATH=$HOME/go
 export PAGER=most
