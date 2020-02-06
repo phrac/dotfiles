@@ -11,7 +11,7 @@ set background=dark
 
 let g:airline_powerline_fonts = 1
 let g:notes_directories = ['~/Documents/Notes']
-colorscheme gruvbox
+colorscheme nord
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 set shiftwidth=4

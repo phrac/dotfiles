@@ -1,4 +1,4 @@
 rofi.font: hack 13 
-rofi.theme: /usr/local/share/rofi/themes/gruvbox-dark.rasi
+rofi.theme: ~/.config/rofi/custom-nord.rasi
 rofi.width: 20
 rofi.columns: 1

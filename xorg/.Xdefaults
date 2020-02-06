@@ -88,3 +88,51 @@ Xft.rgba: rgb
 ! LightGrey + White
 *color7:  #a89984
 *color15: #ebdbb2
+
+! Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+! Copyright (c) 2016-present Sven Greb <code@svengreb.de>
+
+! Project:    Nord XResources
+! Version:    0.1.0
+! Repository: https://github.com/arcticicestudio/nord-xresources
+! License:    MIT
+
+#define nord0 #2E3440
+#define nord1 #3B4252
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define nord4 #D8DEE9
+#define nord5 #E5E9F0
+#define nord6 #ECEFF4
+#define nord7 #8FBCBB
+#define nord8 #88C0D0
+#define nord9 #81A1C1
+#define nord10 #5E81AC
+#define nord11 #BF616A
+#define nord12 #D08770
+#define nord13 #EBCB8B
+#define nord14 #A3BE8C
+#define nord15 #B48EAD
+
+*foreground:   #D8DEE9
+*background:   #2E3440
+*cursorColor:  #D8DEE9
+*fading: 35
+*fadeColor: #4C566A
+
+*color0: #3B4252
+*color1: #BF616A
+*color2: #A3BE84
+*color3: #ebcb8b
+*color4: #81a1c1
+*color5: #b48ead
+*color6: #88c0d0
+*color7: #e5e9f0
+*color8: #4c566a
+*color9: #bf616a
+*color10: #a3be8c
+*color11: #ebcb8b
+*color12: #81a1c1
+*color13: #ebcb8b
+*color14: #8fbcbb
+*color15: #eceff4

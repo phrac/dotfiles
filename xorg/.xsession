@@ -10,7 +10,7 @@ ulimit -Sc 0
 pkill redshift
 
 xsetroot -name " " &
-feh --bg-tile ~/.wallpapers/rooflifters.jpg &
+feh --bg-tile ~/.wallpapers/nord-pape.jpg &
 #xmodmap $HOME/.Xmodmap &
 
 # activate scroll wheel button
