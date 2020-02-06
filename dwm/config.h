@@ -9,12 +9,12 @@ static const char dmenufont[]       = "Hack Nerd Font:size=9";
 
 /* useless gaps patch */
 static const unsigned int gappx     = 0;
-static const char normbordercolor[] = "#353535";
-static const char normbgcolor[]     = "#2c2e2f";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#f99157";
-static const char selbgcolor[]      = "#2c2e2f";
-static const char selfgcolor[]      = "#f99157";
+static const char normbordercolor[] = "#2e3440";
+static const char normbgcolor[]     = "#2e3440";
+static const char normfgcolor[]     = "#83a598";
+static const char selbordercolor[]  = "#81a1c1";
+static const char selbgcolor[]      = "#2e3440";
+static const char selfgcolor[]      = "#83a598";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 12;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
@@ -27,27 +27,27 @@ static const Bool showsystray       = 0;     /* False means no systray */
 #define NUMCOLORS         2
 /*static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 	// border   foreground background
-	{ "#353535", "#bbbbbb", "#2c2e2f" },  // normal
-	{ "#f99157", "#f99157", "#2c2e2f" },  // selected
+	{ "#2e3440", "#81a1c1", "#2e3440" },  // normal
+	{ "#81a1c1", "#81a1c1", "#2e3440" },  // selected
 	// add more here
 };*/
 static const char colors[NUMCOLORS][MAXCOLORS][17] = {
     /* border    fg         bg */
     { "#3b4252", "#d8dee9", "#2e3440" },        /* [0]  01 - Client normal */
     { "#81a1c1", "#81a1c1", "#2e3440" },        /* [1]  02 - Client selected */
-    { "#83a598", "#fb4934", "#2e3440" },        /* [2]  03 - Client urgent */
-    { "#83a598", "#83a598", "#2e3440" },        /* [3]  04 - Client occupied */
+    { "#83a598", "#81a1c1", "#2e3440" },        /* [2]  03 - Client urgent */
+    { "#83a598", "#81a1c1", "#2e3440" },        /* [3]  04 - Client occupied */
     { "#2e3440", "#fb4934", "#2e3440" },        /* [4]  05 - Red */
     { "#2e3440", "#fabd2f", "#2e3440" },        /* [5]  06 - Yellow */
-    { "#2e3440", "#b8bb26", "#2e3440" },        /* [6]  07 - Green */
-    { "#2e3440", "#928374", "#2e3440" },        /* [7]  08 - Dark grey */
+    { "#2e3440", "#81a1c1", "#2e3440" },        /* [6]  07 - Green */
+    { "#2e3440", "#81a1c1", "#2e3440" },        /* [7]  08 - Dark grey */
     { "#2e3440", "#d5c4a1", "#2e3440" },        /* [8]  09 - Light grey */
-    { "#2e3440", "#a3be8c", "#2e3440" },        /* [9]  0A - Bar normal*/
-    { "#3c3836", "#a89985", "#2e3440" },        /* [10] 0B - Bar selected*/
+    { "#2e3440", "#81a1c1", "#2e3440" },        /* [9]  0A - Bar normal*/
+    { "#3c3836", "#81a1c1", "#2e3440" },        /* [10] 0B - Bar selected*/
     { "#fb4934", "#fb4934", "#2e3440" },        /* [11] 0C - Bar urgent*/
     { "#928374", "#458588", "#2e3440" },        /* [12] 0D - Bar occupied*/
-    { "#3c3836", "#3c3836", "#2e3440" },        /* [13] 0E - Tag normal*/
-    { "#83a598", "#83a598", "#2e3440" },        /* [14] 0F - Tag selected*/
+    { "#3b4252", "#d8dee9", "#2e3440" },        /* [13] 0E - Tag normal*/
+    { "#81a1c1", "#81a1c1", "#81a1c1" },        /* [14] 0F - Tag selected*/
     { "#fb4934", "#fb4934", "#2e3440" },        /* [15] 10 - Tag urgent*/
     { "#3c3836", "#928374", "#2e3440" },        /* [16] 11 - Tag occupied*/
 };
