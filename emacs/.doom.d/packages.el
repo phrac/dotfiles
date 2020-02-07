@@ -52,3 +52,5 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! web-beautify)
+(package! org-roam
+          :recipe (:host github :repo "jethrokuan/org-roam"))
