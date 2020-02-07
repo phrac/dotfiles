@@ -88,6 +88,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias ls="colorls -G"
 alias neofetch="neofetch --ascii_distro openbsd_small"
+alias doom="~/.emacs.d/bin/doom"
 
 #colored man pages
 man() {
@@ -101,8 +102,3 @@ man() {
 		LESS_TERMCAP_us=$(printf "\e[1;32m") \
 			man "$@"
 }
-
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
