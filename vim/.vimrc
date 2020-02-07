@@ -10,6 +10,7 @@ let g:nerdtree_tabs_open_on_console_startup=1
 set background=dark
 
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'nord'
 let g:notes_directories = ['~/Documents/Notes']
 colorscheme nord
 highlight Normal ctermbg=NONE
