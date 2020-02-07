@@ -38,6 +38,7 @@
 XLock.dpmsoff : 1
 
 URxvt.font:    xft:Hack Nerd Font Mono:minspace=False:style=Regular:pixelsize=20:antialias=true:autohint=true
+!URxvt.font:     xft:PragmataPro:pixelsize=20
 URxvt.perl-ext-common: default,matcher
 URxvt.url-launcher: /usr/bin/xdg-open
 URxvt.matcher.button: 1
