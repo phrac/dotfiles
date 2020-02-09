@@ -54,13 +54,13 @@
   (setq org-default-notes-file (concat org-directory "/refile.org"))
   (setq org-capture-templates
     '(("t" "New TODO" entry (file "refile.org")
-       "* TODO %?\n  %i\n %T\n %a")
+       "* TODO %?\n  %i\n %a")
       ("b" "Buy Item" entry (file "refile.org")
-       "* BUY %?\n  %i\n %T\n")
+       "* BUY %?\n  %i\n")
       ("s" "Sell Item" entry (file "refile.org")
-       "* SELL %?\n  %i\n %T\n")
+       "* SELL %?\n  %i\n")
       ("p" "Project" entry (file "refile.org")
-       "* PROJ %?\n  %i\n %T\n")
+       "* PROJ %?\n  %i\n")
       ("n" "NOTE" entry (file+olp+datetree "refile.org")
        "* %?\nEntered on %U\n  %i %a")
       ("h" "Habit" entry (file "refile.org")
@@ -133,7 +133,7 @@
                                    :and (:todo "BUY" :file-path "business\\.org"))
                             (:name "Important"
                                    :priority "A"
-                                   :order 6)
+                                   :order 3)
                             (:name "Low Effort Tasks"
                                    :effort< "0:11")
                             (:name "Time consuming Tasks"
@@ -147,7 +147,10 @@
                             (:name "Meetings"
                                    :and (:todo "MEET" :scheduled future)
                                    :order 10)
-                            ;(:discard (:not (:todo "TODO")))
+                            (:name "Unfinished Personal Projects"
+                                   :and (:todo "PROJ" :file-path "personal\\.org")
+                                   :order 4)
+                            (:discard (:not (:todo "TODO")))
                             ))))))))
   :config
   (org-super-agenda-mode))
