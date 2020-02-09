@@ -64,18 +64,21 @@
       ("n" "NOTE" entry (file+olp+datetree "refile.org")
        "* %?\nEntered on %U\n  %i %a")
       ("h" "Habit" entry (file "refile.org")
-       "* TODO %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
+       "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
           (sequence "SELL(s)" "|" "SOLD(S@/!)" "CANCELED(c@)")
+          (sequence "HABIT(h)" "|" "DONE(H/!)")
           ))
   (setq org-todo-keyword-faces
         (quote (("BUY" :foreground "orchid" :weight bold)
-                ("BOUGHT" :foreground "purple")
+                ("BOUGHT" :foreground "purple" :weight bold)
+                ("WAIT" :foreground "goldenrod1" :weight bold)
                 ("SELL" :foreground "tomato" :weight bold)
                 ("SOLD" :foreground "rosy brown" :weight bold)
                 ("PROJ" :foreground "deep pink" :weight bold)
+                ("HABIT" :foreground "cyan1" :weight bold)
                 ("PHONE" :foreground "forest green" :weight bold))))
   )
 
@@ -125,8 +128,14 @@
                          (org-super-agenda-groups
                           '(
                             (:log t)
+                            (:name "Due Today"
+                                   :date today
+                                   :order 1)
                             (:name "To refile"
                                    :file-path "refile\\.org")
+                            (:name "On Hold"
+                                   :todo "WAIT"
+                                   :order 5)
                             (:name "Personal Buy/Sell"
                                    :and (:todo ("BUY" "SELL") :file-path "personal\\.org"))
                             (:name "Business Purchases"
@@ -136,11 +145,11 @@
                                    :order 3)
                             (:name "Low Effort Tasks"
                                    :effort< "0:11")
-                            (:name "Time consuming Tasks"
-                                   :effort> "00:59")
+                            (:name "High Effort Tasks"
+                                   :effort> "00:29")
                             (:name "Scheduled Soon"
                                    :scheduled future
-                                   :order 8)
+                                   :order 4)
                             (:name "Overdue"
                                    :deadline past
                                    :order 2)
