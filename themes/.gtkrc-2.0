@@ -1,19 +1,19 @@
 # DO NOT EDIT! This file will be overwritten by LXAppearance.
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
-gtk-theme-name="Awesome"
-gtk-icon-theme-name="Faenza Dark"
-gtk-font-name="Bitstream Vera Sans 8"
+include "/home/derek/.gtkrc-2.0.mine"
+gtk-theme-name="Nordic-master"
+gtk-icon-theme-name="Gruvbox"
+gtk-font-name="Noto Sans Medium 10"
+gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=0
-gtk-toolbar-style=GTK_TOOLBAR_BOTH
-gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=1
+gtk-toolbar-style=GTK_TOOLBAR_BOTH_HORIZ
+gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
+gtk-button-images=0
+gtk-menu-images=0
+gtk-enable-event-sounds=0
+gtk-enable-input-feedback-sounds=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintslight"
+gtk-xft-hintstyle="hintfull"
 gtk-xft-rgba="rgb"
-gtk-color-scheme="fg_color:#B3B3A1\nbg_color:#333333\nselected_fg_color:#A3CACC\nbase_color:#323232\nselected_bg_color:#1E2320\ntext_color:#B3B3A1\n"
-include "/home/derek/.gtkrc-2.0.mine"
