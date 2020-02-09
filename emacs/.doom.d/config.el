@@ -61,8 +61,8 @@
        "* SELL %?\n  %i\n %T\n")
       ("p" "Project" entry (file "refile.org")
        "* PROJ %?\n  %i\n %T\n")
-      ("j" "Journal" entry (file+olp+datetree "journal.org")
-       "* %?\nEntered on %U\n  %i")
+      ("n" "NOTE" entry (file+olp+datetree "refile.org")
+       "* %?\nEntered on %U\n  %i %a")
       ("h" "Habit" entry (file "refile.org")
        "* TODO %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
