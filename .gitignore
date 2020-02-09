@@ -18,6 +18,9 @@ history.search
 *.log
 *.o
 
+# org mode state file #
+emacs/.doom.d/.state
+
 # ignore vim bundles for now
 vim/.vim/bundle/
 # Ignore Pragmata Pro font because its not free #

@@ -25,9 +25,6 @@
 ;; `load-theme' function. These are the defaults.
 (setq doom-theme 'doom-nord)
 
-;; If you intend to use org, it is recommended you change this!
-(setq org-directory "~/notes/")
-
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
 (setq display-line-numbers-type t)
@@ -49,14 +46,108 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;; org setting
+(setq org-directory "~/notes")
+(after! org
+  (setq org-agenda-window-setup 'other-window)
+  (setq org-id-locations-file "~/.doom.d/.state")
+  (setq org-default-notes-file (concat org-directory "/refile.org"))
+  (setq org-capture-templates
+    '(("t" "New TODO" entry (file "refile.org")
+       "* TODO %?\n  %i\n %T\n %a")
+      ("b" "Buy Item" entry (file "refile.org")
+       "* BUY %?\n  %i\n %T\n")
+      ("s" "Sell Item" entry (file "refile.org")
+       "* SELL %?\n  %i\n %T\n")
+      ("p" "Project" entry (file "refile.org")
+       "* PROJ %?\n  %i\n %T\n")
+      ("j" "Journal" entry (file+olp+datetree "journal.org")
+       "* %?\nEntered on %U\n  %i")
+      ("h" "Habit" entry (file "refile.org")
+       "* TODO %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@)")
+          (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
+          (sequence "SELL(s)" "|" "SOLD(S@/!)" "CANCELED(c@)")
+          ))
+  (setq org-todo-keyword-faces
+        (quote (("BUY" :foreground "orchid" :weight bold)
+                ("BOUGHT" :foreground "purple")
+                ("SELL" :foreground "tomato" :weight bold)
+                ("SOLD" :foreground "rosy brown" :weight bold)
+                ("PROJ" :foreground "deep pink" :weight bold)
+                ("PHONE" :foreground "forest green" :weight bold))))
+  )
+
+;; org-journal settings
+(use-package! org-journal
+  :after org
+  :custom
+  (org-journal-dir "~/notes/journal")
+  (org-journal-file-type 'monthly)
+  )
+       
+;; org-roam settings
 (use-package! org-roam
       :after org
       :hook (org-mode . org-roam-mode)
       :custom
       (org-roam-directory "~/notes/roam")
       :bind
+      ("C-c n b" . org-roam--build-cache-async)
       ("C-c n l" . org-roam)
       ("C-c n t" . org-roam-today)
       ("C-c n f" . org-roam-find-file)
       ("C-c n i" . org-roam-insert)
       ("C-c n g" . org-roam-show-graph))
+
+;; org-super-agenda settings
+(use-package! org-super-agenda
+  :after org-agenda
+  :init
+  (setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      ;org-agenda-block-separator nil
+      org-agenda-compact-blocks nil
+      org-agenda-start-day nil ;; i.e. today
+      org-agenda-span 1
+      org-agenda-start-on-weekday nil)
+  (setq org-agenda-custom-commands
+        '(("c" "Super view"
+           ((agenda "" ((org-agenda-overriding-header "")
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                                  :time-grid t
+                                  :date today
+                                  :order 1)))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '(
+                            (:log t)
+                            (:name "To refile"
+                                   :file-path "refile\\.org")
+                            (:name "Personal Buy/Sell"
+                                   :and (:todo ("BUY" "SELL") :file-path "personal\\.org"))
+                            (:name "Business Purchases"
+                                   :and (:todo "BUY" :file-path "business\\.org"))
+                            (:name "Important"
+                                   :priority "A"
+                                   :order 6)
+                            (:name "Low Effort Tasks"
+                                   :effort< "0:11")
+                            (:name "Time consuming Tasks"
+                                   :effort> "00:59")
+                            (:name "Scheduled Soon"
+                                   :scheduled future
+                                   :order 8)
+                            (:name "Overdue"
+                                   :deadline past
+                                   :order 2)
+                            (:name "Meetings"
+                                   :and (:todo "MEET" :scheduled future)
+                                   :order 10)
+                            ;(:discard (:not (:todo "TODO")))
+                            ))))))))
+  :config
+  (org-super-agenda-mode))
