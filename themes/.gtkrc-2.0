@@ -3,7 +3,7 @@
 
 include "/home/derek/.gtkrc-2.0.mine"
 gtk-theme-name="Nordic-master"
-gtk-icon-theme-name="Gruvbox"
+gtk-icon-theme-name="Nordic-standard-buttons"
 gtk-font-name="Noto Sans Medium 10"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=0
