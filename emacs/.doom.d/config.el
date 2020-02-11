@@ -49,12 +49,17 @@
 ;; org setting
 (setq org-directory "~/notes")
 (after! org
+;(custom-theme-set-faces 'user
+;                        `(org-level-1 ((t (:weight semi-bold :height 1.1))))
+;                        )
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
   (setq org-default-notes-file (concat org-directory "/refile.org"))
   (setq org-capture-templates
     '(("t" "New TODO" entry (file "refile.org")
        "* TODO %?\n  %i\n %a")
+      ("w" "New Work Order" entry (file "refile.org")
+       "* W/O %?\n %i\n")
       ("b" "Buy Item" entry (file "refile.org")
        "* BUY %?\n  %i\n")
       ("s" "Sell Item" entry (file "refile.org")
@@ -66,19 +71,22 @@
       ("h" "Habit" entry (file "refile.org")
        "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@)")
+        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
-          (sequence "SELL(s)" "|" "SOLD(S@/!)" "CANCELED(c@)")
-          (sequence "HABIT(h)" "|" "DONE(H/!)")
+          (sequence "SELL(s)" "LISTED(l@/!)" "|" "SOLD(S@/!)" "CANCELED(c@)")
+          (sequence "HABIT(h)" "|" "DONE(H@/!)")
           ))
   (setq org-todo-keyword-faces
         (quote (("BUY" :foreground "orchid" :weight bold)
                 ("BOUGHT" :foreground "purple" :weight bold)
                 ("WAIT" :foreground "goldenrod1" :weight bold)
                 ("SELL" :foreground "tomato" :weight bold)
-                ("SOLD" :foreground "rosy brown" :weight bold)
+                ("LISTED" :foreground "rosy brown" :weight bold)
+                ("SOLD" :foreground "sienna brown" :weight bold)
                 ("PROJ" :foreground "deep pink" :weight bold)
                 ("HABIT" :foreground "cyan1" :weight bold)
+                ("ASSIGNED" :foreground "spring green" :weight bold)
+                ("W/O" :foreground "magenta" :weight bold)
                 ("PHONE" :foreground "forest green" :weight bold))))
   )
 
@@ -86,7 +94,7 @@
 (use-package! org-journal
   :after org
   :custom
-  (org-journal-dir "~/notes/journal")
+  (org-journal-dir org-directory)
   (org-journal-file-type 'monthly)
   )
        
@@ -95,7 +103,7 @@
       :after org
       :hook (org-mode . org-roam-mode)
       :custom
-      (org-roam-directory "~/notes/roam")
+      (org-roam-directory org-directory)
       :bind
       ("C-c n b" . org-roam--build-cache-async)
       ("C-c n l" . org-roam)
@@ -135,9 +143,10 @@
                                    :file-path "refile\\.org")
                             (:name "On Hold"
                                    :todo "WAIT"
-                                   :order 5)
-                            (:name "Personal Buy/Sell"
-                                   :and (:todo ("BUY" "SELL") :file-path "personal\\.org"))
+                                   :order 6)
+                            (:name "Personal Marketplace"
+                                   :and (:todo ("BUY" "SELL" "LISTED") :file-path "personal\\.org")
+                                   :order 4)
                             (:name "Business Purchases"
                                    :and (:todo "BUY" :file-path "business\\.org"))
                             (:name "Important"
@@ -149,7 +158,7 @@
                                    :effort> "00:29")
                             (:name "Scheduled Soon"
                                    :scheduled future
-                                   :order 4)
+                                   :order 3)
                             (:name "Overdue"
                                    :deadline past
                                    :order 2)
@@ -158,8 +167,65 @@
                                    :order 10)
                             (:name "Unfinished Personal Projects"
                                    :and (:todo "PROJ" :file-path "personal\\.org")
-                                   :order 4)
+                                   :order 5)
+                            (:name "Unfinished Business Projects"
+                                   :and (:todo "PROJ" :file-path "business\\.org")
+                                   :order 5)
                             (:discard (:not (:todo "TODO")))
-                            ))))))))
+                            ))))))
+
+        ("b" "Business Super view"
+           ((agenda "" ((org-agenda-overriding-header "")
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                                  :time-grid t
+                                  :and (:date today :file-path "business\\.org")
+                                  :order 1)))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '(
+                            (:log t)
+                            (:name "Due Today"
+                                   :and (:date today :file-path "business\\.org")
+                                   :order 1)
+                            (:name "To refile"
+                                   :file-path "refile\\.org"
+                                   :order 2)
+                            (:name "Work Orders"
+                                   :and (:todo "W/O" :file-path "business\\.org")
+                                   :order 2)
+                            (:name "On Hold"
+                                   :and (:todo "WAIT" :file-path "business\\.org")
+                                   :order 6)
+                            (:name "Assigned Tasks"
+                                   :and (:todo "ASSIGNED" :file-path "business\\.org")
+                                   )
+                            (:name "Business Purchases"
+                                   :and (:todo "BUY" :file-path "business\\.org")
+                                   )
+                            (:name "Important"
+                                   :and (:priority "A" :file-path "business\\.org")
+                                   :order 3)
+                            (:name "Low Effort Tasks"
+                                   :and (:effort< "0:11" :file-path "business\\.org")
+                                   )
+                            (:name "High Effort Tasks"
+                                   :and (:effort> "00:29" :file-path "business\\.org")
+                                   )
+                            (:name "Scheduled Soon"
+                                   :and (:scheduled future :file-path "business\\.org")
+                                   :order 3)
+                            (:name "Overdue"
+                                   :and (:deadline past :file-path "business\\.org")
+                                   :order 2)
+                            (:name "Meetings"
+                                   :and (:todo "MEET" :scheduled future :file-path "business\\.org")
+                                   :order 10)
+                            (:name "Unfinished Business Projects"
+                                   :and (:todo "PROJ" :file-path "business\\.org")
+                                   :order 5)
+                            (:discard (:not(:file-path "business\\.org")))
+                            ))))))
+          ))
   :config
   (org-super-agenda-mode))
