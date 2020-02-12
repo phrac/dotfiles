@@ -1,0 +1,128 @@
+.\" $Id: dstat.1 34 2017-06-21 19:57:22Z umaxx $
+.\" Copyright (c) 2016-2017 Joerg Jung <mail@umaxx.net>
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.Dd June 20, 2017
+.Dt DSTAT 1
+.Os
+.Sh NAME
+.Nm dstat
+.Nd dwm status bar statistics
+.Sh SYNOPSIS
+.Nm dstat
+.Ar if
+.Nm dstat
+.Cm version
+.Sh DESCRIPTION
+.Nm
+is a lightweight utility to set the
+.Xr dwm 1
+status bar text.
+.Nm
+displays the current network throughput for the given interface
+.Ar if ,
+wireless signal quality, CPU usage, performance settings, battery status,
+temperature, volume settings, as well as the current date and time on the
+.Xr dwm 1
+status bar.
+.Pp
+The arguments are as follows:
+.Bl -tag -width "version"
+.It Ar if
+Specify the interface to collect the network statistics.
+.It Cm version
+Print the
+.Cm version
+and copyright information of
+.Nm
+to the standard output, then exit.
+.El
+.Pp
+.Nm
+is supposed to be started with the
+.Xr dwm 1
+session.
+.Nm
+updates the statistics shown on the
+.Xr dwm 1
+status bar every second using the results from
+.Xr ioctl 2,
+calls as well as calls to
+.Xr apm 4 ,
+.Xr audio 4 ,
+.Xr getifaddrs 3 ,
+.Xr sysctl 3 ,
+and
+.Xr time 3 .
+.Nm
+displays a warning window if the estimated number of minutes for the remaining
+battery life drops below 10 minutes.
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Run
+.Nm
+using the urtwn0 network interface:
+.Bd -literal -offset indent
+$ dstat urtwn0 &
+.Ed
+.Pp
+Print
+.Cm version
+and copyright information of
+.Nm
+to the standard output stream and exit successfully:
+.Bd -literal -offset indent
+$ dstat version
+.Ed
+.Pp
+.Nm
+can also be used with
+.Xr tint2 1
+by adding an executor to the panel items within the
+.Xr tint2 1
+configuration, like in the following:
+.Bd -literal -offset indent
+execp = new
+execp_command = /usr/local/bin/dstat trunk0
+execp_interval = 0
+execp_continuous = 1
+panel_items = TE
+.Ed
+.Sh SEE ALSO
+.Xr dwm 1 ,
+.Xr ioctl 2 ,
+.Xr getifaddrs 3 ,
+.Xr sysctl 3 ,
+.Xr time 3 ,
+.Xr apm 4 ,
+.Xr audio 4
+.Sh STANDARDS
+The
+.Nm
+utility is not compliant with any specification.
+.Pp
+Where portability is paramount, do not use it.
+.Sh HISTORY
+The first version of the
+.Nm
+utility was a shell script and appeared back in May 2013.
+.Sh AUTHORS
+.An -nosplit
+.Nm
+was written by
+.An Joerg Jung Aq Mt mail@umaxx.net .
+.Sh CAVEATS
+Displayed wireless signal quality is rather coarse grained.
+.Sh HOMEPAGE
+.Lk https://www.umaxx.net/
