@@ -9,12 +9,6 @@ static const char dmenufont[]       = "Hack Nerd Font:size=9";
 
 /* useless gaps patch */
 static const unsigned int gappx     = 0;
-static const char normbordercolor[] = "#2e3440";
-static const char normbgcolor[]     = "#2e3440";
-static const char normfgcolor[]     = "#83a598";
-static const char selbordercolor[]  = "#81a1c1";
-static const char selbgcolor[]      = "#2e3440";
-static const char selfgcolor[]      = "#83a598";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 12;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
@@ -22,6 +16,16 @@ static const Bool topbar            = True;     /* False means bottom bar */
 static const unsigned int systrayspacing = 2;   /* systray spacing */ 
 static const int defaultpriority = 50;
 static const Bool showsystray       = 0;     /* False means no systray */  
+static const char col_gray1[]       = "#2e3440";
+static const char col_gray2[]       = "#3b4252";
+static const char col_gray3[]       = "#d8dee9";
+static const char col_gray4[]       = "#81a1c1";
+static const char col_cyan[]        = "#81a1c1";
+static const char *colors[][3]      = {
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_gray1, col_cyan  },
+};
 
 /* statusbar colors */
 #define NUMCOLORS         2
@@ -31,26 +35,26 @@ static const Bool showsystray       = 0;     /* False means no systray */
 	{ "#81a1c1", "#81a1c1", "#2e3440" },  // selected
 	// add more here
 };*/
-static const char colors[NUMCOLORS][MAXCOLORS][17] = {
+//static const char colors[NUMCOLORS][MAXCOLORS][17] = {
     /* border    fg         bg */
-    { "#3b4252", "#d8dee9", "#2e3440" },        /* [0]  01 - Client normal */
-    { "#81a1c1", "#81a1c1", "#2e3440" },        /* [1]  02 - Client selected */
-    { "#83a598", "#81a1c1", "#2e3440" },        /* [2]  03 - Client urgent */
-    { "#83a598", "#81a1c1", "#2e3440" },        /* [3]  04 - Client occupied */
-    { "#2e3440", "#fb4934", "#2e3440" },        /* [4]  05 - Red */
-    { "#2e3440", "#fabd2f", "#2e3440" },        /* [5]  06 - Yellow */
-    { "#2e3440", "#81a1c1", "#2e3440" },        /* [6]  07 - Green */
-    { "#2e3440", "#81a1c1", "#2e3440" },        /* [7]  08 - Dark grey */
-    { "#2e3440", "#d5c4a1", "#2e3440" },        /* [8]  09 - Light grey */
-    { "#2e3440", "#81a1c1", "#2e3440" },        /* [9]  0A - Bar normal*/
-    { "#3c3836", "#81a1c1", "#2e3440" },        /* [10] 0B - Bar selected*/
-    { "#fb4934", "#fb4934", "#2e3440" },        /* [11] 0C - Bar urgent*/
-    { "#928374", "#458588", "#2e3440" },        /* [12] 0D - Bar occupied*/
-    { "#3b4252", "#d8dee9", "#2e3440" },        /* [13] 0E - Tag normal*/
-    { "#81a1c1", "#81a1c1", "#81a1c1" },        /* [14] 0F - Tag selected*/
-    { "#fb4934", "#fb4934", "#2e3440" },        /* [15] 10 - Tag urgent*/
-    { "#3c3836", "#928374", "#2e3440" },        /* [16] 11 - Tag occupied*/
-};
+//    { "#3b4252", "#d8dee9", "#2e3440" },        /* [0]  01 - Client normal */
+//    { "#81a1c1", "#81a1c1", "#2e3440" },        /* [1]  02 - Client selected */
+//    { "#83a598", "#81a1c1", "#2e3440" },        /* [2]  03 - Client urgent */
+//    { "#83a598", "#81a1c1", "#2e3440" },        /* [3]  04 - Client occupied */
+//    { "#2e3440", "#fb4934", "#2e3440" },        /* [4]  05 - Red */
+//    { "#2e3440", "#fabd2f", "#2e3440" },        /* [5]  06 - Yellow */
+//    { "#2e3440", "#81a1c1", "#2e3440" },        /* [6]  07 - Green */
+//    { "#2e3440", "#81a1c1", "#2e3440" },        /* [7]  08 - Dark grey */
+//    { "#2e3440", "#d5c4a1", "#2e3440" },        /* [8]  09 - Light grey */
+//    { "#2e3440", "#81a1c1", "#2e3440" },        /* [9]  0A - Bar normal*/
+//    { "#3c3836", "#81a1c1", "#2e3440" },        /* [10] 0B - Bar selected*/
+//   { "#fb4934", "#fb4934", "#2e3440" },        /* [11] 0C - Bar urgent*/
+//    { "#928374", "#458588", "#2e3440" },        /* [12] 0D - Bar occupied*/
+//    { "#3b4252", "#d8dee9", "#2e3440" },        /* [13] 0E - Tag normal*/
+//    { "#81a1c1", "#81a1c1", "#81a1c1" },        /* [14] 0F - Tag selected*/
+//    { "#fb4934", "#fb4934", "#2e3440" },        /* [15] 10 - Tag urgent*/
+//    { "#3c3836", "#928374", "#2e3440" },        /* [16] 11 - Tag occupied*/
+//};
 
 /* tagging */
 static const char *tags[] = { "", "", "", "", "ﴬ", "", "", "" };
