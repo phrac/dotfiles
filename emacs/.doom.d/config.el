@@ -66,12 +66,14 @@
        "* SELL %?\n  %i\n")
       ("p" "Project" entry (file "refile.org")
        "* PROJ %?\n  %i\n")
+      ("m" "Schedule Meeting" entry (file "refile.org")
+       "* MEET %?\n %i\n")
       ("n" "NOTE" entry (file+olp+datetree "refile.org")
        "* %?\nEntered on %U\n  %i %a")
       ("h" "Habit" entry (file "refile.org")
        "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
           (sequence "SELL(s)" "LISTED(l@/!)" "|" "SOLD(S@/!)" "CANCELED(c@)")
           (sequence "HABIT(h)" "|" "DONE(H@/!)")
@@ -87,7 +89,7 @@
                 ("HABIT" :foreground "cyan1" :weight bold)
                 ("ASSIGNED" :foreground "spring green" :weight bold)
                 ("W/O" :foreground "magenta" :weight bold)
-                ("PHONE" :foreground "forest green" :weight bold))))
+                ("MEET" :foreground "forest green" :weight bold))))
   )
 
 ;; org-journal settings

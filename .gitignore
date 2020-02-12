@@ -23,14 +23,15 @@ emacs/.doom.d/.state
 
 # ignore vim bundles for now
 vim/.vim/bundle/
+
 # Ignore Pragmata Pro font because its not free #
 .fonts/
 .icons/
+
 # Ignore misc binaries
 dwm/dwm
 st/st
-
-bin/dstat/dstat
+dstat/dstat
 
 # oh-my-zsh
 zsh/.oh-my-zsh
