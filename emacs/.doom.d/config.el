@@ -95,19 +95,36 @@
 ;; org-journal settings
 (use-package! org-journal
   :after org
+  :bind
+  ("C-c n j" . org-journal-new-entry)
   :custom
-  (org-journal-dir org-directory)
-  (org-journal-file-type 'monthly)
+  (org-journal-dir "~/notes")
+  (org-journal-file-type 'daily)
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-date-format "%A, %d %B %Y")
   )
-       
+;; deft settings
+(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/notes")
+  (deft-use-filename-as-title t))
+
 ;; org-roam settings
 (use-package! org-roam
       :after org
       :hook (org-mode . org-roam-mode)
       :custom
-      (org-roam-directory org-directory)
+      (org-roam-directory "~/notes")
+      (org-roam-link-representation 'id)
+      (org-roam-graph-viewer "/usr/local/bin/chrome")
+      (org-roam-buffer-width 0.3)
       :bind
-      ("C-c n b" . org-roam--build-cache-async)
       ("C-c n l" . org-roam)
       ("C-c n t" . org-roam-today)
       ("C-c n f" . org-roam-find-file)
@@ -193,6 +210,10 @@
                             (:name "To refile"
                                    :file-path "refile\\.org"
                                    :order 2)
+                            (:name "Upcoming Meetings"
+                                   :and (:todo "MEET" :file-path "business\\.org")
+                                   :order 2
+                                   )
                             (:name "Work Orders"
                                    :and (:todo "W/O" :file-path "business\\.org")
                                    :order 2)
@@ -219,7 +240,7 @@
                                    :order 3)
                             (:name "Overdue"
                                    :and (:deadline past :file-path "business\\.org")
-                                   :order 2)
+                                   :order 0)
                             (:name "Meetings"
                                    :and (:todo "MEET" :scheduled future :file-path "business\\.org")
                                    :order 10)
