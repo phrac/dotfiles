@@ -56,4 +56,5 @@
   :recipe (:host github :repo "jethrokuan/org-roam"))
 (package! org-super-agenda)
 (package! org-journal)
-(package! org-gantt)
+;(package! org-gantt)
+(package! deft)
