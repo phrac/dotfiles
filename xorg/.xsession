@@ -9,7 +9,7 @@ ulimit -Sc 0
 # kill any redshifts lingering
 pkill redshift
 
-xsetroot -name " " -solid "#2E3440" &
+xsetroot -name "dwm" -solid "#2E3440" &
 feh --bg-tile ~/.wallpapers/nord-pape.jpg &
 #xmodmap $HOME/.Xmodmap &
 

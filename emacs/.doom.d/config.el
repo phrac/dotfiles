@@ -49,9 +49,7 @@
 ;; org setting
 (setq org-directory "~/notes")
 (after! org
-;(custom-theme-set-faces 'user
-;                        `(org-level-1 ((t (:weight semi-bold :height 1.1))))
-;                        )
+  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
   (setq org-default-notes-file (concat org-directory "/refile.org"))
@@ -73,7 +71,7 @@
       ("h" "Habit" entry (file "refile.org")
        "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
+        '((sequence "TODO(t)" "NEXT(n@/!)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
           (sequence "SELL(s)" "LISTED(l@/!)" "|" "SOLD(S@/!)" "CANCELED(c@)")
           (sequence "HABIT(h)" "|" "DONE(H@/!)")
@@ -89,6 +87,7 @@
                 ("HABIT" :foreground "cyan1" :weight bold)
                 ("ASSIGNED" :foreground "spring green" :weight bold)
                 ("W/O" :foreground "magenta" :weight bold)
+                ("NEXT" :foreground "deep sky blue" :weight bold)
                 ("MEET" :foreground "forest green" :weight bold))))
   )
 
@@ -121,7 +120,8 @@
       :hook (org-mode . org-roam-mode)
       :custom
       (org-roam-directory "~/notes")
-      (org-roam-link-representation 'id)
+      (org-roam-link-title-format "R:%s")
+      (org-roam-use-timestamp-as-filename nil)
       (org-roam-graph-viewer "/usr/local/bin/chrome")
       (org-roam-buffer-width 0.3)
       :bind
@@ -160,14 +160,15 @@
                                    :order 1)
                             (:name "To refile"
                                    :file-path "refile\\.org")
+                            (:name "Next Tasks"
+                                   :todo "NEXT"
+                                   :order 0)
                             (:name "On Hold"
                                    :todo "WAIT"
                                    :order 6)
-                            (:name "Personal Marketplace"
-                                   :and (:todo ("BUY" "SELL" "LISTED") :file-path "personal\\.org")
+                            (:name "Marketplace"
+                                   :todo ("BUY" "SELL" "LISTED")
                                    :order 4)
-                            (:name "Business Purchases"
-                                   :and (:todo "BUY" :file-path "business\\.org"))
                             (:name "Important"
                                    :priority "A"
                                    :order 3)
@@ -184,11 +185,8 @@
                             (:name "Meetings"
                                    :and (:todo "MEET" :scheduled future)
                                    :order 10)
-                            (:name "Unfinished Personal Projects"
-                                   :and (:todo "PROJ" :file-path "personal\\.org")
-                                   :order 5)
-                            (:name "Unfinished Business Projects"
-                                   :and (:todo "PROJ" :file-path "business\\.org")
+                            (:name "Unfinished Projects"
+                                   :todo "PROJ"
                                    :order 5)
                             (:discard (:not (:todo "TODO")))
                             ))))))
