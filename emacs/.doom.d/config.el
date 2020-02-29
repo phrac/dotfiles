@@ -49,7 +49,7 @@
 ;; org setting
 (setq org-directory "~/notes")
 (after! org
-  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
+;;  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
   (setq org-default-notes-file (concat org-directory "/refile.org"))
@@ -121,15 +121,13 @@
       :custom
       (org-roam-directory "~/notes")
       (org-roam-link-title-format "R:%s")
-      (org-roam-use-timestamp-as-filename nil)
-      (org-roam-graph-viewer "/usr/local/bin/chrome")
       (org-roam-buffer-width 0.3)
-      :bind
-      ("C-c n l" . org-roam)
-      ("C-c n t" . org-roam-today)
-      ("C-c n f" . org-roam-find-file)
-      ("C-c n i" . org-roam-insert)
-      ("C-c n g" . org-roam-show-graph))
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-show-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))))
 
 ;; org-super-agenda settings
 (use-package! org-super-agenda

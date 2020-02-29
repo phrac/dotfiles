@@ -58,3 +58,4 @@
 (package! org-journal)
 ;(package! org-gantt)
 (package! deft)
+(package! pdf-tools)
