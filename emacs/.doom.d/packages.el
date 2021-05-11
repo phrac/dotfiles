@@ -53,9 +53,10 @@
 
 (package! web-beautify)
 (package! org-roam
-  :recipe (:host github :repo "jethrokuan/org-roam" :branch "develop"))
+  :recipe (:host github :repo "jethrokuan/org-roam"))
 (package! org-super-agenda)
 (package! org-journal)
 ;(package! org-gantt)
 (package! deft)
 (package! pdf-tools)
+(package! arduino-mode)

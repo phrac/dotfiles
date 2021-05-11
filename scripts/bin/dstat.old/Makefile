@@ -1,5 +1,5 @@
-# $Id: Makefile 44 2020-04-19 21:24:36Z umaxx $
-# Copyright (c) 2016-2020 Joerg Jung <mail@umaxx.net>
+# $Id: Makefile 34 2017-06-21 19:57:22Z umaxx $
+# Copyright (c) 2016-2017 Joerg Jung <mail@umaxx.net>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -30,7 +30,7 @@ CFLAGS+=-Isrc -I/usr/include -I$(INCDIR) -I/usr/X11R6/include
 
 LDFLAGS+=-L/usr/lib -L$(LIBDIR) -L/usr/X11R6/lib
 
-LIBS+=-lX11 -lsndio -lutil
+LIBS+=-lX11 -lutil
 
 OBJECTS=dstat.o
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rsync -av --delete ~/p/fave goliath:/tank/p
+rsync -av ~/p/fave goliath:/tank/p
 rsync -av ~/dotfiles goliath:/tank/backup
 rsync -av ~/Documents goliath:/tank/backup
 rsync -av --delete ~/notes goliath:/tank/backup

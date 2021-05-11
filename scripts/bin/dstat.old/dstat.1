@@ -1,5 +1,5 @@
-.\" $Id: dstat.1 44 2020-04-19 21:24:36Z umaxx $
-.\" Copyright (c) 2016-2020 Joerg Jung <mail@umaxx.net>
+.\" $Id: dstat.1 34 2017-06-21 19:57:22Z umaxx $
+.\" Copyright (c) 2016-2017 Joerg Jung <mail@umaxx.net>
 .\"
 .\" Permission to use, copy, modify, and distribute this software for any
 .\" purpose with or without fee is hereby granted, provided that the above
@@ -12,7 +12,7 @@
 .\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-.Dd April 19, 2020
+.Dd June 20, 2017
 .Dt DSTAT 1
 .Os
 .Sh NAME
@@ -56,12 +56,12 @@ session.
 updates the statistics shown on the
 .Xr dwm 1
 status bar every second using the results from
-.Xr ioctl 2 ,
+.Xr ioctl 2,
 calls as well as calls to
 .Xr apm 4 ,
+.Xr audio 4 ,
 .Xr getifaddrs 3 ,
-.Xr sndio 7 ,
-.Xr sysctl 2 ,
+.Xr sysctl 3 ,
 and
 .Xr time 3 .
 .Nm
@@ -85,59 +85,13 @@ to the standard output stream and exit successfully:
 .Bd -literal -offset indent
 $ dstat version
 .Ed
-.Ss Integrations
-Pipe
-.Nm
-output to dzen2:
-.Bd -literal -offset indent
-$ dstat urtwn0 | dzen2 -fn "-*-terminus-medium-*-*-*-*-*-*-*-*-*-*-*"
-.Ed
-.Pp
-Use
-.Nm
-output in
-.Xr i3 1
-via
-.Xr i3bar 1
-by adding the the following lines to the configuration:
-.Bd -literal -offset indent
-bar {
-    status_command dstat trunk0
-}
-.Ed
-.Pp
-Pipe
-.Nm
-output to
-.Xr lemonbar 1 :
-.Bd -literal -offset indent
-$ dstat urtwn0 | lemonbar -d -f "-*-terminus-medium-*-*-*-*-*-*-*-*-*-*-*"
-.Ed
-.Pp
-Use
-.Nm
-output in right status bar of
-.Xr tmux 1
-by adding the following configuration commands:
-.Bd -literal -offset indent
-set -g status-right-length 100
-set -g status-right '#(dstat trunk0)'
-.Ed
-.Pp
-Pipe
-.Nm
-output to xmobar:
-.Bd -literal -offset indent
-$ dstat urtwn0 | \\
-> xmobar -b -f "-*-terminus-medium-*-*-*-*-*-*-*-*-*-*-*" \\
-> -t "%StdinReader%" -c "[Run StdinReader]"
-.Ed
 .Pp
 .Nm
 can also be used with
 .Xr tint2 1
-by adding an executor to the panel items within the configuration,
-like in the following:
+by adding an executor to the panel items within the
+.Xr tint2 1
+configuration, like in the following:
 .Bd -literal -offset indent
 execp = new
 execp_command = /usr/local/bin/dstat trunk0
@@ -148,11 +102,11 @@ panel_items = TE
 .Sh SEE ALSO
 .Xr dwm 1 ,
 .Xr ioctl 2 ,
-.Xr sysctl 2 ,
 .Xr getifaddrs 3 ,
+.Xr sysctl 3 ,
 .Xr time 3 ,
 .Xr apm 4 ,
-.Xr sndio 7
+.Xr audio 4
 .Sh STANDARDS
 The
 .Nm

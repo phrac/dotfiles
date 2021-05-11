@@ -13,6 +13,7 @@ history.search
 *.pyc
 
 # misc #
+*.synclock
 *.lock
 *.core
 *.log
@@ -37,11 +38,12 @@ dstat/dstat
 zsh/.oh-my-zsh
 
 # Ignore other configs
-.config/cmus/cache
-.config/cmus/command-history
-.config/cmus/search-history
-.config/cmus/autosave
-.config/mps-youtube/play_history.m3u
+config/.config/cmus/cache
+config/.config/cmus/command-history
+config/.config/cmus/search-history
+config/.config/cmus/autosave
+config/.config/cmus/lib.pl
+config/.config/mps-youtube/play_history.m3u
 .config/mps-youtube/input_history
 .config/mps-youtube/cache*
 .config/mimeapps.list
