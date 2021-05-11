@@ -98,7 +98,7 @@
   ("C-c n j" . org-journal-new-entry)
   :custom
   (org-journal-dir "~/notes")
-  (org-journal-file-type 'daily)
+  (org-journal-file-type 'yearly)
   (org-journal-file-format "%Y-%m-%d.org")
   (org-journal-date-format "%A, %d %B %Y")
   )
@@ -116,8 +116,7 @@
 
 ;; org-roam settings
 (use-package! org-roam
-      :after org
-      :hook (org-mode . org-roam-mode)
+      :hook (after-init . org-roam-mode)
       :custom
       (org-roam-directory "~/notes")
       (org-roam-link-title-format "R:%s")
@@ -248,3 +247,10 @@
           ))
   :config
   (org-super-agenda-mode))
+
+(use-package arduino-mode
+             :init
+             (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
+        (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
+        )
+
