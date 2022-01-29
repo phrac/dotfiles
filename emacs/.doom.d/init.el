@@ -13,11 +13,10 @@
 ;;
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
-
+(setq org-roam-v2-ack t)
 (doom! :input
        ;;chinese
        ;;japanese
-
        :completion
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
@@ -144,7 +143,8 @@
         ;;+jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
-        ;;+present)        ; using org-mode for presentations
+        ;;+present)         ; using org-mode for presentations
+        +roam2
         )
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother

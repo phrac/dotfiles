@@ -51,11 +51,9 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-(package! web-beautify)
-(package! org-roam
-  :recipe (:host github :repo "jethrokuan/org-roam"))
+;(package! web-beautify)
 (package! org-super-agenda)
-(package! org-journal)
+;(package! org-journal)
 ;(package! org-gantt)
 (package! deft)
 (package! pdf-tools)

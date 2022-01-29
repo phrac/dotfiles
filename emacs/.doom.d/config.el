@@ -48,6 +48,7 @@
 
 ;; org setting
 (setq org-directory "~/notes")
+(setq org-agenda-files '("~/notes/roam/daily"))
 (after! org
 ;;  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
   (setq org-agenda-window-setup 'other-window)
@@ -91,17 +92,6 @@
                 ("MEET" :foreground "forest green" :weight bold))))
   )
 
-;; org-journal settings
-(use-package! org-journal
-  :after org
-  :bind
-  ("C-c n j" . org-journal-new-entry)
-  :custom
-  (org-journal-dir "~/notes")
-  (org-journal-file-type 'yearly)
-  (org-journal-file-format "%Y-%m-%d.org")
-  (org-journal-date-format "%A, %d %B %Y")
-  )
 ;; deft settings
 (use-package deft
   :after org
@@ -113,20 +103,6 @@
   (deft-default-extension "org")
   (deft-directory "~/notes")
   (deft-use-filename-as-title t))
-
-;; org-roam settings
-(use-package! org-roam
-      :hook (after-init . org-roam-mode)
-      :custom
-      (org-roam-directory "~/notes")
-      (org-roam-link-title-format "R:%s")
-      (org-roam-buffer-width 0.3)
-      :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-show-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))))
 
 ;; org-super-agenda settings
 (use-package! org-super-agenda
@@ -249,7 +225,7 @@
   (org-super-agenda-mode))
 
 (use-package arduino-mode
-             :init
+            :init
              (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
         (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
         )
