@@ -57,4 +57,6 @@
 ;(package! org-gantt)
 (package! deft)
 (package! pdf-tools)
-(package! arduino-mode)
+;(package! arduino-mode)
+(unpin! org-roam)
+(package! org-roam-ui)

@@ -1,10 +1,12 @@
 #!/bin/sh
 
-rsync -av ~/p/fave goliath:/tank/p
-rsync -av ~/dotfiles goliath:/tank/backup
-rsync -av ~/Documents goliath:/tank/backup
-rsync -av --delete ~/notes goliath:/tank/backup
-rsync -av ~/ss goliath:/tank/backup
-rsync -av --delete ~/Downloads goliath:/tank/backup
-rsync -av ~/code goliath:/tank/backup
-rsync -av ~/go goliath:/tank/backup
+rsync -av ~/p/fave disflux.com:/tank/p
+rsync -av ~/dotfiles disflux.com:/tank/backup
+rsync -av ~/Documents disflux.com:/tank/backup
+rsync -av --delete ~/notes disflux.com:/tank/backup
+rsync -av ~/ss disflux.com:/tank/backup
+rsync -av --delete ~/Downloads disflux.com:/tank/backup
+rsync -av ~/code disflux.com:/tank/backup
+rsync -av ~/go disflux.com:/tank/backup
+rsync -av ~/manuals disflux.com:/tank/backup
+
