@@ -48,28 +48,28 @@
 
 ;; org setting
 (setq org-directory "~/notes")
-(setq org-agenda-files '("~/notes/roam/daily"))
+;(setq org-agenda-files '("~/notes/roam/todo.org"))
 (after! org
 ;;  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
-  (setq org-default-notes-file (concat org-directory "/refile.org"))
+  (setq org-default-notes-file (concat org-directory "~/refile.org"))
   (setq org-capture-templates
-    '(("t" "New TODO" entry (file "refile.org")
+    '(("t" "New TODO" entry (file "~/notes/roam/todo.org")
        "* TODO %?\n  %i\n %a")
-      ("w" "New Work Order" entry (file "refile.org")
+      ("w" "New Work Order" entry (file "~/notes/roam/todo.org")
        "* W/O %?\n %i\n")
-      ("b" "Buy Item" entry (file "refile.org")
+      ("b" "Buy Item" entry (file "~/notes/roam/todo.org")
        "* BUY %?\n  %i\n")
-      ("s" "Sell Item" entry (file "refile.org")
+      ("s" "Sell Item" entry (file "~/notes/roam/todo.org")
        "* SELL %?\n  %i\n")
-      ("p" "Project" entry (file "refile.org")
+      ("p" "Project" entry (file "~/notes/roam/todo.org")
        "* PROJ %?\n  %i\n")
-      ("m" "Schedule Meeting" entry (file "refile.org")
+      ("m" "Schedule Meeting" entry (file "~/notes/roam/todo.org")
        "* MEET %?\n %i\n")
-      ("n" "NOTE" entry (file+olp+datetree "refile.org")
+      ("n" "NOTE" entry (file+olp+datetree "~/notes/roam/todo.org")
        "* %?\nEntered on %U\n  %i %a")
-      ("h" "Habit" entry (file "refile.org")
+      ("h" "Habit" entry (file "~/notes/roam/todo.org")
        "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n@/!)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
@@ -90,7 +90,9 @@
                 ("W/O" :foreground "magenta" :weight bold)
                 ("NEXT" :foreground "deep sky blue" :weight bold)
                 ("MEET" :foreground "forest green" :weight bold))))
+  (setq org-capture-bookmark nil)
   )
+
 
 ;; deft settings
 (use-package deft
@@ -142,22 +144,25 @@
                             (:name "Marketplace"
                                    :todo ("BUY" "SELL" "LISTED")
                                    :order 4)
+                            (:name "Assigned/Not Complete"
+                             :todo ("ASSIGNED")
+                             :order 5)
                             (:name "Important"
                                    :priority "A"
                                    :order 3)
                             (:name "Low Effort Tasks"
-                                   :effort< "0:11")
+                                   :effort< "00:59")
                             (:name "High Effort Tasks"
-                                   :effort> "00:29")
+                             :effort> "00:59")
+                            (:name "Upcoming Meetings"
+                             :todo ("MEET")
+                             :order 3)
                             (:name "Scheduled Soon"
                                    :scheduled future
                                    :order 3)
                             (:name "Overdue"
                                    :deadline past
                                    :order 2)
-                            (:name "Meetings"
-                                   :and (:todo "MEET" :scheduled future)
-                                   :order 10)
                             (:name "Unfinished Projects"
                                    :todo "PROJ"
                                    :order 5)
@@ -223,13 +228,68 @@
           ))
   :config
   (org-super-agenda-mode))
-
+(setq org-agenda-prefix-format '(
+  ;; (agenda  . " %i %-12:c%?-12t% s") ;; file name + org-agenda-entry-type
+  (agenda  . "• %i %-12:c%?-12t% s")
+  (timeline  . "• %i %-12:c%?-12t% s")
+  (todo  . " • %-12:c%?-12t% s")
+  (tags  . " • %-12:c%?-12t% s")
+  (search . " • %-12:c%?-12t% s")))
 ;(use-package arduino-mode
 ;            :init
 ;             (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
 ;        (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
 ;        )
 
+;; org-roam settings
+;;
+(setq org-roam-capture-templates '(
+                                   ("p" "Project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+ :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+ :unnarrowed t)
+                                   ("d" "Default" plain "%?"
+  :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                     "#+title: ${title}\n#+category: ${title}\n")
+  :unnarrowed t)
+                                   ("c" "Contact" plain "%?"
+  :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                     "#+title: ${title}\n#+category: ${title}\n
+                     \n* Details\n- Title:\n- Company:\n- Phone:\n- Email:\n")
+  :unnarrowed t)
+                                   )
+)
+
+;; Build agendas from org-roam files
+(defun my/org-roam-filter-by-tag (tag-name)
+  (lambda (node)
+    (member tag-name (org-roam-node-tags node))))
+
+(defun my/org-roam-list-notes-by-tag (tag-name)
+  (mapcar #'org-roam-node-file
+          (seq-filter
+           (my/org-roam-filter-by-tag tag-name)
+           (org-roam-node-list))))
+
+(defun my/org-roam-refresh-agenda-list ()
+  (interactive)
+  (setq org-agenda-files (nconc
+                          (my/org-roam-list-notes-by-tag "Project")
+                          (my/org-roam-list-notes-by-tag "Tasks")))
+)
+
+;; Build the agenda list the first time for the session
+(my/org-roam-refresh-agenda-list)
+
+;; refile to roam targets
+  (setq myroamfiles (directory-files "~/notes/roam" t "org$"))
+
+  ;; -------- refile settings -----
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 5) (myroamfiles :maxlevel . 5)))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+;; org-roam-ui settings
 (use-package! websocket
     :after org-roam)
 
