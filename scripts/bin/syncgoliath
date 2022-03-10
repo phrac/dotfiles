@@ -3,10 +3,6 @@
 rsync -av ~/p/fave disflux.com:/tank/p
 rsync -av ~/dotfiles disflux.com:/tank/backup
 rsync -av ~/Documents disflux.com:/tank/backup
-rsync -av --delete ~/notes disflux.com:/tank/backup
+rsync -av ~/notes disflux.com:/tank/backup
 rsync -av ~/ss disflux.com:/tank/backup
-rsync -av --delete ~/Downloads disflux.com:/tank/backup
 rsync -av ~/code disflux.com:/tank/backup
-rsync -av ~/go disflux.com:/tank/backup
-rsync -av ~/manuals disflux.com:/tank/backup
-
