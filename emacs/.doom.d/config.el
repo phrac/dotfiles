@@ -56,7 +56,7 @@
   (setq org-default-notes-file (concat org-directory "~/refile.org"))
   (setq org-capture-templates
         '(("t" "New TODO" entry (file "~/notes/roam/todo.org")
-           "* TODO %?\n  %i\n %a")
+           "* TODO %?\n+ Added: %U")
           ("w" "New Work Order" entry (file "~/notes/roam/todo.org")
            "* W/O %?\n %i\n")
           ("b" "Buy Item" entry (file "~/notes/roam/todo.org")
@@ -66,11 +66,7 @@
           ("p" "Project" entry (file "~/notes/roam/todo.org")
            "* PROJ %?\n  %i\n")
           ("m" "Schedule Meeting" entry (file "~/notes/roam/todo.org")
-           "* MEET %?\n %i\n")
-          ("n" "NOTE" entry (file+olp+datetree "~/notes/roam/todo.org")
-           "* %?\nEntered on %U\n  %i %a")
-          ("h" "Habit" entry (file "~/notes/roam/todo.org")
-           "* HABIT %?\n%U\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
+           "* MEET %?\n %i\n")))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n@/!)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
@@ -85,7 +81,6 @@
                 ("LISTED" :foreground "rosy brown" :weight bold)
                 ("SOLD" :foreground "sienna brown" :weight bold)
                 ("PROJ" :foreground "deep pink" :weight bold)
-                ("HABIT" :foreground "cyan1" :weight bold)
                 ("ASSIGNED" :foreground "spring green" :weight bold)
                 ("W/O" :foreground "magenta" :weight bold)
                 ("NEXT" :foreground "deep sky blue" :weight bold)
@@ -260,26 +255,27 @@
       )
 
 ;; Build agendas from org-roam files
-(defun my/org-roam-filter-by-tag (tag-name)
-  (lambda (node)
-    (member tag-name (org-roam-node-tags node))))
+(after! org-roam
+  (defun my/org-roam-filter-by-tag (tag-name)
+    (lambda (node)
+      (member tag-name (org-roam-node-tags node))))
 
-(defun my/org-roam-list-notes-by-tag (tag-name)
-  (mapcar #'org-roam-node-file
-          (seq-filter
-           (my/org-roam-filter-by-tag tag-name)
-           (org-roam-node-list))))
+  (defun my/org-roam-list-notes-by-tag (tag-name)
+    (mapcar #'org-roam-node-file
+            (seq-filter
+             (my/org-roam-filter-by-tag tag-name)
+             (org-roam-node-list))))
 
-(defun my/org-roam-refresh-agenda-list ()
-  (interactive)
-  (setq org-agenda-files (nconc
-                          (my/org-roam-list-notes-by-tag "Project")
-                          (my/org-roam-list-notes-by-tag "Tasks")))
+  (defun my/org-roam-refresh-agenda-list ()
+    (interactive)
+    (setq org-agenda-files (nconc
+                            (my/org-roam-list-notes-by-tag "Project")
+                            (my/org-roam-list-notes-by-tag "Tasks")))
+    )
+
+  ;; Build the agenda list the first time for the session
+  (my/org-roam-refresh-agenda-list)
   )
-
-;; Build the agenda list the first time for the session
-(my/org-roam-refresh-agenda-list)
-
 ;; refile to roam targets
 (setq myroamfiles (directory-files "~/notes/roam" t "org$"))
 
