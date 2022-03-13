@@ -319,7 +319,6 @@ static void d_run(const char *ifn) {
   for (;;) {
     XStoreName(d, DefaultRootWindow(d),
                d_fmt(s, sizeof(s),
-                     y ",
                      d_net(ifn),
                      d_temp(), d_vol(m), d_cpu(), d_bat(a, d, f), d_time()));
     XSync(d, False), sleep(1);
