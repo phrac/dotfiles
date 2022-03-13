@@ -1,0 +1,6 @@
+apmd_flags=-A
+lpd_flags=
+pkg_scripts=postgresql
+sndiod_flags=-s default -m play,mon -s mon
+vmd_flags=
+xenodm_flags=
