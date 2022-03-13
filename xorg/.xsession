@@ -32,7 +32,7 @@ xset s off
 xset b off
 
 # enable xlock screensaver
-xidle -timeout 180 -program "/usr/X11R6/bin/xlock -mode blank -lockdelay 20 -dpmsoff 3" &
+xidle -timeout 180 -program "/usr/X11R6/bin/xlock -mode blank -lockdelay 60 -dpmsoff 3" &
 
 # urxvt daemon
 urxvtd &
@@ -44,7 +44,7 @@ urxvtd &
 #compton -b
 
 # auto adjust color temp
-redshift -l 40.547974:-96.576218 &
+redshift -l 40.54:-96.57 &
 
 # fire up the ol' dwm
 exec ~/dotfiles/dwm/dwm
