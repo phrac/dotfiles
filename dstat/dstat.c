@@ -159,7 +159,7 @@ static char *d_cpu(void) {
                c[CP_NICE] - cpu[CP_NICE] + c[CP_IDLE] - cpu[CP_IDLE]) *
       100;
   memmove(cpu, c, sizeof(cpu));
-  return d_fmt(s, sizeof(s), " %d%% %s %s", p, d_bar(p), d_perf());
+  return d_fmt(s, sizeof(s), "\033[0;36m\033[0m %d%% %s %s", p, d_bar(p), d_perf());
 }
 
 static void d_win(Display *d, XFontStruct *f) {

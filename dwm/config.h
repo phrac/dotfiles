@@ -2,8 +2,8 @@
 #include <X11/XF86keysym.h>
 /* appearance */
 
-static const char *fonts[] = {"Hack Nerd Font:size=9"};
-static const char dmenufont[] = "Hack Nerd Font:size=9";
+static const char *fonts[] = {"JetBrainsMono Nerd Font:size=9"};
+static const char dmenufont[] = "JetBrainsMono Nerd Font:size=9";
 
 /* useless gaps patch */
 static const unsigned int gappx = 0;
