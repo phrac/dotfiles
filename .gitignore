@@ -46,6 +46,8 @@ config/.config/cmus/lib.pl
 config/.config/mps-youtube/play_history.m3u
 config/.config/htop
 config/.config/configstore
+config/.config/ripme
+config/.config/syncthing
 .config/mps-youtube/input_history
 .config/mps-youtube/cache*
 .config/mimeapps.list
