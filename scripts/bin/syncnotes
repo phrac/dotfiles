@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rsync -avP ~/notes/ disflux.com:/tank/backup
+
