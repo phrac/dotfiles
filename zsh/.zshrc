@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jre-1.8.0/bin
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-16/bin
 
 # exports
 export BROWSER=firefox

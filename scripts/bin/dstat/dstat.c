@@ -307,7 +307,7 @@ static void d_run(const char *ifn) {
     err(1, "open failed");
   for (;;) {
     XStoreName(d, DefaultRootWindow(d),
-               d_fmt(s, sizeof(s), "ﯱ %s  %s  %s  %s  %s   %s",
+               d_fmt(s, sizeof(s), "ﯱ %s ^c#d08770^^d^ %s ^c#d08770^^d^ %s ^c#d08770^^d^ %s ^c#d08770^^d^ %s ^c#d08770^^d^ ^c#b48ead^ ^d^ %s",
                      d_net(ifn), d_cpu(), d_bat(a, d, f), d_temp(),
                      d_vol(h, ctls), d_time()));
     printf("%s\n", s);

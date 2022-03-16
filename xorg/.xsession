@@ -32,7 +32,7 @@ xset s off
 xset b off
 
 # enable xlock screensaver
-xidle -timeout 180 -program "/usr/X11R6/bin/xlock -mode blank -lockdelay 60 -dpmsoff 3" &
+xidle -timeout 180 -program "/usr/X11R6/bin/xlock -lockdelay 60 -dpmsoff 5" &
 
 # urxvt daemon
 urxvtd &
