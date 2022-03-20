@@ -49,6 +49,7 @@ config/.config/configstore
 config/.config/ripme
 config/.config/syncthing
 config/.config/VirtualBox
+config/.config/glib-2.0/settings/keyfile
 .config/mps-youtube/input_history
 .config/mps-youtube/cache*
 .config/mimeapps.list
