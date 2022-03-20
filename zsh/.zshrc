@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-16/bin
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-16/bin:/usr/local/libexec/w3m
 
 # exports
 export BROWSER=firefox
@@ -10,6 +10,7 @@ export LC_CTYPE=en_US.UTF-8
 export AUTOMAKE_VERSION=1.16
 export AUTOCONF_VERSION=2.69
 export SSDIR=$HOME/ss/
+export QT_SCALE_FACTOR=1.5        
 
 # Development variables (not tracked by git)
 source ~/.DEV_VARS
@@ -86,10 +87,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ls="colorls -G"
+#alias ls="colorls -G"
 alias neofetch="neofetch --ascii_distro openbsd_small"
 alias doom="~/.emacs.d/bin/doom"
-
+alias bpytop="~/dotfiles/st/st -e bpytop &"
 #colored man pages
 man() {
 	env \

@@ -48,6 +48,7 @@ config/.config/htop
 config/.config/configstore
 config/.config/ripme
 config/.config/syncthing
+config/.config/VirtualBox
 .config/mps-youtube/input_history
 .config/mps-youtube/cache*
 .config/mimeapps.list

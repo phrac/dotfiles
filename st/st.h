@@ -20,21 +20,6 @@
 #define TRUECOLOR(r,g,b)	(1 << 24 | (r) << 16 | (g) << 8 | (b))
 #define IS_TRUECOL(x)		(1 << 24 & (x))
 
-#define TLINE(y)		((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-				+ HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
-
-#define TLINE(y)		((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-				+ HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
-
-#define TLINE(y)		((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-				+ HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
-
-#define TLINE(y)		((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-				+ HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
-
-#define TLINE(y)		((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-				+ HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
-
 enum glyph_attribute {
 	ATTR_NULL       = 0,
 	ATTR_BOLD       = 1 << 0,
@@ -89,13 +74,13 @@ typedef union {
 	uint ui;
 	float f;
 	const void *v;
+	const char *s;
 } Arg;
 
 void die(const char *, ...);
 void redraw(void);
 void draw(void);
 
-void iso14755(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
@@ -106,7 +91,7 @@ void tnew(int, int);
 void tresize(int, int);
 void tsetdirtattr(int);
 void ttyhangup(void);
-int ttynew(char *, char *, char *, char **);
+int ttynew(const char *, char *, const char *, char **);
 size_t ttyread(void);
 void ttyresize(int, int);
 void ttywrite(const char *, size_t, int);
@@ -124,18 +109,20 @@ size_t utf8encode(Rune, char *);
 
 void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
-char *xstrdup(char *);
+char *xstrdup(const char *);
+
+int xgetcolor(int x, unsigned char *r, unsigned char *g, unsigned char *b);
 
 /* config.h globals */
 extern char *utmp;
+extern char *scroll;
 extern char *stty_args;
 extern char *vtiden;
-extern char *worddelimiters;
+extern wchar_t *worddelimiters;
 extern int allowaltscreen;
+extern int allowwindowops;
 extern char *termname;
 extern unsigned int tabspaces;
-extern unsigned int alpha;
-extern unsigned int alpha;
-extern unsigned int alpha;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
+extern unsigned int defaultcs;
