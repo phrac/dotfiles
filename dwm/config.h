@@ -66,6 +66,7 @@ static const Rule rules[] = {
        isfloating   monitor */
     {"Gimp", NULL, NULL, 1 << 7, True, 0},
     {"Firefox", NULL, NULL, 2, False, 0},
+    {"VirtualBox", NULL, NULL, 5, False, 0},
     {"feh", NULL, NULL, 0, True, 0},
     {"Chromium-browser", NULL, NULL, 2, False, 0},
     {"Pcmanfm", NULL, NULL, 1 << 3, True, 0},
