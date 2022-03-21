@@ -1,9 +1,9 @@
 #!/bin/sh
 
 rsync -rtuv ~/p/fave/ disflux.com:/tank/p/fave
-rsync -av ~/dotfiles/ disflux.com:/tank/backup
-rsync -av ~/Documents/ disflux.com:/tank/backup
-rsync -av ~/ss/ disflux.com:/tank/backup
-rsync -av ~/code/ disflux.com:/tank/backup
-rsync -av ~/arduino/ disflux.com:/tank/backup
+rsync -av ~/dotfiles/ disflux.com:/tank/backup/dotfiles
+rsync -av ~/Documents/ disflux.com:/tank/backup/Documents
+rsync -av ~/ss/ disflux.com:/tank/backup/ss
+rsync -av ~/code/ disflux.com:/tank/backup/code
+rsync -av ~/arduino/ disflux.com:/tank/backup/arduino
 

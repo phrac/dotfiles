@@ -23,7 +23,7 @@ xset b off
 xidle -timeout 180 -program "/home/derek/dotfiles/slock/slock-1.4/slock" &
 
 # urxvt daemon
-urxvtd &
+#urxvtd &
 
 # dstat status bar
 #~/bin/dstat/dstat iwm0 &

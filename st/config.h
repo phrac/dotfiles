@@ -126,7 +126,7 @@ unsigned int defaultfg = 256; /* nord4 */
 unsigned int defaultbg = 257; /* nord0 */
 unsigned int defaultcs = 256; /* nord4 */
 unsigned int defaultrcs = 8;  /* nord3 */
-
+unsigned int bg = 17, bgUnfocused = 16;
 /*
  * Default shape of cursor
  * 2: Block ("█")
