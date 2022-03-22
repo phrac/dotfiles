@@ -58,5 +58,6 @@
 (package! deft)
 (package! pdf-tools)
 ;(package! arduino-mode)
+(package! openwith)
 (unpin! org-roam)
 (package! org-roam-ui)
