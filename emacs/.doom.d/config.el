@@ -71,7 +71,6 @@
         '((sequence "TODO(t)" "NEXT(n@/!)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
           (sequence "SELL(s)" "LISTED(l@/!)" "|" "SOLD(S@/!)" "CANCELED(c@)")
-          (sequence "HABIT(h)" "|" "DONE(H@/!)")
           ))
   (setq org-todo-keyword-faces
         (quote (("BUY" :foreground "orchid" :weight bold)
@@ -282,7 +281,7 @@
     (let ((org-refile-keep t) ;; Set this to nil to delete the original!
           (org-roam-dailies-capture-templates
            '(("t" "tasks" entry "%?"
-              :if-new (file+head+olp "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n" ("Tasks")))))
+              :if-new (file+head+olp "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n" ("Completed Tasks")))))
           (org-after-refile-insert-hook #'save-buffer)
           today-file
           pos)
@@ -294,17 +293,12 @@
       ;; Only refile if the target file is different than the current file
       (unless (equal (file-truename today-file)
                      (file-truename (buffer-file-name)))
-        (org-refile nil nil (list "Tasks" today-file nil pos)))))
+        (org-refile nil nil (list "Completed Tasks" today-file nil pos)))))
 
   (add-to-list 'org-after-todo-state-change-hook
                (lambda ()
-                 (cond
-                  ((or
-                    (equal org-state "DONE")
-                    (equal org-state "MET")
-                    (equal org-state "BOUGHT"))))
-                 (my/org-roam-copy-todo-to-today)))
-
+                 (when (member org-state org-done-keywords)
+                   (my/org-roam-copy-todo-to-today))))
   )
 
 ;; refile to roam targets
@@ -336,21 +330,22 @@
   :config
   (openwith-mode t)
   (setq openwith-associations
-            (list
-             (list (openwith-make-extension-regexp
-                    '("mpg" "mpeg" "mp3" "mp4"
-                      "avi" "wmv" "wav" "mov" "flv"
-                      "ogm" "ogg" "mkv" "gif"))
-                   "mpv"
-                   '(file))
-             (list (openwith-make-extension-regexp
-                    '("xbm" "pbm" "pgm" "ppm" "pnm"
-                      "png" "bmp" "tif" "jpeg" "jpg"))
-                   "sxiv"
-                   '(file))
-             (list (openwith-make-extension-regexp
-                    '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-                   "libreoffice"
-                   '(file))
-             ))
+        (list
+         (list (openwith-make-extension-regexp
+                '("mpg" "mpeg" "mp3" "mp4"
+                  "avi" "wmv" "wav" "mov" "flv"
+                  "ogm" "ogg" "mkv" "gif" "webm"))
+               "mpv"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("xbm" "pbm" "pgm" "ppm" "pnm"
+                  "png" "bmp" "tif" "jpeg" "jpg"))
+               "sxiv"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("doc" "xls" "ppt" "odt" "ods" "odg" "odp" "docx" "xlsx"))
+               "libreoffice"
+               '(file))
+         ))
   )
+(setq doom-themes-treemacs-theme "doom-colors")
