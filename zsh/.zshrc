@@ -88,7 +88,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 #alias ls="colorls -G"
-alias neofetch="neofetch --ascii_distro openbsd_small"
 alias doom="~/.emacs.d/bin/doom"
 #alias bpytop="~/dotfiles/st/st -e bpytop &"
 #colored man pages

@@ -19,6 +19,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20))
+;;(setq doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -48,9 +49,9 @@
 
 ;; org setting
 (setq org-directory "~/notes")
-                                        ;(setq org-agenda-files '("~/notes/roam/todo.org"))
 (after! org
-  ;;  (add-to-list 'org-file-apps  '("\\.pdf" . "mupdf %s"))
+  (setq org-ellipsis " ▼")
+  (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
   (setq org-default-notes-file (concat org-directory "~/refile.org"))
@@ -68,9 +69,9 @@
           ("m" "Schedule Meeting" entry (file "~/notes/roam/todo.org")
            "* MEET %?\n %i\n")))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n@/!)" "PROJ(p@/!)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o@/!)" "MEET(m@/!)" "|" "DONE(d@/!)" "MET(M@/!)" "CANCELED(c@/!)")
-          (sequence "BUY(b)" "|" "BOUGHT(B@/!)" "CANCELED(c@)")
-          (sequence "SELL(s)" "LISTED(l@/!)" "|" "SOLD(S@/!)" "CANCELED(c@)")
+        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o)" "MEET(m)" "|" "DONE(d!)" "MET(M!)" "CANCELED(c@/!)")
+          (sequence "BUY(b)" "|" "BOUGHT(B!)" "CANCELED(c@)")
+          (sequence "SELL(s)" "LISTED(l!)" "|" "SOLD(S!)" "CANCELED(c@)")
           ))
   (setq org-todo-keyword-faces
         (quote (("BUY" :foreground "orchid" :weight bold)
@@ -107,7 +108,6 @@
   (setq org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
         org-agenda-include-deadlines t
-                                        ;org-agenda-block-separator nil
         org-agenda-compact-blocks nil
         org-agenda-start-day nil ;; i.e. today
         org-agenda-span 1
@@ -160,65 +160,13 @@
                             (:name "Unfinished Projects"
                              :todo "PROJ"
                              :order 5)
+                            (:name "To refile"
+                             :todo ("DONE" "MET" "BOUGHT")
+                             :order 2)
+
                             (:discard (:not (:todo "TODO")))
                             ))))))
 
-          ("b" "Business Super view"
-           ((agenda "" ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '((:name "Today"
-                            :time-grid t
-                            :and (:date today :file-path "business\\.org")
-                            :order 1)))))
-            (alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '(
-                            (:log t)
-                            (:name "Due Today"
-                             :and (:date today :file-path "business\\.org")
-                             :order 1)
-                            (:name "To refile"
-                             :file-path "refile\\.org"
-                             :order 2)
-                            (:name "Upcoming Meetings"
-                             :and (:todo "MEET" :file-path "business\\.org")
-                             :order 2
-                             )
-                            (:name "Work Orders"
-                             :and (:todo "W/O" :file-path "business\\.org")
-                             :order 2)
-                            (:name "On Hold"
-                             :and (:todo "WAIT" :file-path "business\\.org")
-                             :order 6)
-                            (:name "Assigned Tasks"
-                             :and (:todo "ASSIGNED" :file-path "business\\.org")
-                             )
-                            (:name "Business Purchases"
-                             :and (:todo "BUY" :file-path "business\\.org")
-                             )
-                            (:name "Important"
-                             :and (:priority "A" :file-path "business\\.org")
-                             :order 3)
-                            (:name "Low Effort Tasks"
-                             :and (:effort< "0:11" :file-path "business\\.org")
-                             )
-                            (:name "High Effort Tasks"
-                             :and (:effort> "00:29" :file-path "business\\.org")
-                             )
-                            (:name "Scheduled Soon"
-                             :and (:scheduled future :file-path "business\\.org")
-                             :order 3)
-                            (:name "Overdue"
-                             :and (:deadline past :file-path "business\\.org")
-                             :order 0)
-                            (:name "Meetings"
-                             :and (:todo "MEET" :scheduled future :file-path "business\\.org")
-                             :order 10)
-                            (:name "Unfinished Business Projects"
-                             :and (:todo "PROJ" :file-path "business\\.org")
-                             :order 5)
-                            (:discard (:not(:file-path "business\\.org")))
-                            ))))))
           ))
   :config
   (org-super-agenda-mode))
@@ -229,11 +177,6 @@
                                  (todo  . " • %-12:c%?-12t% s")
                                  (tags  . " • %-12:c%?-12t% s")
                                  (search . " • %-12:c%?-12t% s")))
-                                        ;(use-package arduino-mode
-                                        ;            :init
-                                        ;             (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
-                                        ;        (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
-                                        ;        )
 
 ;; org-roam settings
 ;;
@@ -248,8 +191,21 @@
                                    ("c" "Contact" plain "%?"
                                     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                        "#+title: ${title}\n#+category: ${title}\n
-                     \n* Details\n- Title:\n- Company:\n- Phone:\n- Email:\n")
+                     \n* Details\n+ Title:\n+ Company:\n+ Phone:\n+ Email:\n")
                                     :unnarrowed t)
+                                   ("a" "Asset" plain "%?"
+                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                       "#+filetags: :asset:\n#+title: ${title}\n#+category: ${title}\n
+                     \n* General\n+ *Make:* \n+ *Model:* \n+ *Year:* \n+ *Serial Number/VIN:* \n+ *Department/Location:* \n+ *Type:* \n+ *Install Date:* \n+ *Status:* Active\n+ *Fuel Type:* N/A \n\n
+** Electrical\n+ *Voltage:* \n+ *Current/Amps:* \n+ *Breaker/Disconnect Location:* \n\n
+* Documentation (attachments)\n\n
+* Activity Log\n\n\n
+* Purchases/Parts Log")
+                                    :unnarrowed t)
+                                   ("r" "Recipe" plain "%?"
+                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                       "#+title: ${title}\n#+filetags: :recipe:\n%(org-chef-get-recipe-from-url)\n** Tasting notes")
+                                    :empty-lines 1)
                                    )
       )
 
@@ -342,6 +298,10 @@
                   "png" "bmp" "tif" "jpeg" "jpg"))
                "sxiv"
                '(file))
+         ;;(list (openwith-make-extension-regexp
+         ;;      '("pdf"))
+         ;;     "mupdf"
+         ;;    '(file))
          (list (openwith-make-extension-regexp
                 '("doc" "xls" "ppt" "odt" "ods" "odg" "odp" "docx" "xlsx"))
                "libreoffice"
