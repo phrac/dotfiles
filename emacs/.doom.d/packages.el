@@ -62,3 +62,7 @@
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! org-chef)
+(package! deadgrep)
+(package! delve
+  :recipe (:host github :repo "publicimageltd/delve"))
+(package! arduino-mode)

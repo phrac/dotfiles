@@ -1,0 +1,15 @@
+mxid: '@phrac402:matrix.org'
+device_id: ZBVMDUTZEC
+access_token: syt_cGhyYWM0MDI_GWBPsLlRugVmkSlVprWi_1xNWzF
+homeserver: https://matrix-client.matrix.org/
+room_cache_size: 32
+room_cache_age: 60
+notify_sound: true
+send_to_verified_only: false
+data_dir: /home/derek/.local/share/gomuks
+cache_dir: /home/derek/.cache/gomuks
+history_path: /home/derek/.cache/gomuks/history.db
+room_list_path: /home/derek/.cache/gomuks/rooms.gob.gz
+media_dir: /home/derek/.cache/gomuks/media
+download_dir: /home/derek/Downloads
+state_dir: /home/derek/.cache/gomuks/state

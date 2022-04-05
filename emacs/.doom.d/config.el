@@ -190,14 +190,14 @@
                                     :unnarrowed t)
                                    ("c" "Contact" plain "%?"
                                     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                       "#+title: ${title}\n#+category: ${title}\n
-                     \n* Details\n+ Title:\n+ Company:\n+ Phone:\n+ Email:\n")
+                                                       "#+filetags: :contact:\n#+title: ${title}\n#+category: ${title}\n
+                     \n* Details\n- Title:\n- Company:\n- Phone:\n- Email:\n")
                                     :unnarrowed t)
                                    ("a" "Asset" plain "%?"
                                     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                        "#+filetags: :asset:\n#+title: ${title}\n#+category: ${title}\n
-                     \n* General\n+ *Make:* \n+ *Model:* \n+ *Year:* \n+ *Serial Number/VIN:* \n+ *Department/Location:* \n+ *Type:* \n+ *Install Date:* \n+ *Status:* Active\n+ *Fuel Type:* N/A \n\n
-** Electrical\n+ *Voltage:* \n+ *Current/Amps:* \n+ *Breaker/Disconnect Location:* \n\n
+                     \n* General\n- *Make:* \n- *Model:* \n- *Year:* \n- *Serial Number/VIN:* \n- *Department/Location:* \n- *Type:* \n- *Install Date:* \n- *Status:* Active\n- *Fuel Type:* N/A \n\n
+** Electrical\n- *Voltage:* \n- *Current/Amps:* \n- *Breaker/Disconnect Location:* \n\n
 * Documentation (attachments)\n\n
 * Activity Log\n\n\n
 * Purchases/Parts Log")
@@ -309,3 +309,18 @@
          ))
   )
 (setq doom-themes-treemacs-theme "doom-colors")
+
+(setq org-superstar-item-bullet-alist
+      '((?* . ?•)
+        (?+ . ?➤)
+        (?- . ?•)))
+;; org-roam delve
+(use-package! delve
+  :config
+  (setq delve-dashboard-tags '("Asset" "Recipe"))
+  ;; turn on delve-minor-mode when org roam file is opened:
+  (delve-global-minor-mode))
+
+;; deadgrep key bind
+(global-set-key (kbd "<f5>") #'deadgrep)
+(global-set-key (kbd "<f6>") #'delve)
