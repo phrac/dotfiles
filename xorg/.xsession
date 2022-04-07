@@ -24,7 +24,7 @@ xinput set-prop "/dev/wsmouse" "WS Pointer Wheel Emulation Inertia" 3
 xinput set-prop "/dev/wsmouse" "Device Accel Constant Deceleration" 0.4
 
 # deactivate touchpad
-doas wsconsctl mouse0.tp.disable=1
+doas wsconsctl mouse0.tp.disable=0
 
 #enable dpms features (power saving)
 xset +dpms
@@ -32,7 +32,7 @@ xset s off
 xset b off
 
 # enable xlock screensaver
-xidle -timeout 180 -program "/usr/X11R6/bin/xlock -lockdelay 60 -dpmsoff 5" &
+xidle -timeout 180 -program "/usr/local/bin/slock" &
 
 # urxvt daemon
 urxvtd &

@@ -38,6 +38,8 @@ dstat/dstat
 zsh/.oh-my-zsh
 
 # Ignore other configs
+config/.config/chromium
+config/.config/user-dirs.dirs
 config/.config/cmus/cache
 config/.config/cmus/command-history
 config/.config/cmus/search-history

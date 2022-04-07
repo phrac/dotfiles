@@ -57,6 +57,11 @@
 ;(package! org-gantt)
 (package! deft)
 (package! pdf-tools)
-;(package! arduino-mode)
+(package! openwith)
 (unpin! org-roam)
 (package! org-roam-ui)
+(package! org-chef)
+(package! deadgrep)
+(package! delve
+            :recipe (:host github :repo "publicimageltd/delve"))
+(package! arduino-mode)
