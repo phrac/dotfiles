@@ -180,6 +180,9 @@
 
 ;; org-roam settings
 ;;
+(setq org-roam-dailies-capture-templates '(("d" "default" entry "* %<%H:%M> %?" :target
+  (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+
 (setq org-roam-capture-templates '(
                                    ("p" "Project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
                                     :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
