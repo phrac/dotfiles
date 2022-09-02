@@ -94,7 +94,7 @@ static char *d_wifi(const char *ifn) {
   else
     q = nr.nr_rssi >= -50 ? 100
                           : (nr.nr_rssi <= -100 ? 0 : (2 * (nr.nr_rssi + 100)));
-  return close(fd), d_fmt(s, sizeof(s), "[%s]", d_dots(q));
+  return close(fd), d_fmt(s, sizeof(s), "[%s] (%s)", d_dots(q), nr.nr_nwid);
 }
 
 static char *d_net(const char *ifn) {
@@ -311,7 +311,7 @@ static void d_run(const char *ifn) {
                      d_net(ifn), d_cpu(), d_bat(a, d, f), d_temp(),
                      d_vol(h, ctls), d_time()));
     printf("%s\n", s);
-    XSync(d, False), sleep(1);
+    XSync(d, False), sleep(2);
   }
   close(a);
   sioctl_close(h);

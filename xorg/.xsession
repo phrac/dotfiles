@@ -34,14 +34,8 @@ xset b off
 # enable xlock screensaver
 xidle -timeout 180 -program "/usr/local/bin/slock" &
 
-# urxvt daemon
-urxvtd &
-
 # dstat status bar
 ~/bin/dstat/dstat iwm0 &
-
-# start the compositor
-#compton -b
 
 # auto adjust color temp
 redshift -l 40.54:-96.57 &
