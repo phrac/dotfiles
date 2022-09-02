@@ -19,6 +19,8 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20))
+;;(setq doom-font (font-spec :family "PragmataPro" :size 20))
+
 ;;(setq doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -57,7 +59,7 @@
   (setq org-default-notes-file (concat org-directory "~/refile.org"))
   (setq org-capture-templates
         '(("t" "New TODO" entry (file "~/notes/roam/todo.org")
-           "* TODO %?\n+ Added: %U")
+           "* TODO %?")
           ("w" "New Work Order" entry (file "~/notes/roam/todo.org")
            "* W/O %?\n %i\n")
           ("b" "Buy Item" entry (file "~/notes/roam/todo.org")
@@ -66,10 +68,11 @@
            "* SELL %?\n  %i\n")
           ("p" "Project" entry (file "~/notes/roam/todo.org")
            "* PROJ %?\n  %i\n")
+
           ("m" "Schedule Meeting" entry (file "~/notes/roam/todo.org")
            "* MEET %?\n %i\n")))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "W/O(o)" "MEET(m)" "|" "DONE(d!)" "MET(M!)" "CANCELED(c@/!)")
+        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w@/!)" "ASSIGNED(a@/!)" "IN PROCESS(i)" "W/O(o)" "MEET(m)" "|" "DONE(d@/!)" "MET(M!)" "CANCELED(c@/!)")
           (sequence "BUY(b)" "|" "BOUGHT(B!)" "CANCELED(c@)")
           (sequence "SELL(s)" "LISTED(l!)" "|" "SOLD(S!)" "CANCELED(c@)")
           ))
@@ -82,6 +85,7 @@
                 ("SOLD" :foreground "sienna brown" :weight bold)
                 ("PROJ" :foreground "deep pink" :weight bold)
                 ("ASSIGNED" :foreground "spring green" :weight bold)
+                ("IN PROCESS" :foreground "orange" :weight bold)
                 ("W/O" :foreground "magenta" :weight bold)
                 ("NEXT" :foreground "deep sky blue" :weight bold)
                 ("MEET" :foreground "forest green" :weight bold))))
@@ -133,11 +137,14 @@
                             (:name "On Hold"
                              :todo "WAIT"
                              :order 6)
+                            (:name "Open House"
+                             :category "OpenHouse"
+                             :order 4)
                             (:name "Marketplace"
                              :todo ("BUY" "SELL" "LISTED")
                              :order 4)
-                            (:name "Assigned/Not Complete"
-                             :todo ("ASSIGNED")
+                            (:name "Assigned/In Process"
+                             :todo ("ASSIGNED" "IN PROCESS")
                              :order 5)
                             (:name "Important"
                              :priority "A"
@@ -199,10 +206,10 @@
                                    ("a" "Asset" plain "%?"
                                     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                        "#+filetags: :asset:\n#+title: ${title}\n#+category: ${title}\n
-                     \n* General\n-*Owner:* \n- *Make:* \n- *Model:* \n- *Year:* \n- *Serial Number/VIN:* \n- *Department/Location:* \n- *Type:* \n- *Install Date:* \n- *Status:* Active\n- *Fuel Type:* N/A \n\n
-** Electrical\n- *Voltage:* \n- *Current/Amps:* \n- *Breaker/Disconnect Location:* \n\n
-* Documentation (attachments)\n\n
-* Activity Log\n\n\n
+                     \n* General\n- *Owner:* \n- *Asset ID#:* \n- *Make:* \n- *Model:* \n- *Year:* \n- *Serial Number/VIN:* \n- *Department/Location:* \n- *Type:* \n- *Install Date:* \n- *Status:* Active\n- *Fuel Type:* N/A \n\n
+** Electrical\n- *Voltage:* \n- *Current/Amps:* \n- *Breaker/Disconnect Location:* \n \n
+* Documentation (attachments)\n \n
+* Activity Log\n \n
 * Purchases/Parts Log")
                                     :unnarrowed t)
                                    ("r" "Recipe" plain "%?"
@@ -261,13 +268,14 @@
   )
 
 ;; refile to roam targets
-(setq myroamfiles (directory-files "~/notes/roam" t "org$"))
+(after! org-roam
+  (setq myroamfiles (directory-files "~/notes/roam" t "org$"))
 
-;; -------- refile settings -----
-(setq org-refile-targets '((org-agenda-files :maxlevel . 5) (myroamfiles :maxlevel . 5)))
-(setq org-refile-use-outline-path 'file)
-(setq org-outline-path-complete-in-steps nil)
-(setq org-refile-allow-creating-parent-nodes 'confirm)
+  ;; -------- refile settings -----
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 5) (myroamfiles :maxlevel . 5)))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm))
 
 ;; org-roam-ui settings
 (use-package! websocket
@@ -301,10 +309,10 @@
                   "png" "bmp" "tif" "jpeg" "jpg"))
                "sxiv"
                '(file))
-         ;;(list (openwith-make-extension-regexp
-         ;;      '("pdf"))
-         ;;     "mupdf"
-         ;;    '(file))
+         (list (openwith-make-extension-regexp
+               '("pdf"))
+               "mupdf"
+               '(file))
          (list (openwith-make-extension-regexp
                 '("doc" "xls" "ppt" "odt" "ods" "odg" "odp" "docx" "xlsx"))
                "libreoffice"
@@ -320,11 +328,29 @@
 ;; org-roam delve
 (use-package! delve
   :config
-  (setq delve-dashboard-tags '("Asset" "Recipe"))
+  (setq delve-dashboard-tags '("Asset" "Vendor" "Contact" "OpenHouse" "Recipe"))
   ;; turn on delve-minor-mode when org roam file is opened:
   (delve-global-minor-mode))
 
 ;; deadgrep key bind
 (global-set-key (kbd "<f5>") #'deadgrep)
 (global-set-key (kbd "<f6>") #'delve)
+(defun my/force-org-rebuild-cache ()
+  "Rebuild the `org-mode' and `org-roam' cache."
+  (interactive)
+  (org-id-update-id-locations)
+  ;; Note: you may need `org-roam-db-clear-all'
+  ;; followed by `org-roam-db-sync'
+  (org-roam-db-sync)
+  (org-roam-update-org-id-locations))
 
+(defun publish-dir-org ()
+  "Publish all org files in a directory"
+  (interactive)
+  (save-excursion
+    (mapc
+     (lambda (file)
+       (with-current-buffer
+       (find-file-noselect file)
+     (org-latex-export-to-pdf)))
+       (file-expand-wildcards  "*.org"))))

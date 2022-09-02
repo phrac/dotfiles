@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-16/bin
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-17/bin
 
 # exports
 export BROWSER=firefox
@@ -89,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 alias ls="colorls -G"
 alias neofetch="neofetch --ascii_distro openbsd_small"
 alias doom="~/.emacs.d/bin/doom"
-
+alias less=most
 #colored man pages
 man() {
 	env \
