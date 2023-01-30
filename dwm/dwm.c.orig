@@ -66,7 +66,6 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
-enum { DWMComptonShadow, DWMLast };
 
 typedef union {
 	int i;
@@ -201,8 +200,6 @@ static void run(void);
 static void scan(void);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
-static void setcomptonshadow(Window w, int isfloating);
-static void togglecomptonshadow(Monitor *m, int isfloating);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
@@ -266,7 +263,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[PropertyNotify] = propertynotify,
 	[UnmapNotify] = unmapnotify
 };
-static Atom wmatom[WMLast], netatom[NetLast], dwmatom[DWMLast];
+static Atom wmatom[WMLast], netatom[NetLast];
 static int running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme;
@@ -1211,7 +1208,6 @@ manage(Window w, XWindowAttributes *wa)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
 		XRaiseWindow(dpy, c->win);
-	setcomptonshadow(c->win, c->isfloating || !selmon->lt[selmon->sellt]->arrange);
 	attach(c);
 	attachstack(c);
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
@@ -1615,23 +1611,6 @@ sendevent(Client *c, Atom proto)
 }
 
 void
-setcomptonshadow(Window w, int isfloating)
-{
-	XChangeProperty(dpy, w, dwmatom[DWMComptonShadow], XA_CARDINAL, 32,
-				    PropModeReplace, (unsigned char*)&isfloating, 1);
-}
-
-void
-togglecomptonshadow(Monitor *m, int isfloating)
-{
-	Client *c;
-
-	for(c=nexttiled(m->clients); c; c = nexttiled(c->next)) {
-		setcomptonshadow(c->win, isfloating);
-	}
-}
-
-void
 setfocus(Client *c)
 {
 	if (!c->neverfocus) {
@@ -1679,7 +1658,6 @@ setlayout(const Arg *arg)
 	if (arg && arg->v)
 		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
-	togglecomptonshadow(selmon, selmon->lt[selmon->sellt]->arrange ? 0 : 1);
 	if (selmon->sel)
 		arrange(selmon);
 	else
@@ -1737,7 +1715,6 @@ setup(void)
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
-	dwmatom[DWMComptonShadow] = XInternAtom(dpy, "_COMPTON_SHADOW", False);
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
@@ -1893,7 +1870,6 @@ togglefloating(const Arg *arg)
 	if (selmon->sel->isfloating)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
-	setcomptonshadow(selmon->sel->win, selmon->sel->isfloating);
 	arrange(selmon);
 }
 

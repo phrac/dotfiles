@@ -22,8 +22,8 @@
 # The number of bars (0-200). 0 sets it to auto (fill up console).
 # Bars' width and space between bars in number of characters.
 ; bars = 0
- bar_width = 2
-; bar_spacing = 1
+bar_width = 2
+bar_spacing = 1
 
 
 # Lower and higher cutoff frequencies for lowest and highest bars
@@ -49,14 +49,14 @@
 # For alsa 'source' will be the capture device.
 # For fifo 'source' will be the path to fifo-file.
 # For shmem 'source' will be /squeezelite-AA:BB:CC:DD:EE:FF where 'AA:BB:CC:DD:EE:FF' will be squeezelite's MAC address
-method = sndio
-source = snd/0.mon
+;method = sndio
+;source = snd/0.mon
 
-; method = pulse
-; source = auto
+method = pulse
+source = auto
 
-; method = alsa
-; source = hw:Loopback,1
+;method = alsa
+;source = hw:Loopback,1
 
 ; method = fifo
 ; source = /tmp/mpd.fifo

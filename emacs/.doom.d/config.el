@@ -18,7 +18,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13))
 ;;(setq doom-font (font-spec :family "PragmataPro" :size 20))
 
 ;;(setq doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
@@ -53,6 +53,7 @@
 (setq org-directory "~/notes")
 (after! org
   (setq org-ellipsis " ▼")
+  (setq org-fold-core-style "overlays")
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
@@ -354,3 +355,4 @@
        (find-file-noselect file)
      (org-latex-export-to-pdf)))
        (file-expand-wildcards  "*.org"))))
+(setq org-chef-prefer-json-ld t)

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rsync -rtuv ~/p/fave/ disflux.com:/tank/p/fave
 rsync -av ~/dotfiles/ disflux.com:/tank/backup
 rsync -av ~/Documents/ disflux.com:/tank/backup
 rsync -av ~/ss/ disflux.com:/tank/backup

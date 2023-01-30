@@ -7,9 +7,9 @@ while read file
             rm "$file" ;;
         
         "6")
-            mv "$file" ~/p/fave ;;
+            mv "$file" /tank/p/fave ;;
         "7")
-            mv "$file" ~/p/obg ;;
+            mv "$file" /tank/p/fave/obg ;;
         esac
     done
 

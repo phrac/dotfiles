@@ -37,16 +37,15 @@
 
 XLock.dpmsoff : 1
 
-URxvt.font:    xft:JetBrainsMono Nerd Font Mono:style=Regular:pixelsize=20:antialias=true:autohint=true
-!URxvt.font:     xft:PragmataPro:pixelsize=20
+URxvt.font:    xft:JetBrainsMono Nerd Font Mono:style=Regular:pixelsize=12:antialias=true:autohint=true
 URxvt.perl-ext-common: default,matcher
-URxvt.url-launcher: /usr/local/bin/firefox
+URxvt.url-launcher: /usr/local/bin/google-chrome-bin
 URxvt.matcher.button: 1
 URxvt.scrollBar:false
-URxvt*letterSpace:-1
-URxvt*internalBorder:20
+!URxvt*letterSpace:0
+URxvt*internalBorder:5
 
-Xft.dpi: 150
+Xft.dpi: 96
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -54,6 +53,7 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 Xcursor.theme: Adwaita
+Xcursor.size: 16
 ! -----------------------------------------------------------------------------
 ! File: gruvbox-dark.xresources
 ! Description: Retro groove colorscheme generalized

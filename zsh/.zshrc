@@ -1,15 +1,15 @@
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/jdk-17/bin
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/opt/resolve/bin
 
 # exports
-export BROWSER=firefox
+export BROWSER=brave
 export EDITOR=vim
 export GOPATH=$HOME/go
 export PAGER=most
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
-export AUTOMAKE_VERSION=1.16
-export AUTOCONF_VERSION=2.69
 export SSDIR=$HOME/ss/
+export QT_QPA_PLATFORMTHEME=qt5ct
+#export QT_STYLE_OVERRIDE=kvantum
 
 # Development variables (not tracked by git)
 source ~/.DEV_VARS
@@ -86,10 +86,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ls="colorls -G"
 alias neofetch="neofetch --ascii_distro openbsd_small"
 alias doom="~/.emacs.d/bin/doom"
 alias less=most
+alias ls=colorls
 #colored man pages
 man() {
 	env \

@@ -1,14 +1,21 @@
+export SSDIR="/home/derek/ss/"
 xsetroot -name " " &
-feh --bg-tile ~/.wallpapers/rooflifters.jpg &
+feh --bg-fill ~/.wallpapers/nord-pape.jpg &
 
-#feh --bg-scale ~/.wallpapers/FreeBSD-love.png &
-( sleep 3 && conky | dzen2 -xs 1 -x 900 -e '' -fg '#dcdccc' -bg '#2c2e2f' -ta r -fn 'Hack:size=8' -p ) &
+#( sleep 3 && conky | dzen2 -xs 1 -x 900 -e '' -fg '#dcdccc' -bg '#2c2e2f' -ta r -fn 'Hack:size=8' -p ) &
 #xmodmap $HOME/.Xmodmap &
 #nvidia-settings -l
-#compton &
+picom &
 #mopidy &
 #~/bin/mpd_fifo.sh &
-exec ~/dotfiles/dwm/dwm
+dunst &
+xrandr --output HDMI-1 --auto --right-of DP-3
+xrandr --output DP-1 --auto --left-of DP-3
+xbindkeys &
+exec ~/dotfiles/dwm/dwm 2> ~/dwm.log
+
+#export DESKTOP_SESSION=plasma
+#exec startplasma-x11
 #exec dbus-launch $HOME/Downloads/dwm-6.1/dwm
 #exec dbus-launch awesome
 #exec nvidia-settings

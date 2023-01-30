@@ -15,11 +15,11 @@
 
 /* Standard commands */
 static char dmenumon[2] = "0";
-static const char *dmenucmd[]   =   { "rofi", "-show", "run", NULL };
-static const char *termcmd[]    =   { "/home/derek/st/st", NULL};
+static const char *dmenucmd[]   =   { "rofi", "-show", "combi", NULL };
+static const char *termcmd[]    =   { "kitty", NULL};
 static const char *browsercmd[] =   { "firefox", NULL };
-static const char *screenshot[] =   { "/home/derek/dotfiles/scripts/bin/ss.py", NULL };
-static const char *windowshot[] =   { "/home/derek/dotfiles/scripts/bin/ss.py", "-window", NULL };
+static const char *screenshot[] =   { "/home/derek/bin/ss.py", NULL };
+static const char *windowshot[] =   { "/home/derek/bin/ss.py", "-window", NULL };
 static const char *nexttrack[]  =   { "cmus-remote", "-n", NULL };
 static const char *prevtrack[]  =   { "cmus-remote", "-r", NULL };
 static const char *playpause[]  =   { "cmus-remote", "-u", NULL };

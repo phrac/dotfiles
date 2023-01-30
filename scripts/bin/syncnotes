@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rsync -avP ~/notes/ disflux.com:/tank/backup
+rsync -avP ~/notes/ goliath:/tank/backup/notes
 

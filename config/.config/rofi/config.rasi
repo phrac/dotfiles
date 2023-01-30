@@ -1,5 +1,13 @@
 configuration {
-    font: "JetBrainsMono Nerd Font 14";
+    modi: "window,ssh,run,combi";
+    combi-modi: "window,ssh,run";
+    font: "JetBrainsMono Nerd Font 12";
+    show-icons: true;
+    terminal: "kitty";
+    icon-theme: "Nordic-darker";
+}
+window {
+	width: 20%;
 }
 
 @theme "nord"

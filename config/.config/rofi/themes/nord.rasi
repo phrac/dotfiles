@@ -101,6 +101,8 @@ window {
     padding: 0;
     border: 0;
     background-color: var(background);
+    width: 30%;
+    height: 20%;
 }
 mainbox {
     padding: 0;

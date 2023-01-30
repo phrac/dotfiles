@@ -2,12 +2,12 @@
 #include <X11/XF86keysym.h>
 /* appearance */
 
-static const char *fonts[] = {"JetBrainsMono Nerd Font:size=9"};
-static const char dmenufont[] = "JetBrainsMono Nerd Font:size=9";
+static const char *fonts[] = {"JetBrainsMono Nerd Font:size=10"};
+static const char dmenufont[] = "JetBrainsMono Nerd Font:size=10";
 
 /* useless gaps patch */
 static const unsigned int gappx = 0;
-static const unsigned int borderpx = 2;       /* border pixel of windows */
+static const unsigned int borderpx = 1;       /* border pixel of windows */
 static const unsigned int snap = 12;          /* snap pixel */
 static const Bool showbar = True;             /* False means no bar */
 static const Bool topbar = True;              /* False means bottom bar */
@@ -22,7 +22,7 @@ static const char col_cyan[] = "#81a1c1";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
-    [SchemeSel] = {col_gray4, col_gray1, col_cyan},
+    [SchemeSel] = {col_gray4, col_gray1, col_gray3},
 };
 
 /* statusbar colors */
@@ -55,7 +55,8 @@ static const char *colors[][3] = {
 //};
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "ﴬ", "", "", ""};
+static const char *tags[] = {"", "", "", "",
+                             "ﴬ",   "", "", ""};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -65,17 +66,16 @@ static const Rule rules[] = {
     /* class                instance    title       tags mask   iscentered
        isfloating   monitor */
     {"Gimp", NULL, NULL, 1 << 7, True, 0},
-    {"Firefox", NULL, NULL, 2, False, 0},
-    {"feh", NULL, NULL, 0, True, 0},
     {"Chromium-browser", NULL, NULL, 2, False, 0},
     {"Pcmanfm", NULL, NULL, 1 << 3, True, 0},
-    {"Thunar", NULL, NULL, 1 << 3, True, 0},
     {"Geeqie", NULL, NULL, 0, True, -1},
     {"Viewnior", NULL, NULL, 0, True, -1},
-    {"mpv", NULL, NULL, 0, True, -1},
+    {"mpv", NULL, NULL, 1, True, -1},
     {"Sxiv", NULL, NULL, 0, True, -1},
     {"keepassx", NULL, NULL, 0, True, -1},
-    {"MuPDF", NULL, NULL, 0, True, -1},
+    {"MuPDF", NULL, NULL, 0, 1, 1, -1},
+    {"Plexamp", NULL, NULL, 0, 1, 1, -1},
+    {"Brave-browser", NULL, NULL, 2, 1, 1, -1},
 };
 
 /* layout(s) */
