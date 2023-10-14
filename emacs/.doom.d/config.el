@@ -8,7 +8,7 @@
 ;; some email clients, file templates and snippets.
 (setq user-full-name ""
       user-mail-address "john@doe.com")
-
+(setq org-ai-openai-api-token "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")
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -50,10 +50,10 @@
 ;; they are implemented.
 
 ;; org setting
-(setq org-directory "~/notes")
+(setq org-directory "~/storage/notes")
 (after! org
   (setq org-ellipsis " ▼")
-  (setq org-fold-core-style "overlays")
+  ;;(setq org-fold-core-style "overlays")
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
@@ -189,23 +189,23 @@
 ;; org-roam settings
 ;;
 (setq org-roam-dailies-capture-templates '(("d" "default" entry "* %<%H:%M> %?" :target
-  (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+                                            (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
 
 (setq org-roam-capture-templates '(
                                    ("p" "Project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-                                    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+                                    :if-new (file+head "${slug}-%<%Y%m%d%H%M%S>.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
                                     :unnarrowed t)
                                    ("d" "Default" plain "%?"
-                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                    :target (file+head "${slug}-%<%Y%m%d%H%M%S>.org"
                                                        "#+title: ${title}\n#+category: ${title}\n")
                                     :unnarrowed t)
                                    ("c" "Contact" plain "%?"
-                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                    :target (file+head "${slug}-%<%Y%m%d%H%M%S>.org"
                                                        "#+filetags: :contact:\n#+title: ${title}\n#+category: ${title}\n
                      \n* Details\n- Title:\n- Company:\n- Phone:\n- Email:\n")
                                     :unnarrowed t)
                                    ("a" "Asset" plain "%?"
-                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                    :target (file+head "${slug}-%<%Y%m%d%H%M%S>.org"
                                                        "#+filetags: :asset:\n#+title: ${title}\n#+category: ${title}\n
                      \n* General\n- *Owner:* \n- *Asset ID#:* \n- *Make:* \n- *Model:* \n- *Year:* \n- *Serial Number/VIN:* \n- *Department/Location:* \n- *Type:* \n- *Install Date:* \n- *Status:* Active\n- *Fuel Type:* N/A \n\n
 ** Electrical\n- *Voltage:* \n- *Current/Amps:* \n- *Breaker/Disconnect Location:* \n \n
@@ -214,7 +214,7 @@
 * Purchases/Parts Log")
                                     :unnarrowed t)
                                    ("r" "Recipe" plain "%?"
-                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                    :target (file+head "${slug}-%<%Y%m%d%H%M%S>.org"
                                                        "#+title: ${title}\n#+filetags: :recipe:\n%(org-chef-get-recipe-from-url)\n** Tasting notes")
                                     :empty-lines 1)
                                    )
@@ -276,8 +276,8 @@
   (setq org-refile-targets '((org-agenda-files :maxlevel . 5) (myroamfiles :maxlevel . 5)))
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
-  (setq org-refile-allow-creating-parent-nodes 'confirm))
-
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  )
 ;; org-roam-ui settings
 (use-package! websocket
   :after org-roam)
@@ -311,7 +311,7 @@
                "sxiv"
                '(file))
          (list (openwith-make-extension-regexp
-               '("pdf"))
+                '("pdf"))
                "mupdf"
                '(file))
          (list (openwith-make-extension-regexp
@@ -326,6 +326,18 @@
       '((?* . ?•)
         (?+ . ?➤)
         (?- . ?•)))
+
+(use-package org-ai
+  :ensure t
+  :commands (org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+  (org-ai-install-yasnippets)) ; if you are using yasnippet and want `ai` snippets
+
 ;; org-roam delve
 (use-package! delve
   :config
@@ -352,7 +364,14 @@
     (mapc
      (lambda (file)
        (with-current-buffer
-       (find-file-noselect file)
-     (org-latex-export-to-pdf)))
-       (file-expand-wildcards  "*.org"))))
+           (find-file-noselect file)
+         (org-latex-export-to-pdf)))
+     (file-expand-wildcards  "*.org"))))
 (setq org-chef-prefer-json-ld t)
+
+(setq org-roam-mode-sections
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            #'org-roam-unlinked-references-section
+            ))
+

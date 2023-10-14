@@ -12,7 +12,7 @@ dunst &
 xrandr --output HDMI-1 --auto --right-of DP-3
 xrandr --output DP-1 --auto --left-of DP-3
 xbindkeys &
-exec ~/dotfiles/dwm/dwm 2> ~/dwm.log
+exec ~/dotfiles/dwm/dwm
 
 #export DESKTOP_SESSION=plasma
 #exec startplasma-x11
