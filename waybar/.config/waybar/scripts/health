@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Failed systemd units (system + user) and uptime.
+sys=$(systemctl --failed --no-legend --plain | awk '{print $1}')
+usr=$(systemctl --user --failed --no-legend --plain | awk '{print "user: " $1}')
+failed=$(printf '%s\n%s\n' "$sys" "$usr" | grep .)
+n=$(grep -c . <<<"$failed")
+up=$(uptime -p | sed 's/^up //')
+load=$(cut -d' ' -f1-3 /proc/loadavg)
+jq -nc --arg n "$n" --arg f "$failed" --arg up "$up" --arg load "$load" '
+  ($n|tonumber) as $n
+  | {
+      text: (if $n == 0 then "󰄬" else "<span color=\"#f7768e\">󰀦</span> \($n)" end),
+      class: (if $n == 0 then "ok" else "failed" end),
+      tooltip: ("System health\nUptime  \($up)\nLoad    \($load)\nFailed  \($n)"
+        + (if $n == 0 then "" else "\n\n\($f)" end) + "\n\nClick: show failed units")
+    }'

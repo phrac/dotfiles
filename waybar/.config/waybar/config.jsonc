@@ -1,0 +1,476 @@
+// Top and bottom bars run in ONE waybar process: two separate waybar processes
+// fight over the same D-Bus name and SIGUSR2 reload aborts one of them.
+[
+{
+  "layer": "top",
+  "position": "top",
+  "margin-left": 8,
+  "margin-right": 8,
+  "margin-top": 6,
+  "margin-bottom": 0,
+  "spacing": 0,
+  "reload_style_on_change": true,
+
+  // Choose the order of the modules
+
+  "modules-left": ["niri/workspaces", "niri/window"],
+
+  "modules-center": [],
+
+  "modules-right": [
+    "group/media",
+    "group/status",
+    "group/system",
+    "custom/weather",
+    "clock",
+  ],
+
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": ["image#albumart", "mpris"],
+  },
+
+  "group/status": {
+    "orientation": "horizontal",
+    "modules": ["custom/tailscale", "custom/notification"],
+  },
+
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["network", "cpu", "memory", "temperature", "custom/gpu"],
+  },
+
+  "group/custom-group": {
+    "orientation": "horizontal",
+    "modules": ["tray", "idle_inhibitor", "custom/power"],
+  },
+
+  // Modules configuration
+  "niri/workspaces": {
+    "format": "{value}",
+    "current-only": false,
+  },
+
+  "niri/window": {
+    "format": "{title}",
+    "max-length": 60,
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10,
+    "show-passive-items": true,
+    "reverse-direction": true,
+  },
+
+  "clock": {
+    "interval": 60,
+    "format": "<span color='#7aa2f7'>󰃭</span> {:%a %b %d  <span color='#7aa2f7'>󰥔</span> %I:%M %p}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "months": "<span weight='bold' color='#c0caf5'>{}</span>",
+        "weekdays": "<span color='#565f89'>{}</span>",
+        "days": "<span color='#a9b1d6'>{}</span>",
+        "today": "<span color='#7aa2f7'><b><u>{}</u></b></span>",
+      },
+    },
+  },
+
+  "temperature": {
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>CPU temperature</span>\n<span color='#565f89'>Tctl</span>  {temperatureC}°C",
+    "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+    "input-filename": "temp1_input",
+    "critical-threshold": 80,
+    "interval": 2,
+    "format": "<span color='#e0af68'></span> {temperatureC}°",
+    "format-critical": "<span color='#f7768e'></span> {temperatureC}°",
+    "format-icons": ["", "", ""],
+  },
+
+  "cpu": {
+    "interval": 2,
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>CPU</span>\n<span color='#565f89'>Usage</span>  {usage}%\n<span color='#565f89'>Load </span>  {load}",
+    "format": "<span color='#7aa2f7'></span> {usage:>2}%",
+  },
+
+  "memory": {
+    "interval": 2,
+    "format": "<span color='#bb9af7'>󰍛</span> {used:0.1f}G",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>Memory</span>\n<span color='#565f89'>RAM </span>  {used:0.1f} / {total:0.1f} GB\n<span color='#565f89'>Swap</span>  {swapUsed:0.1f} / {swapTotal:0.1f} GB",
+  },
+
+  "disk": {
+    "interval": 15,
+    "format": "󰋊 {percentage_used:>2}%",
+  },
+
+  "backlight": {
+    // "device": "acpi_video1",
+    "format": "{icon} {percent:>2}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+  },
+
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "interval": 2,
+    "format-wifi": " {bandwidthTotalBytes:>2}", //({essid} {signalStrength}%)
+    "format-ethernet": "<span color='#7dcfff'>󰛳</span> {bandwidthDownBytes}<span color='#565f89'>↓</span> {bandwidthUpBytes}<span color='#565f89'>↑</span>",
+    "tooltip-format-ethernet": "<span weight='bold' color='#c0caf5'>Network</span>\n<span color='#565f89'>Interface</span>  {ifname}\n<span color='#565f89'>Address  </span>  {ipaddr}/{cidr}\n<span color='#565f89'>Gateway  </span>  {gwaddr}",
+    "tooltip-format-wifi": "<span weight='bold' color='#c0caf5'>Wi-Fi</span>\n<span color='#565f89'>Network</span>  {essid}\n<span color='#565f89'>Signal </span>  {signalStrength}%",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>Network</span>\n<span color='#565f89'>Interface</span>  {ifname}",
+    "format-linked": "󰀦 {ifname} (No IP)",
+    "format-disconnected": "󰀦 Disconnected", //Disconnected ⚠
+    "format-alt": "{ifname}: {gwaddr}/{cidr}",
+  },
+
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon} {volume}%", //{format_source}",
+    "format-bluetooth": "{icon} {volume}% 󰂯", //{format_source}",
+    "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
+    "format-muted": "󰖁 {volume}%",
+    // "format-source": " {volume}%",
+    // "format-source-muted": "",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󱡒",
+      "headset": "󰋎",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+    "on-click": "pavucontrol",
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume:>3}%",
+    "format-muted": "󰖁 {volume:>3}%",
+    "format-icons": ["", "", ""],
+  },
+
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+  },
+
+  // This waybar build doesn't have support for cava.
+  // Need to edit the PKGBUILD and rebuild with -Dcava=enabled flag
+  "cava": {
+    "cava_config": "$XDG_CONFIG_HOME/cava/config",
+    "framerate": 30,
+    "autosens": 1,
+    "sensitivity": 100,
+    "bars": 14,
+    "lower_cutoff_freq": 50,
+    "higher_cutoff_freq": 10000,
+    "method": "pulse",
+    "source": "auto",
+    "stereo": true,
+    "reverse": false,
+    "bar_delimiter": 0,
+    "monstercat": false,
+    "waves": false,
+    "noise_reduction": 0.77,
+    "input_delay": 2,
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "actions": {
+      "on-click-right": "mode",
+    },
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": ["", "", "", "", ""],
+    "interval": 2,
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": "󰈉",
+    },
+  },
+
+  "custom/power": {
+    "format": "{icon}",
+    "format-icons": " ", //  
+    "exec-on-event": "true",
+    "on-click": "$HOME/scripts/rofi-power",
+    "tooltip-format": "Power Menu",
+  },
+
+  "custom/kdeconnect": {
+    "format": "{icon}",
+    "format-icons": "",
+    "exec-on-event": "true",
+    "on-click": "kdeconnect-app",
+    "tooltip-format": "KDE Connect",
+  },
+
+  "custom/bluetooth": {
+    "format": "{icon}",
+    "format-icons": "",
+    "exec-on-event": "true",
+    "on-click": "$HOME/scripts/rofi-bluetooth",
+    "tooltip-format": "Bluetooth Menu",
+  },
+
+  "custom/wifi": {
+    "format": "{icon}",
+    "format-icons": "",
+    "exec-on-event": "true",
+    "on-click": "$HOME/scripts/rofi-wifi",
+    "tooltip-format": "Wifi Menu",
+  },
+
+  "custom/separator": {
+    "format": "{icon}",
+    "format-icons": "|",
+    "tooltip": false,
+  },
+
+  "custom/temp": {
+    "format": "{}",
+    "interval": 1,
+    "exec": "$HOME/scripts/temp",
+    "return-type": "json",
+    "tooltip": true,
+  },
+
+  "custom/pacman": {
+    "format": "  {}",
+    "interval": 3600, // every hour
+    "exec": "checkupdates | wc -l", // # of updates
+    "exec-if": "exit 0", // always run; consider advanced run conditions
+    "on-click": "foot -e 'sudo pacman -Syu'; pkill -SIGRTMIN+8 waybar", // update system
+    "signal": 8,
+  },
+
+  "image#albumart": {
+    "exec": "$HOME/.config/waybar/scripts/plexamp-art",
+    "size": 20,
+    "interval": 2,
+    "on-click": "playerctl -p Plexamp play-pause",
+  },
+
+  "mpris": {
+    "player": "Plexamp",
+    "format": "{status_icon} {artist} — {title}",
+    "format-paused": "{status_icon} <i>{artist} — {title}</i>",
+    "format-stopped": "",
+    "status-icons": {
+      "playing": "<span color='#bb9af7'>󰎈</span>",
+      "paused": "<span color='#565f89'>󰏤</span>",
+    },
+    "artist-len": 25,
+    "title-len": 40,
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>{title}</span>\n<span color='#565f89'>Artist</span>  {artist}\n<span color='#565f89'>Album </span>  {album}\n<span color='#565f89'>Time  </span>  {position} / {length}\n\n<span size='small' color='#565f89'>Click: play/pause · Middle: previous · Right-click: next</span>",
+    "on-click": "playerctl -p Plexamp play-pause",
+    "on-click-middle": "playerctl -p Plexamp previous",
+    "on-click-right": "playerctl -p Plexamp next",
+    "on-scroll-up": "",
+    "on-scroll-down": "",
+  },
+
+  "custom/weather": {
+    "exec": "$HOME/.config/waybar/scripts/weather | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 300,
+    "on-click": "xdg-open https://www.wunderground.com/dashboard/pws/YOUR_STATION_ID",
+  },
+
+  "custom/gpu": {
+    "exec": "$HOME/.config/waybar/scripts/gpu | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "kitty -e btop",
+  },
+
+  "custom/tailscale": {
+    "exec": "$HOME/.config/waybar/scripts/tailscale-exit | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 10,
+    "signal": 9,
+    "on-click": "$HOME/.config/waybar/scripts/tailscale-exit toggle",
+    "on-click-right": "$HOME/.config/waybar/scripts/tailscale-exit pick",
+  },
+
+  "custom/notification": {
+    "tooltip": true,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚<span color='#f7768e'><sup>●</sup></span>",
+      "none": "󰂚",
+      "dnd-notification": "󰂛<span color='#f7768e'><sup>●</sup></span>",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚<span color='#f7768e'><sup>●</sup></span>",
+      "inhibited-none": "󰂚",
+      "dnd-inhibited-notification": "󰂛<span color='#f7768e'><sup>●</sup></span>",
+      "dnd-inhibited-none": "󰂛",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb | jq --unbuffered -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+},
+
+{
+  "layer": "top",
+  "position": "bottom",
+  "margin-left": 8,
+  "margin-right": 8,
+  "margin-top": 0,
+  "margin-bottom": 6,
+  "spacing": 0,
+  "reload_style_on_change": true,
+
+  "modules-left": ["wlr/taskbar"],
+  "modules-center": ["group/lab"],
+  "modules-right": ["group/storage", "group/audio", "group/tools", "group/extras"],
+
+  "group/lab": {
+    "orientation": "horizontal",
+    "modules": ["custom/llm", "custom/hermes", "custom/comfy"],
+  },
+  "group/storage": {
+    "orientation": "horizontal",
+    "modules": ["disk#root", "disk#nas"],
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "modules": ["wireplumber", "custom/sink"],
+  },
+  "group/tools": {
+    "orientation": "horizontal",
+    "modules": ["custom/screenshot", "custom/health"],
+  },
+  "group/extras": {
+    "orientation": "horizontal",
+    "modules": ["custom/updates", "idle_inhibitor", "tray", "custom/power"],
+  },
+
+  "wlr/taskbar": {
+    "format": "{icon} {title:.22}",
+    "icon-size": 18,
+    "icon-theme": "Nordzy-dark",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>{app_id}</span>\n{title}\n\n<span size='small' color='#565f89'>Click: focus · Middle: close</span>",
+    "on-click": "activate",
+    "on-click-middle": "close",
+  },
+
+  "custom/llm": {
+    "exec": "$HOME/.config/waybar/scripts/llm | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "xdg-open http://llm-host:8080/",
+  },
+
+  "custom/hermes": {
+    "exec": "$HOME/.config/waybar/scripts/hermes | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 10,
+    "on-click": "xdg-open http://agent-host:9119/",
+  },
+
+  "custom/comfy": {
+    "exec": "$HOME/.config/waybar/scripts/comfy | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "xdg-open http://127.0.0.1:8188/",
+  },
+
+  "disk#root": {
+    "path": "/",
+    "interval": 60,
+    "format": "<span color='#7dcfff'>󰋊</span> {percentage_used}%",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>System disk</span>\n<span color='#565f89'>Mount</span>  /\n<span color='#565f89'>Used </span>  {used} of {total} ({percentage_used}%)\n<span color='#565f89'>Free </span>  {free}\n\n<span size='small' color='#565f89'>Click: open in Thunar</span>",
+    "on-click": "thunar /",
+    "states": { "warning": 85, "critical": 95 },
+  },
+
+  "disk#nas": {
+    "path": "/mnt/nas",
+    "interval": 300,
+    "format": "<span color='#7dcfff'>󰒍</span> {free}",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>NAS</span>\n<span color='#565f89'>Mount</span>  /mnt/nas\n<span color='#565f89'>Used </span>  {used} of {total} ({percentage_used}%)\n<span color='#565f89'>Free </span>  {free}\n\n<span size='small' color='#565f89'>Click: open in Thunar</span>",
+    "on-click": "thunar /mnt/nas",
+    "states": { "warning": 85, "critical": 95 },
+  },
+
+  "wireplumber": {
+    "format": "<span color='#bb9af7'>{icon}</span> {volume}%",
+    "format-muted": "<span color='#565f89'>󰖁</span> muted",
+    "format-icons": ["󰕿", "󰖀", "󰕾"],
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>Volume</span>\n<span color='#565f89'>Level </span>  {volume}%\n<span color='#565f89'>Output</span>  {node_name}\n\n<span size='small' color='#565f89'>Click: mute · Scroll: volume</span>",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "scroll-step": 2,
+    "max-volume": 100,
+  },
+
+  "custom/sink": {
+    "exec": "$HOME/.config/waybar/scripts/sink | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 30,
+    "signal": 11,
+    "on-click": "$HOME/.config/waybar/scripts/sink cycle",
+  },
+
+  "custom/screenshot": {
+    "format": "󰹑",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>Screenshot</span>\n\n<span size='small' color='#565f89'>Click: region · Right-click: screen · Middle: window</span>",
+    "on-click": "niri msg action screenshot",
+    "on-click-right": "niri msg action screenshot-screen",
+    "on-click-middle": "niri msg action screenshot-window",
+  },
+
+  "custom/health": {
+    "exec": "$HOME/.config/waybar/scripts/health | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 60,
+    "on-click": "kitty -e sh -c 'systemctl --failed; echo; systemctl --user --failed; printf \"\\nPress Enter \"; read _'",
+  },
+
+  "custom/updates": {
+    "exec": "$HOME/.config/waybar/scripts/updates | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 1800,
+    "signal": 8,
+    "on-click": "kitty -e sh -c 'yay -Syu; printf \"\\nDone — press Enter \"; read _'; rm -f $XDG_RUNTIME_DIR/waybar-updates.json; pkill -RTMIN+8 -x waybar",
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰾪",
+    },
+    "tooltip-format-activated": "<span weight='bold' color='#c0caf5'>Keep awake</span>\n<span color='#565f89'>Status</span>  on — screen won't lock\n\n<span size='small' color='#565f89'>Click: turn off</span>",
+    "tooltip-format-deactivated": "<span weight='bold' color='#c0caf5'>Keep awake</span>\n<span color='#565f89'>Status</span>  off\n\n<span size='small' color='#565f89'>Click: turn on</span>",
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10,
+    "show-passive-items": true,
+  },
+
+  "custom/power": {
+    "format": "<span color='#f7768e'>󰐥</span>",
+    "tooltip-format": "<span weight='bold' color='#c0caf5'>Power</span>\n\n<span size='small' color='#565f89'>Click: lock · suspend · log out · reboot · shut down</span>",
+    "on-click": "$HOME/.config/waybar/scripts/power",
+  },
+}
+]

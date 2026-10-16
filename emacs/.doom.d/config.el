@@ -18,7 +18,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16))
 ;;(setq doom-font (font-spec :family "PragmataPro" :size 20))
 
 ;;(setq doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
@@ -50,7 +50,7 @@
 ;; they are implemented.
 
 ;; org setting
-(setq org-directory "~/storage/notes")
+(setq org-directory "~/notes")
 (after! org
   (setq org-ellipsis " ▼")
   ;;(setq org-fold-core-style "overlays")
@@ -374,4 +374,6 @@
             #'org-roam-reflinks-section
             #'org-roam-unlinked-references-section
             ))
+
+(add-to-list 'auto-mode-alist '("\\.kdl\\'" . kdl-mode))
 

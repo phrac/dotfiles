@@ -69,3 +69,6 @@
 (package! org-web-tools)
 (package! pdftotext
   :recipe (:host github :repo "tecosaur/pdftotext.el"))
+
+(package! kdl-mode)
+

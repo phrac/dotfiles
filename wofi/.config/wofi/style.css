@@ -1,0 +1,68 @@
+/* wofi — launcher + bar menus. Tokyo Night card, matches swaync / waybar. */
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+}
+
+/* Window stays transparent so the rounded card has no square corners */
+window {
+  background-color: transparent;
+}
+
+#outer-box {
+  background-color: #1a1b26;
+  border: 1px solid #2f354d;
+  border-radius: 20px;
+  padding: 12px;
+}
+
+#input {
+  margin: 0 0 10px 0;
+  padding: 10px 14px;
+  border: 1px solid #2f354d;
+  border-radius: 14px;
+  background-color: #24283b;
+  color: #c0caf5;
+  box-shadow: none;
+  outline: none;
+  font-size: 15px;
+}
+#input:focus {
+  border-color: #7aa2f7;
+}
+#input image {
+  color: #565f89;
+}
+
+#scroll,
+#inner-box {
+  background: transparent;
+}
+
+#entry {
+  padding: 7px 12px;
+  margin: 1px 0;
+  border-radius: 12px;
+  background-color: transparent;
+  outline: none;
+}
+#entry:hover {
+  background-color: #24283b;
+}
+#entry:selected {
+  background-color: #7aa2f7;
+}
+
+#entry image {
+  margin-right: 10px;
+}
+
+#text {
+  color: #c0caf5;
+}
+#text:selected,
+#entry:selected #text {
+  color: #1a1b26;
+  font-weight: bold;
+  background: transparent;
+}

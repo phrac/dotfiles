@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Show / cycle the default audio output.
+#   (no args)  print status JSON     cycle  switch to the next sink
+name() { case $1 in *hdmi*) echo "󰍹 Dell" ;; *analog*) echo "󰓃 Speakers" ;; *) echo "󰓃 ${1##*.}" ;; esac; }
+
+if [[ ${1:-} == cycle ]]; then
+  mapfile -t sinks < <(pactl list short sinks | cut -f2)
+  cur=$(pactl get-default-sink)
+  for i in "${!sinks[@]}"; do [[ ${sinks[$i]} == "$cur" ]] && next=${sinks[$(( (i + 1) % ${#sinks[@]} ))]}; done
+  pactl set-default-sink "${next:-${sinks[0]}}"
+  # Move playing streams too
+  for s in $(pactl list short sink-inputs | cut -f1); do pactl move-sink-input "$s" "${next:-${sinks[0]}}"; done
+  pkill -RTMIN+11 -x waybar
+  exit 0
+fi
+
+cur=$(pactl get-default-sink)
+list=$(pactl list short sinks | cut -f2 | while read -r s; do
+  mark="  "; [[ $s == "$cur" ]] && mark="● "
+  echo "$mark$(name "$s")"; done)
+jq -nc --arg t "$(name "$cur")" --arg l "$list" \
+  '{text: $t, tooltip: "Audio output\n\($l)\n\nClick: switch output"}'

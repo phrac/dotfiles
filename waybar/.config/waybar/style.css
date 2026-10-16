@@ -1,0 +1,275 @@
+/* Tokyo Night */
+@define-color bg      #1a1b26;
+@define-color bg-alt  #24283b;
+@define-color border  #2f354d;
+@define-color fg      #c0caf5;
+@define-color subtle  #a9b1d6;
+@define-color muted   #565f89;
+@define-color blue    #7aa2f7;
+@define-color cyan    #7dcfff;
+@define-color green   #9ece6a;
+@define-color magenta #bb9af7;
+@define-color red     #f7768e;
+@define-color yellow  #e0af68;
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @fg;
+}
+
+/* Tooltips: same card look as the swaync panel */
+tooltip {
+  background: @bg;
+  border: 1px solid @border;
+  border-radius: 14px;
+  box-shadow: none;
+  text-shadow: none;
+}
+tooltip label {
+  color: @subtle;
+  font-size: 13px;
+  padding: 8px 10px;
+}
+
+/* ── Pills ─────────────────────────────────────────── */
+#workspaces,
+#window,
+#media,
+#status,
+#system,
+#custom-weather,
+#clock {
+  background: alpha(@bg, 0.92);
+  border: 1px solid @border;
+  border-radius: 12px;
+  margin: 2px 3px;
+  padding: 3px 4px;
+}
+
+/* Modules inside groups share the group's pill */
+#mpris,
+#custom-tailscale,
+#custom-notification,
+#network,
+#cpu,
+#memory,
+#temperature {
+  padding: 0 9px;
+}
+
+/* ── Workspaces ───────────────────────────────────── */
+#workspaces {
+  padding: 3px;
+}
+#workspaces button {
+  color: @muted;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 9px;
+  padding: 0 9px;
+  margin: 0 1px;
+  transition: all 150ms ease;
+}
+#workspaces button:hover {
+  color: @fg;
+  background: @bg-alt;
+}
+#workspaces button.active {
+  color: @bg;
+  background: @blue;
+  font-weight: bold;
+}
+#workspaces button.urgent {
+  color: @bg;
+  background: @red;
+}
+
+/* ── Window title ─────────────────────────────────── */
+#window {
+  color: @subtle;
+  padding: 3px 14px;
+}
+#window.empty,
+window#waybar.empty #window {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* ── Media ────────────────────────────────────────── */
+#media {
+  padding: 3px 4px 3px 4px;
+}
+#image.albumart {
+  margin-left: 4px;
+}
+#mpris {
+  color: @fg;
+}
+#mpris.paused {
+  color: @muted;
+}
+
+/* ── Status ───────────────────────────────────────── */
+#custom-tailscale.on       { color: @green; }
+#custom-tailscale.off      { color: @muted; }
+#custom-tailscale.offline,
+#custom-tailscale.down     { color: @red; }
+
+#custom-notification {
+  color: @subtle;
+}
+
+/* ── System ───────────────────────────────────────── */
+#network, #cpu, #memory, #temperature {
+  color: @subtle;
+}
+#network.disconnected,
+#temperature.critical {
+  color: @red;
+}
+
+/* ── Clock ────────────────────────────────────────── */
+#clock {
+  color: @fg;
+  font-weight: bold;
+  padding: 3px 14px;
+}
+
+/* ── GPU ──────────────────────────────────────────── */
+#custom-gpu {
+  color: @subtle;
+  padding: 0 9px;
+}
+#custom-gpu.busy { color: @yellow; }
+#custom-gpu.hot  { color: @red; }
+
+/* ── Weather ──────────────────────────────────────── */
+#custom-weather {
+  color: @fg;
+  padding: 3px 12px;
+}
+#custom-weather.hot   { color: @red; }
+#custom-weather.cold  { color: @cyan; }
+#custom-weather.unavailable { color: @muted; }
+
+/* ════════════════ Bottom bar ════════════════ */
+
+window#waybar.bottom * {
+  font-size: 13px;
+}
+
+#taskbar,
+#lab,
+#storage,
+#audio,
+#tools,
+#extras {
+  background: alpha(@bg, 0.92);
+  border: 1px solid @border;
+  border-radius: 12px;
+  margin: 2px 3px;
+  padding: 2px 4px;
+}
+
+/* Hide empty pills (e.g. no windows open) */
+#taskbar.empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* ── Taskbar ──────────────────────────────────────── */
+#taskbar button {
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  border-radius: 9px;
+  padding: 1px 6px;
+  margin: 0 1px;
+  border-bottom: 2px solid transparent;
+  transition: all 150ms ease;
+}
+#taskbar button:hover {
+  background: @bg-alt;
+}
+#taskbar button.active {
+  background: @bg-alt;
+  border-bottom: 2px solid @blue;
+}
+#taskbar button.minimized {
+  opacity: 0.5;
+}
+
+/* ── Lab status ───────────────────────────────────── */
+#custom-llm,
+#custom-hermes,
+#custom-comfy {
+  color: @subtle;
+  padding: 0 10px;
+}
+#custom-llm.busy,
+#custom-hermes.busy,
+#custom-comfy.busy     { color: @fg; }
+#custom-llm.queued,
+#custom-hermes.warn    { color: @yellow; }
+#custom-llm.offline,
+#custom-hermes.offline { color: @red; }
+#custom-comfy.offline  { color: @muted; }
+
+/* ── Extras ───────────────────────────────────────── */
+#custom-updates,
+#idle_inhibitor {
+  color: @subtle;
+  padding: 0 9px;
+}
+#custom-updates.none,
+#custom-updates.missing { color: @muted; }
+#custom-updates.pending { color: @fg; }
+#idle_inhibitor.activated { color: @yellow; }
+#tray {
+  padding: 0 8px 0 4px;
+}
+#tray > .needs-attention {
+  background: alpha(@red, 0.3);
+  border-radius: 6px;
+}
+
+#taskbar button label {
+  padding-left: 4px;
+  color: @subtle;
+}
+#taskbar button.active label {
+  color: @fg;
+}
+
+/* ── Storage / audio / tools ──────────────────────── */
+#disk,
+#wireplumber,
+#custom-sink,
+#custom-screenshot,
+#custom-health,
+#custom-power {
+  color: @subtle;
+  padding: 0 9px;
+}
+#disk.warning  { color: @yellow; }
+#disk.critical { color: @red; }
+#wireplumber.muted { color: @muted; }
+#custom-screenshot:hover,
+#custom-power:hover {
+  background: @bg-alt;
+  border-radius: 8px;
+}
+#custom-health.ok     { color: @green; }
+#custom-health.failed { color: @fg; }

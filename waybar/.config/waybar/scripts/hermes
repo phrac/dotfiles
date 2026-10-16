@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Hermes agent status on agent-host (unauthenticated /api/status).
+json=$(curl -sf -m3 "http://agent-host:9119/api/status")
+if [[ -z $json ]]; then
+  echo '{"text":"󰚩 hermes offline","class":"offline","tooltip":"Hermes · agent-host\nStatus  not responding on :9119"}'
+  exit 0
+fi
+jq -c '
+  (.gateway_platforms // {}) as $p
+  | ([$p[] | select(.needs_attention or .state != "connected")] | length) as $bad
+  | (.active_agents // 0) as $a
+  | {
+      text: ("<span color=\"#bb9af7\">󰚩</span> hermes"
+             + (if .gateway_state != "running" then " · \(.gateway_state)"
+                elif $bad > 0 then " · attention"
+                elif $a > 0 then " · \($a) active"
+                else "" end)),
+      class: (if .gateway_state != "running" then "offline"
+              elif $bad > 0 then "warn"
+              elif $a > 0 then "busy" else "idle" end),
+      tooltip: ([
+        "Hermes \(.version) · agent-host",
+        "Gateway   \(.gateway_state)\(if .gateway_busy then " (busy)" else "" end)",
+        "Agents    \($a) active · \(.active_sessions // 0) sessions",
+        ($p | to_entries[] | "\(.key | ascii_downcase | .[0:1] | ascii_upcase)\(.key[1:])    \(.value.state)\(if .value.error_message then " — \(.value.error_message)" else "" end)"),
+        "",
+        "Click: open Hermes"
+      ] | join("\n"))
+    }' <<<"$json"

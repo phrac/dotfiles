@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Local ComfyUI queue status.
+json=$(curl -sf -m2 "http://127.0.0.1:8188/queue")
+if [[ -z $json ]]; then
+  echo '{"text":"󰋩 comfy off","class":"offline","tooltip":"ComfyUI\nStatus  not running on :8188"}'
+  exit 0
+fi
+jq -c '
+  (.queue_running | length) as $r | (.queue_pending | length) as $q
+  | {
+      text: ("<span color=\"#ff9e64\">󰋩</span> comfy · "
+             + (if $r > 0 then "rendering" + (if $q > 0 then " (+\($q))" else "" end) else "idle" end)),
+      class: (if $r > 0 then "busy" else "idle" end),
+      tooltip: "ComfyUI\nRunning  \($r)\nQueued   \($q)\nAddress  127.0.0.1:8188\n\nClick: open ComfyUI"
+    }' <<<"$json"

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Current conditions from a Wunderground personal weather station (PWS) for waybar.
+# Set station= to your PWS ID.
+# API key (free for PWS owners: wunderground.com/member/api-keys) goes in:
+#   ~/.config/waybar/wunderground.key
+station="YOUR_STATION_ID"
+keyfile="$HOME/.config/waybar/wunderground.key"
+
+if [[ ! -s $keyfile ]]; then
+  echo '{"text":"󰖐 key?","class":"unavailable","tooltip":"Weather\nStatus  no API key\n\nPut your Wunderground key in ~/.config/waybar/wunderground.key"}'
+  exit 0
+fi
+key=$(tr -d '[:space:]' <"$keyfile")
+
+json=$(curl -sf --max-time 10 \
+  "https://api.weather.com/v2/pws/observations/current?stationId=$station&format=json&units=e&numericPrecision=decimal&apiKey=$key") ||
+  { echo '{"text":"󰖐 --","class":"unavailable","tooltip":"Weather\nStatus  Wunderground request failed"}'; exit 0; }
+
+jq -c --arg station "$station" '
+  .observations[0] as $o | $o.imperial as $i
+  | def r: if . == null then "--" else (. | round | tostring) end;
+    def compass: if . == null then "" else
+      ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][((. + 11.25) / 22.5 | floor) % 16] end;
+    ($i.temp) as $t
+  | (if $t == null then $i.temp
+     elif $t >= 80 and $i.heatIndex != null then $i.heatIndex
+     elif $t <= 50 and $i.windChill != null then $i.windChill
+     else $t end) as $feels
+  | (if ($i.precipRate // 0) > 0 then "󰖗"
+     elif $o.solarRadiation == null then "󰔏"
+     elif $o.solarRadiation >= 300 then "󰖙"
+     elif $o.solarRadiation > 5 then "󰖕"
+     else "󰖔" end) as $icon
+  | {
+      text: "<span color=\"#e0af68\">\($icon)</span> \($t | r)°",
+      class: (if $t == null then "unavailable" elif $t >= 90 then "hot" elif $t <= 32 then "cold" else "normal" end),
+      tooltip: ([
+        "\($o.neighborhood // $station) (\($station))",
+        "Temp       \($t | r)°F  (feels \($feels | r)°)",
+        "Humidity   \($o.humidity | r)%  · dew point \($i.dewpt | r)°",
+        "Wind       \($o.winddir | compass) \($i.windSpeed | r) mph, gust \($i.windGust | r)",
+        "Pressure   \($i.pressure // "--") inHg",
+        "Rain       \($i.precipTotal // 0) in today  (\($i.precipRate // 0) in/hr)",
+        (if $o.uv != null then "UV         \($o.uv | r)" else empty end),
+        "Updated    \($o.obsTimeLocal | split(" ")[1][0:5])"
+      ] | join("\n"))
+    }' <<<"$json" 2>/dev/null ||
+  echo '{"text":"󰖐 --","class":"unavailable","tooltip":"Weather\nStatus  unexpected response from Wunderground"}'

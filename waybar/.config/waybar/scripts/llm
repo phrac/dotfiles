@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# LLM status for llm-host: radiance (vLLM-compatible) on :8080 + amdgpu exporter on :9101.
+host="llm-host"   # box running a vLLM-compatible server (:8080) + amdgpu exporter (:9101)
+state="${XDG_RUNTIME_DIR:-/tmp}/waybar-llm-tokens"
+
+# One copy per monitor: serialize and share the result so tok/s deltas stay sane.
+cache="${XDG_RUNTIME_DIR:-/tmp}/waybar-llm.json"
+exec 9>"$cache.lock"
+flock 9
+if [[ -s $cache ]] && (( $(date +%s%N) - $(stat -c %Y "$cache")000000000 < 2000000000 )); then
+  cat "$cache"; exit 0
+fi
+exec > >(tee "$cache.tmp"; mv "$cache.tmp" "$cache")
+
+health=$(curl -sf -m3 "http://$host:8080/health")
+if [[ -z $health ]]; then
+  echo '{"text":"󰒋 llm offline","class":"offline","tooltip":"llm-host\nStatus  radiance not responding on :8080"}'
+  exit 0
+fi
+metrics=$(curl -sf -m3 "http://$host:8080/metrics")
+gpus=$(curl -sf -m3 "http://$host:9101/metrics")
+node=$(curl -sf -m3 "http://$host:9100/metrics" | grep -E '^node_(load1|load5|memory_MemTotal_bytes|memory_MemAvailable_bytes|boot_time_seconds) ')
+
+# Flatten Prometheus text into "name[gpu] value" pairs we care about.
+prom() {
+  awk '
+    /^#/ { next }
+    {
+      name = $1; sub(/\{.*/, "", name)
+      gpu = ""; if (match($0, /gpu="[0-9]+"/)) gpu = substr($0, RSTART+5, RLENGTH-6)
+      sensor = ""; if (match($0, /sensor="[a-z]+"/)) sensor = substr($0, RSTART+8, RLENGTH-9)
+      key = name; if (gpu != "") key = key "_" gpu; if (sensor != "") key = key "_" sensor
+      gsub(/[^A-Za-z0-9_]/, "_", key)
+      print key "=" $NF
+    }'
+}
+declare -A m
+while IFS='=' read -r k v; do m[$k]=$v; done < <( { prom <<<"$metrics"; prom <<<"$gpus"; prom <<<"$node"; } )
+
+now=$(date +%s.%N)
+tok=${m[vllm_generation_tokens_total]:-0}
+read -r prev_t prev_tok 2>/dev/null <"$state"
+echo "$now $tok" >"$state"
+rate=$(awk -v n="$now" -v t="$tok" -v pt="${prev_t:-0}" -v ptok="${prev_tok:-0}" \
+  'BEGIN { dt = n - pt; d = t - ptok; if (pt > 0 && dt > 0 && dt < 30 && d >= 0) printf "%.0f", d/dt; else print 0 }')
+
+jq -nc \
+  --argjson h "$health" \
+  --arg running "${m[vllm_num_requests_running]:-0}" \
+  --arg waiting "${m[vllm_num_requests_waiting]:-0}" \
+  --arg kv "${m[vllm_kv_cache_usage_perc]:-0}" \
+  --arg gen "$tok" --arg rate "$rate" \
+  --arg l0 "${m[amdgpu_gfx_activity_percent_0]:-}" --arg l1 "${m[amdgpu_gfx_activity_percent_1]:-}" \
+  --arg vu0 "${m[amdgpu_vram_used_bytes_0]:-0}" --arg vu1 "${m[amdgpu_vram_used_bytes_1]:-0}" \
+  --arg vt0 "${m[amdgpu_vram_total_bytes_0]:-0}" --arg vt1 "${m[amdgpu_vram_total_bytes_1]:-0}" \
+  --arg p0 "${m[amdgpu_power_watts_0]:-0}" --arg p1 "${m[amdgpu_power_watts_1]:-0}" \
+  --arg t0 "${m[amdgpu_temperature_celsius_0_hotspot]:-0}" --arg t1 "${m[amdgpu_temperature_celsius_1_hotspot]:-0}" \
+  --arg f0 "${m[amdgpu_fan_rpm_0]:-0}" --arg f1 "${m[amdgpu_fan_rpm_1]:-0}" \
+  --arg ld1 "${m[node_load1]:-?}" --arg ld5 "${m[node_load5]:-?}" \
+  --arg mt "${m[node_memory_MemTotal_bytes]:-0}" --arg ma "${m[node_memory_MemAvailable_bytes]:-0}" '
+  def n: tonumber? // 0;
+  def gb: (n / 1073741824 * 10 | round / 10 | tostring);
+  ($running|n) as $r | ($waiting|n) as $w | ($rate|n) as $tps
+  | (if $l0 == "" then "" else " <span color=\"#9ece6a\">󰢮</span> \($l0)% \($l1)%" end) as $gpu
+  | {
+      text: ("<span color=\"#7aa2f7\">󰒋</span> \($h.model) · "
+             + (if $r > 0 then "\($tps) t/s · \($r) req" + (if $w > 0 then " (+\($w))" else "" end)
+                else "idle" end)
+             + $gpu),
+      class: (if $w > 0 then "queued" elif $r > 0 then "busy" else "idle" end),
+      tooltip: ([
+        "llm-host · radiance · \($h.model)",
+        "Requests   \($r) running, \($w) waiting (cap \($h.queue_cap))",
+        "Speed      \($tps) tok/s",
+        "KV cache   \(($kv|n) * 100 | round)%",
+        "Generated  \($gen|n) tokens total",
+        "",
+        "GPU0 R9700  \($l0)% · \($vu0|gb)/\($vt0|gb) GB · \($p0) W · \($t0)°C · \($f0) RPM",
+        "GPU1 R9700  \($l1)% · \($vu1|gb)/\($vt1|gb) GB · \($p1) W · \($t1)°C · \($f1) RPM",
+        "",
+        "Host       load \($ld1) / \($ld5) · RAM \((($mt|n) - ($ma|n)) | gb)/\($mt|gb) GB used",
+        "",
+        "Click: open radiance dashboard"
+      ] | join("\n"))
+    }'

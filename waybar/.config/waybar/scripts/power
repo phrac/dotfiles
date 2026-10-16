@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Power menu via wofi.
+choice=$(printf '%s\n' "󰌾  Lock" "󰤄  Suspend" "󰍃  Log out" "󰜉  Reboot" "󰐥  Shut down" |
+  wofi --dmenu --prompt "Power" --lines 6 --width 220 --cache-file /dev/null --style "$HOME/.config/wofi/style.css") || exit 0
+case $choice in
+  *Lock)      swaylock -f ;;
+  *Suspend)   systemctl suspend ;;
+  *"Log out") niri msg action quit --skip-confirmation ;;
+  *Reboot)    systemctl reboot ;;
+  *"Shut down") systemctl poweroff ;;
+esac

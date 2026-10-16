@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# AMD GPU stats for waybar (RX 7900 XTX). Reads amdgpu sysfs; no extra tools needed.
+# PCI sysfs path of your card: readlink -f /sys/class/drm/card*/device
+dev=/sys/devices/pci0000:00/0000:00:03.1/0000:0a:00.0/0000:0b:00.0/0000:0c:00.0
+hw=$(echo "$dev"/hwmon/hwmon*)
+
+[[ -r $dev/gpu_busy_percent ]] || { echo '{"text":"󰢮 n/a","class":"down"}'; exit 0; }
+
+busy=$(<"$dev/gpu_busy_percent")
+used=$(<"$dev/mem_info_vram_used")
+total=$(<"$dev/mem_info_vram_total")
+edge=$(( $(<"$hw/temp1_input") / 1000 ))
+junc=$(( $(<"$hw/temp2_input") / 1000 ))
+mem=$(( $(<"$hw/temp3_input") / 1000 ))
+power=$(( $(<"$hw/power1_average") / 1000000 ))
+cap=$(( $(<"$hw/power1_cap") / 1000000 ))
+fan=$(<"$hw/fan1_input")
+sclk=$(( $(<"$hw/freq1_input") / 1000000 ))
+mclk=$(( $(<"$hw/freq2_input") / 1000000 ))
+
+vram=$(awk -v u="$used" 'BEGIN{printf "%.1f", u/1073741824}')
+vtotal=$(awk -v t="$total" 'BEGIN{printf "%.0f", t/1073741824}')
+
+class=normal
+(( busy >= 80 )) && class=busy
+(( junc >= 95 )) && class=hot
+
+text="<span color='#9ece6a'>󰢮</span> $(printf '%2d' "$busy")%  ${vram}G  ${junc}°"
+tooltip="RX 7900 XTX\nLoad   ${busy}%\nVRAM   ${vram} / ${vtotal} GB\nTemp   edge ${edge}° · junction ${junc}° · mem ${mem}°\nPower  ${power} / ${cap} W\nFan    ${fan} RPM\nClock  ${sclk} MHz core · ${mclk} MHz mem\n\nClick: open btop"
+
+printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$text" "$tooltip" "$class"

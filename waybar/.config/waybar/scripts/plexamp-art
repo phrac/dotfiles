@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Print Plexamp's cached album art path for waybar's image module (empty = hidden).
+status=$(playerctl -p Plexamp status 2>/dev/null)
+[[ $status == Playing || $status == Paused ]] || exit 0
+url=$(playerctl -p Plexamp metadata mpris:artUrl 2>/dev/null)
+path=${url#file://}
+[[ -f $path ]] && echo "$path"

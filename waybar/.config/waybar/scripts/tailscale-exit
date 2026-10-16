@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Waybar module for Tailscale exit node.
+#   (no args)  print status JSON for waybar
+#   toggle     turn exit node off, or back on to the last-used node
+#   pick       choose an exit node from a wofi menu
+set -u
+
+state="${XDG_STATE_HOME:-$HOME/.local/state}/waybar-tailscale-exit"
+default_node="my-exit-node"   # tailscale hostname of your usual exit node
+
+refresh() { pkill -RTMIN+9 waybar; }
+
+current() {
+  tailscale status --json 2>/dev/null |
+    jq -r '[.Peer[] | select(.ExitNode) | .HostName][0] // empty'
+}
+
+case "${1:-}" in
+  toggle)
+    node=$(current)
+    if [[ -n $node ]]; then
+      mkdir -p "$(dirname "$state")"
+      echo "$node" >"$state"
+      tailscale set --exit-node=
+    else
+      last=$(cat "$state" 2>/dev/null)
+      tailscale set --exit-node="${last:-$default_node}" --exit-node-allow-lan-access
+    fi
+    refresh
+    ;;
+  pick)
+    choice=$( { echo "off"; tailscale status --json | jq -r '.Peer[] | select(.ExitNodeOption) | .HostName'; } |
+      wofi --dmenu --prompt "Exit node" --lines 5 --width 280 --cache-file /dev/null --style "$HOME/.config/wofi/style.css") || exit 0
+    if [[ $choice == off ]]; then
+      node=$(current)
+      [[ -n $node ]] && echo "$node" >"$state"
+      tailscale set --exit-node=
+    else
+      tailscale set --exit-node="$choice" --exit-node-allow-lan-access
+      echo "$choice" >"$state"
+    fi
+    refresh
+    ;;
+  *)
+    json=$(tailscale status --json 2>/dev/null)
+    if [[ -z $json || $(jq -r .BackendState <<<"$json") != Running ]]; then
+      echo '{"text":"󰖂 down","class":"down","tooltip":"Tailscale\nStatus  not running"}'
+      exit 0
+    fi
+    jq -c '
+      ([.Peer[] | select(.ExitNode)][0]) as $n
+      | if $n then
+          {text: "󰖂 \($n.HostName)", class: (if $n.Online then "on" else "offline" end),
+           tooltip: "Tailscale exit node\nNode    \($n.HostName)\nIP      \($n.TailscaleIPs[0] | sub("/.*"; ""))\nStatus  \(if $n.Online then "online" else "OFFLINE" end)\n\nClick: disable · Right-click: choose"}
+        else
+          {text: "󰖂", class: "off",
+           tooltip: "Tailscale exit node\nNode    none\n\nClick: enable · Right-click: choose"}
+        end' <<<"$json"
+    ;;
+esac

@@ -81,3 +81,9 @@ config/.config/syncthing
 .cache/
 .mutt/.muttsecure
 .mutt/cache
+
+# niri/Wayland era — never commit secrets or local backups
+waybar/.config/waybar/wunderground.key
+**/*.pre-*
+**/*.bak
+**/backup-*/

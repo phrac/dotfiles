@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Pending pacman + AUR updates. Needs checkupdates (pacman-contrib).
+if ! command -v checkupdates >/dev/null; then
+  echo '{"text":"󰏗 ?","class":"missing","tooltip":"Updates\nStatus  checkupdates missing (pacman-contrib)"}'
+  exit 0
+fi
+# Waybar runs one copy per monitor; serialize them so concurrent checkupdates
+# runs don't collide on the shared temp db, and let later copies reuse the result.
+cache="${XDG_RUNTIME_DIR:-/tmp}/waybar-updates.json"
+exec 9>"$cache.lock"
+flock 9
+if [[ -s $cache && $(( $(date +%s) - $(stat -c %Y "$cache") )) -lt 60 ]]; then
+  cat "$cache"
+  exit 0
+fi
+
+repo=$(checkupdates 2>/dev/null)
+aur=$(yay -Qua 2>/dev/null)
+nr=$(grep -c . <<<"$repo"); na=$(grep -c . <<<"$aur")
+total=$((nr + na))
+list=$(printf '%s\n%s\n' "$repo" "$aur" | grep . | awk '{print $1, $4}' | head -25)
+(( total > 25 )) && list+=$'\n…'
+jq -nc --arg t "$total" --arg nr "$nr" --arg na "$na" --arg list "$list" '
+  ($t|tonumber) as $n
+  | {
+      text: (if $n == 0 then "󰏗" else "<span color=\"#e0af68\">󰏗</span> \($n)" end),
+      class: (if $n == 0 then "none" else "pending" end),
+      tooltip: (if $n == 0 then "Updates\nStatus  system up to date"
+                else "\($n) updates\nRepo  \($nr)\nAUR   \($na)\n\n\($list)\n\nClick: run yay -Syu" end)
+    }' | tee "$cache"

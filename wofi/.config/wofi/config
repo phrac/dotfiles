@@ -1,0 +1,13 @@
+mode=drun
+insensitive=true
+prompt=Search
+width=560
+height=440
+term=kitty
+hide_scroll=true
+location=2
+yoffset=200
+allow_images=true
+image_size=24
+no_actions=true
+parse_action=false
