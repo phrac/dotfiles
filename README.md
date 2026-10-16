@@ -170,18 +170,4 @@ If you don't run some of these services, drop the matching module from `config.j
 
 ---
 
-## Legacy: OpenBSD / dwm era
-
-Everything else in this repo (`dwm`, `st`, `slock`, `dstat`, `xorg`, `openbsd`, `mail`, `news`, `vim`, …)
-is my older X11 setup on OpenBSD, kept for reference. Stow those packages the same way.
-
-<details>
-<summary>Screenshots (ca. 2020)</summary>
-
-![OpenBSD + dwm, 2020](screenshots/legacy-openbsd-2020.png)
-
-…and Doom Emacs
-
-![Doom Emacs](screenshots/legacy-doom-emacs.png)
-
-</details>
+<sub>Looking for the old OpenBSD / dwm / X11 configs? They were retired in October 2026 and live on in the git history (`git log --diff-filter=D --stat`).</sub>
