@@ -12,3 +12,6 @@ waybar/.config/waybar/wunderground.key
 **/*.pre-*
 **/*.bak
 **/backup-*/
+
+# Doom Emacs secrets (API keys)
+emacs/.doom.d/secrets.el

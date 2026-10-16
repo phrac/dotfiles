@@ -8,7 +8,8 @@
 ;; some email clients, file templates and snippets.
 (setq user-full-name ""
       user-mail-address "john@doe.com")
-(setq org-ai-openai-api-token "REDACTED")
+;; Secrets (API keys etc.) live in secrets.el next to this file; it is gitignored.
+(load (expand-file-name "secrets.el" (file-name-directory (or load-file-name buffer-file-name))) t t)
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
