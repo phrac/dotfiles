@@ -10,6 +10,28 @@ macOS-style notification center, and one consistent Tokyo Night look across ever
 
 <p align="center"><sub>One of three 27" 1440p monitors. Every bar, panel and menu shares the same palette, font and rounded-card style.</sub></p>
 
+## In use
+
+All three monitors on a normal day. Private content (chat messages, file names, browser tabs, the terminal) is blurred.
+
+![Live, all three monitors](screenshots/live-triple.jpg)
+
+| Left: chat | Centre: browser | Right: files and terminal |
+|---|---|---|
+| ![Left monitor](screenshots/live-left.jpg) | ![Centre monitor](screenshots/live-center.jpg) | ![Right monitor](screenshots/live-right.jpg) |
+
+**Notification center over real work.** <kbd>Super</kbd>+<kbd>N</kbd> opens it on whichever monitor has focus.
+
+![Notification center over live windows](screenshots/live-notification-center.jpg)
+
+**Hover anything for details.** Here, GPU load, VRAM, temperatures, power, fan and clocks:
+
+![GPU tooltip over live windows](screenshots/live-tooltip.jpg)
+
+**Tooltips.** Calendar, GPU, memory and CPU temperature on the top row; Now Playing, volume, audio output and disk in the middle; the LLM server, agent, system health and pending updates at the bottom. The hostnames in the LLM and agent tooltips are blurred.
+
+![Tooltip gallery](screenshots/tooltips.png)
+
 ---
 
 ## Highlights
@@ -18,7 +40,7 @@ macOS-style notification center, and one consistent Tokyo Night look across ever
 - **Top bar**: workspaces, window title, now playing with album art, Tailscale exit-node toggle, notifications, network, CPU, RAM, CPU and GPU temperature, local weather and date/clock.
 - **Bottom bar**: a homelab and system dashboard. It has a window taskbar, live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
 - **Notification center**: swaync restyled after macOS. It has cards with a hover-only close button, a Now Playing widget, a volume slider and quick-toggle tiles. It opens with <kbd>Super</kbd>+<kbd>N</kbd>.
-- **Themed tooltips**: every tooltip is a small card with a bold title, dim labels and click hints. One `jq` filter formats them all.
+- **Themed tooltips**: every tooltip is a small card with a title, aligned labels and click hints. For the script modules, one `jq` filter adds a bold title, dim labels and small hints.
 - **One theme everywhere**: Waybar, swaync, the wofi launcher and menus, and kitty all use Tokyo Night and JetBrains Mono Nerd Font.
 
 ## Gallery
@@ -142,6 +164,7 @@ If you don't run some of these services, drop the matching module from `config.j
 ## Notes
 
 - **One Waybar process for both bars.** `config.jsonc` is an array holding the top and bottom bars. With two separate Waybar processes, a reload (`SIGUSR2`) aborts one of them in GLib's D-Bus code.
+- **Some tooltips can't be styled.** Waybar shows the `cpu`, `memory`, `temperature`, `disk`, `mpris`, `wireplumber` and `wlr/taskbar` tooltips as plain text, so Pango markup there appears as raw `<span>` tags. Those modules use the same layout in plain text. Custom modules and `clock` render markup, and the notification module must not set `"escape": true`, because `tip.jq` already escapes.
 - **swaync replaces mako.** Only one notification daemon can own `org.freedesktop.Notifications`.
 - Waybar runs each module once per monitor. Anything that keeps state (tokens/s deltas, `checkupdates`) needs the take-turns-and-share-the-result pattern described above.
 
