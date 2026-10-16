@@ -58,7 +58,7 @@
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'other-window)
   (setq org-id-locations-file "~/.doom.d/.state")
-  (setq org-default-notes-file (concat org-directory "~/refile.org"))
+  (setq org-default-notes-file (expand-file-name "refile.org" org-directory))
   (setq org-capture-templates
         '(("t" "New TODO" entry (file "~/notes/roam/todo.org")
            "* TODO %?")
@@ -328,8 +328,7 @@
         (?+ . ?➤)
         (?- . ?•)))
 
-(use-package org-ai
-  :ensure t
+(use-package! org-ai
   :commands (org-ai-mode
              org-ai-global-mode)
   :init
