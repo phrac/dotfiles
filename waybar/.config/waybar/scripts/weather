@@ -16,11 +16,40 @@ json=$(curl -sf --max-time 10 \
   "https://api.weather.com/v2/pws/observations/current?stationId=$station&format=json&units=e&numericPrecision=decimal&apiKey=$key") ||
   { echo '{"text":"󰖐 --","class":"unavailable","tooltip":"Weather\nStatus  Wunderground request failed"}'; exit 0; }
 
-jq -c --arg station "$station" '
+# Daily forecast for the station's location. One request an hour, shared by every
+# monitor's copy of this module (the key allows 1500 calls a day).
+fcache=${XDG_RUNTIME_DIR:-/tmp}/waybar-forecast.json
+forecast=$(
+  exec 9>"$fcache.lock"; flock 9
+  if [[ -s $fcache ]] && (( $(date +%s) - $(stat -c %Y "$fcache") < 3600 )); then
+    cat "$fcache"
+  else
+    geo=$(jq -r '.observations[0] | "\(.lat),\(.lon)"' <<<"$json")
+    if fc=$(curl -sf --max-time 10 \
+        "https://api.weather.com/v3/wx/forecast/daily/5day?geocode=$geo&format=json&units=e&language=en-US&apiKey=$key") &&
+       jq -e '.dayOfWeek' <<<"$fc" >/dev/null 2>&1; then
+      printf '%s' "$fc" > "$fcache"; printf '%s' "$fc"
+    elif [[ -s $fcache ]]; then
+      cat "$fcache"   # keep showing the last forecast if the refresh fails
+    else
+      echo '{}'
+    fi
+  fi
+)
+
+jq -c --arg station "$station" --argjson fc "${forecast:-"{}"}" '
   .observations[0] as $o | $o.imperial as $i
   | def r: if . == null then "--" else (. | round | tostring) end;
     def compass: if . == null then "" else
       ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][((. + 11.25) / 22.5 | floor) % 16] end;
+    # The forecast high for today goes null once it has passed; use the calendar-day high then.
+    def day($n): if $fc.dayOfWeek == null then empty else
+      ($fc.daypart[0]) as $dp
+      | (($fc.temperatureMax[$n] // $fc.calendarDayTemperatureMax[$n]) | r) as $hi
+      | ($fc.temperatureMin[$n] | r) as $lo
+      | ([$dp.precipChance[$n*2], $dp.precipChance[$n*2+1]] | map(select(. != null)) | max) as $pop
+      | ($dp.wxPhraseLong[$n*2] // $dp.wxPhraseLong[$n*2+1]) as $wx
+      | "\($hi)° / \($lo)°  \($wx // "")\(if ($pop // 0) > 0 then ", \($pop)% rain" else "" end)" end;
     ($i.temp) as $t
   | (if $t == null then $i.temp
      elif $t >= 80 and $i.heatIndex != null then $i.heatIndex
@@ -37,6 +66,8 @@ jq -c --arg station "$station" '
       tooltip: ([
         "\($o.neighborhood // $station) (\($station))",
         "Temp       \($t | r)°F  (feels \($feels | r)°)",
+        (day(0) | "Today      \(.)"),
+        (day(1) | "Tomorrow   \(.)"),
         "Humidity   \($o.humidity | r)%  · dew point \($i.dewpt | r)°",
         "Wind       \($o.winddir | compass) \($i.windSpeed | r) mph, gust \($i.windGust | r)",
         "Pressure   \($i.pressure // "--") inHg",

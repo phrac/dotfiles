@@ -252,6 +252,13 @@ window#waybar.bottom * {
 #taskbar button.active label {
   color: @fg;
 }
+/* Only the focused window keeps its title; the rest collapse to icons so a
+   busy monitor doesn't push the centre pill off-centre. */
+#taskbar button:not(.active) label {
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+}
 
 /* ── Storage / audio / tools ──────────────────────── */
 #disk,

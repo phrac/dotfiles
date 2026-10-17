@@ -38,7 +38,7 @@ All three monitors on a normal day. Private content (chat messages, browser tabs
 
 - **niri**: scrollable tiling, named workspaces pinned per monitor, triple-monitor layout.
 - **Top bar**: workspaces, window title, now playing with album art and a star rating you can change by scrolling, Tailscale exit-node toggle, notifications, network, CPU, RAM, CPU and GPU temperature, local weather and date/clock.
-- **Bottom bar**: a homelab and system dashboard. It has a window taskbar, live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
+- **Bottom bar**: a homelab and system dashboard. It has a window taskbar (only the focused window shows its title, so the centre stays put), live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
 - **Notification center**: swaync restyled after macOS. It has cards with a hover-only close button, a Now Playing widget, a volume slider and quick-toggle tiles. It opens with <kbd>Super</kbd>+<kbd>N</kbd>.
 - **Themed tooltips**: every tooltip is a small card with a title, aligned labels and click hints. For the script modules, one `jq` filter adds a bold title, dim labels and small hints.
 - **One theme everywhere**: Waybar, swaync, the wofi launcher and menus, kitty and Doom Emacs (doom-nord) all use Nord and JetBrains Mono Nerd Font.
@@ -91,7 +91,7 @@ All of them live in `waybar/.config/waybar/scripts/`. They print Waybar JSON, an
 | Script | Shows |
 |---|---|
 | `tailscale-exit` | Exit-node status. Click toggles it (it remembers the last node), right-click picks a node |
-| `weather` | Current conditions from a Wunderground **personal weather station** |
+| `weather` | Current conditions from a Wunderground **personal weather station**, plus today's and tomorrow's forecast high/low (cached hourly) |
 | `gpu` | AMD GPU load, VRAM and junction temperature from sysfs. No ROCm tools needed |
 | `llm` | A remote vLLM-compatible server (tokens/s, requests, KV cache) plus per-GPU stats from an amdgpu Prometheus exporter |
 | `hermes` | Hermes agent gateway status |
