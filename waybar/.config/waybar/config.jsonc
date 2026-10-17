@@ -27,7 +27,7 @@
 
   "group/media": {
     "orientation": "horizontal",
-    "modules": ["image#albumart", "mpris"],
+    "modules": ["image#albumart", "custom/nowplaying"],
   },
 
   "group/status": {
@@ -263,23 +263,17 @@
     "on-click": "playerctl -p Plexamp play-pause",
   },
 
-  "mpris": {
-    "player": "Plexamp",
-    "format": "{status_icon} {artist} — {title}",
-    "format-paused": "{status_icon} <i>{artist} — {title}</i>",
-    "format-stopped": "",
-    "status-icons": {
-      "playing": "<span color='#b48ead'>󰎈</span>",
-      "paused": "<span color='#7b88a1'>󰏤</span>",
-    },
-    "artist-len": 25,
-    "title-len": 40,
-    "tooltip-format": "{title}\nArtist  {artist}\nAlbum   {album}\nTime    {position} / {length}\n\nClick: play/pause · Middle: previous · Right-click: next",
+  "custom/nowplaying": {
+    "exec": "$HOME/.config/waybar/scripts/nowplaying | jq -c -f $HOME/.config/waybar/scripts/tip.jq",
+    "return-type": "json",
+    "interval": 1,
     "on-click": "playerctl -p Plexamp play-pause",
     "on-click-middle": "playerctl -p Plexamp previous",
     "on-click-right": "playerctl -p Plexamp next",
-    "on-scroll-up": "",
-    "on-scroll-down": "",
+    "on-scroll-up": "$HOME/.config/waybar/scripts/plexrate up",
+    "on-scroll-down": "$HOME/.config/waybar/scripts/plexrate down",
+    "smooth-scrolling-threshold": 2,
+    "signal": 12,
   },
 
   "custom/weather": {

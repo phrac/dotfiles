@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Plexamp now playing for waybar, with the track's star rating in the tooltip.
+# Replaces the built-in mpris module, which has no rating field.
+# Plex sends xesam:userRating as 0–1 (0.7 = 3.5 stars); unrated tracks send nothing.
+player=Plexamp
+IFS=$'\x1f' read -r status artist title album rating pos len trackid < <(
+  playerctl -p "$player" metadata --format \
+    $'{{status}}\x1f{{artist}}\x1f{{title}}\x1f{{album}}\x1f{{xesam:userRating}}\x1f{{duration(position)}}\x1f{{duration(mpris:length)}}\x1f{{mpris:trackid}}' 2>/dev/null)
+
+[[ $status == Playing || $status == Paused ]] || { echo '{"text":""}'; exit 0; }
+
+# A rating just set with plexrate wins until Plexamp catches up on the next track.
+[[ $trackid =~ /library/metadata/([0-9]+) ]] && cache=${XDG_RUNTIME_DIR:-/tmp}/waybar-plexrating-${BASH_REMATCH[1]}
+[[ -n $cache && -f $cache ]] && rating=$(awk -v h="$(<"$cache")" 'BEGIN { if (h > 0) print h / 10 }')
+
+jq -nc --arg status "$status" --arg artist "$artist" --arg title "$title" --arg album "$album" \
+       --arg rating "$rating" --arg pos "$pos" --arg len "$len" '
+  def esc: gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub(">"; "&gt;");
+  def cut($n): if length > $n then .[0:$n-1] + "…" else . end;
+  def stars:
+    (if . == "" then 0 else (tonumber * 10 | round) end) as $half
+    | ([range($half / 2 | floor)] | map("󰓎") | join(""))
+      + (if $half % 2 == 1 then "󰓐" else "" end)
+      + ([range(5 - (($half + 1) / 2 | floor))] | map("󰓒") | join(""));
+  ($status == "Paused") as $paused
+  | "\($artist | cut(25) | esc) — \($title | cut(40) | esc)" as $song
+  | {
+      text: (if $paused then "<span color=\"#7b88a1\">󰏤</span> <i>\($song)</i>"
+             else "<span color=\"#b48ead\">󰎈</span> \($song)" end),
+      class: ($status | ascii_downcase),
+      tooltip: ([
+        $title,
+        "Artist  \($artist)",
+        "Album   \($album)",
+        "Rating  \($rating | stars)\(if $rating == "" then "  not rated" else "" end)",
+        "Time    \($pos) / \($len)",
+        "",
+        "Click: play/pause · Middle: previous · Right-click: next",
+        "Scroll: rate up/down"
+      ] | join("\n"))
+    }'

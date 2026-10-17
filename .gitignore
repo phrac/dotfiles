@@ -9,6 +9,7 @@ emacs/.doom.d/.state
 
 # never commit secrets or local backups
 waybar/.config/waybar/wunderground.key
+waybar/.config/waybar/plex.env
 **/*.pre-*
 **/*.bak
 **/backup-*/

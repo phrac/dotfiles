@@ -37,7 +37,7 @@ All three monitors on a normal day. Private content (chat messages, browser tabs
 ## Highlights
 
 - **niri**: scrollable tiling, named workspaces pinned per monitor, triple-monitor layout.
-- **Top bar**: workspaces, window title, now playing with album art, Tailscale exit-node toggle, notifications, network, CPU, RAM, CPU and GPU temperature, local weather and date/clock.
+- **Top bar**: workspaces, window title, now playing with album art and a star rating you can change by scrolling, Tailscale exit-node toggle, notifications, network, CPU, RAM, CPU and GPU temperature, local weather and date/clock.
 - **Bottom bar**: a homelab and system dashboard. It has a window taskbar, live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
 - **Notification center**: swaync restyled after macOS. It has cards with a hover-only close button, a Now Playing widget, a volume slider and quick-toggle tiles. It opens with <kbd>Super</kbd>+<kbd>N</kbd>.
 - **Themed tooltips**: every tooltip is a small card with a title, aligned labels and click hints. For the script modules, one `jq` filter adds a bold title, dim labels and small hints.
@@ -100,6 +100,8 @@ All of them live in `waybar/.config/waybar/scripts/`. They print Waybar JSON, an
 | `sink` | Current audio output. Click switches to the next one and moves playing streams |
 | `health` | Failed systemd units (system and user), uptime and load |
 | `power` | wofi power menu |
+| `nowplaying` | Plexamp now playing. The tooltip shows the track's star rating, with half stars |
+| `plexrate` | Scroll on Now Playing to rate the track up or down half a star. Writes the rating to your Plex server |
 | `plexamp-art` | Album art for the Now Playing module |
 | `tip.jq` | Turns plain-text tooltips into Pango markup that matches the theme |
 
@@ -139,6 +141,7 @@ Personal hosts and IDs are replaced with placeholders. Set these before you use 
 | Where | Placeholder | Set it to |
 |---|---|---|
 | `scripts/weather`, `config.jsonc` | `YOUR_STATION_ID` | Your Wunderground PWS ID. Put your API key in `~/.config/waybar/wunderground.key` (gitignored) |
+| `~/.config/waybar/plex.env` (gitignored) | `PLEX_URL`, `PLEX_TOKEN` | Your Plex server (`http://host:32400`) and token, for rating by scroll. To find the token in Plex Web, open any item, then ⋯ → Get Info → View XML and copy `X-Plex-Token` from the URL |
 | `scripts/tailscale-exit` | `my-exit-node` | Your usual Tailscale exit node |
 | `scripts/llm`, `config.jsonc` | `llm-host` | The machine running your LLM server |
 | `scripts/hermes`, `config.jsonc` | `agent-host` | The machine running Hermes |
@@ -164,7 +167,7 @@ If you don't run some of these services, drop the matching module from `config.j
 ## Notes
 
 - **One Waybar process for both bars.** `config.jsonc` is an array holding the top and bottom bars. With two separate Waybar processes, a reload (`SIGUSR2`) aborts one of them in GLib's D-Bus code.
-- **Some tooltips can't be styled.** Waybar shows the `cpu`, `memory`, `temperature`, `disk`, `mpris`, `wireplumber` and `wlr/taskbar` tooltips as plain text, so Pango markup there appears as raw `<span>` tags. Those modules use the same layout in plain text. Custom modules and `clock` render markup, and the notification module must not set `"escape": true`, because `tip.jq` already escapes.
+- **Some tooltips can't be styled.** Waybar shows the `cpu`, `memory`, `temperature`, `disk`, `wireplumber` and `wlr/taskbar` tooltips as plain text, so Pango markup there appears as raw `<span>` tags. Those modules use the same layout in plain text. Custom modules and `clock` render markup, which is why Now Playing is a script rather than the built-in `mpris` module, and the notification module must not set `"escape": true`, because `tip.jq` already escapes.
 - **swaync replaces mako.** Only one notification daemon can own `org.freedesktop.Notifications`.
 - Waybar runs each module once per monitor. Anything that keeps state (tokens/s deltas, `checkupdates`) needs the take-turns-and-share-the-result pattern described above.
 

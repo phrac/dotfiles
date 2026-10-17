@@ -57,7 +57,7 @@ tooltip label {
 }
 
 /* Modules inside groups share the group's pill */
-#mpris,
+#custom-nowplaying,
 #custom-tailscale,
 #custom-notification,
 #network,
@@ -114,10 +114,10 @@ window#waybar.empty #window {
 #image.albumart {
   margin-left: 4px;
 }
-#mpris {
+#custom-nowplaying {
   color: @fg;
 }
-#mpris.paused {
+#custom-nowplaying.paused {
   color: @muted;
 }
 

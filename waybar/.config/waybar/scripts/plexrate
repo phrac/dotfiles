@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Change the rating of the track Plexamp is playing, half a star at a time.
+#   plexrate up | down
+# Needs ~/.config/waybar/plex.env (keep it private, never commit it):
+#   PLEX_URL=http://your-server:32400
+#   PLEX_TOKEN=xxxxxxxx
+# Plexamp only refreshes its MPRIS rating on the next track, so the new value
+# is cached for nowplaying to show straight away.
+conf=$HOME/.config/waybar/plex.env
+[[ -r $conf ]] || { notify-send -a Plexamp "Rating not set up" "Create $conf with PLEX_URL and PLEX_TOKEN"; exit 1; }
+source "$conf"
+
+trackid=$(playerctl -p Plexamp metadata mpris:trackid 2>/dev/null)
+[[ $trackid =~ /library/metadata/([0-9]+) ]] && key=${BASH_REMATCH[1]}
+[[ -n $key ]] || exit 0
+
+cache=${XDG_RUNTIME_DIR:-/tmp}/waybar-plexrating-$key
+if [[ -f $cache ]]; then
+  cur=$(<"$cache")
+else
+  r=$(playerctl -p Plexamp metadata xesam:userRating 2>/dev/null)
+  cur=$(awk -v r="${r:-0}" 'BEGIN { printf "%d", r * 10 + 0.5 }')
+fi
+
+case $1 in
+  up)   new=$(( cur + 1 > 10 ? 10 : cur + 1 )) ;;
+  down) new=$(( cur - 1 < 0 ? 0 : cur - 1 )) ;;
+  *)    echo "usage: plexrate up|down" >&2; exit 2 ;;
+esac
+(( new == cur )) && exit 0
+
+# Plex rates 0–10 (two per star); -1 clears the rating.
+send=$new; (( new == 0 )) && send=-1
+curl -fsS -X PUT -H "X-Plex-Token: $PLEX_TOKEN" \
+  "$PLEX_URL/:/rate?key=$key&identifier=com.plexapp.plugins.library&rating=$send" >/dev/null \
+  || { notify-send -a Plexamp "Rating failed" "Couldn't reach $PLEX_URL"; exit 1; }
+
+echo "$new" > "$cache"
+pkill -RTMIN+12 -x waybar
