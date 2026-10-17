@@ -1,10 +1,10 @@
 # dotfiles
 
-**Arch Linux · niri · Wayland · Tokyo Night**
+**Arch Linux · niri · Wayland · Nord**
 
 A scrolling-tiling desktop built around [niri](https://github.com/YaLTeR/niri), with a two-bar
 [Waybar](https://github.com/Alexays/Waybar) setup that doubles as a homelab dashboard, a
-macOS-style notification center, and one consistent Tokyo Night look across everything.
+macOS-style notification center, and one consistent Nord look across everything.
 
 ![Desktop](screenshots/desktop.jpg)
 
@@ -41,7 +41,7 @@ All three monitors on a normal day. Private content (chat messages, file names, 
 - **Bottom bar**: a homelab and system dashboard. It has a window taskbar, live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
 - **Notification center**: swaync restyled after macOS. It has cards with a hover-only close button, a Now Playing widget, a volume slider and quick-toggle tiles. It opens with <kbd>Super</kbd>+<kbd>N</kbd>.
 - **Themed tooltips**: every tooltip is a small card with a title, aligned labels and click hints. For the script modules, one `jq` filter adds a bold title, dim labels and small hints.
-- **One theme everywhere**: Waybar, swaync, the wofi launcher and menus, and kitty all use Tokyo Night and JetBrains Mono Nerd Font.
+- **One theme everywhere**: Waybar, swaync, the wofi launcher and menus, kitty and Doom Emacs (doom-nord) all use Nord and JetBrains Mono Nerd Font.
 
 ## Gallery
 

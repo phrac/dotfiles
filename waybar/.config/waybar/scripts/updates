@@ -23,7 +23,7 @@ list=$(printf '%s\n%s\n' "$repo" "$aur" | grep . | awk '{print $1, $4}' | head -
 jq -nc --arg t "$total" --arg nr "$nr" --arg na "$na" --arg list "$list" '
   ($t|tonumber) as $n
   | {
-      text: (if $n == 0 then "󰏗" else "<span color=\"#e0af68\">󰏗</span> \($n)" end),
+      text: (if $n == 0 then "󰏗" else "<span color=\"#ebcb8b\">󰏗</span> \($n)" end),
       class: (if $n == 0 then "none" else "pending" end),
       tooltip: (if $n == 0 then "Updates\nStatus  system up to date"
                 else "\($n) updates\nRepo  \($nr)\nAUR   \($na)\n\n\($list)\n\nClick: run yay -Syu" end)

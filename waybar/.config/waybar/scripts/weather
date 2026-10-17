@@ -32,7 +32,7 @@ jq -c --arg station "$station" '
      elif $o.solarRadiation > 5 then "󰖕"
      else "󰖔" end) as $icon
   | {
-      text: "<span color=\"#e0af68\">\($icon)</span> \($t | r)°",
+      text: "<span color=\"#ebcb8b\">\($icon)</span> \($t | r)°",
       class: (if $t == null then "unavailable" elif $t >= 90 then "hot" elif $t <= 32 then "cold" else "normal" end),
       tooltip: ([
         "\($o.neighborhood // $station) (\($station))",

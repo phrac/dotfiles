@@ -1,4 +1,4 @@
-/* wofi — launcher + bar menus. Tokyo Night card, matches swaync / waybar. */
+/* wofi — launcher + bar menus. Nord card, matches swaync / waybar. */
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-size: 14px;
@@ -10,8 +10,8 @@ window {
 }
 
 #outer-box {
-  background-color: #1a1b26;
-  border: 1px solid #2f354d;
+  background-color: #2e3440;
+  border: 1px solid #434c5e;
   border-radius: 20px;
   padding: 12px;
 }
@@ -19,19 +19,19 @@ window {
 #input {
   margin: 0 0 10px 0;
   padding: 10px 14px;
-  border: 1px solid #2f354d;
+  border: 1px solid #434c5e;
   border-radius: 14px;
-  background-color: #24283b;
-  color: #c0caf5;
+  background-color: #3b4252;
+  color: #eceff4;
   box-shadow: none;
   outline: none;
   font-size: 15px;
 }
 #input:focus {
-  border-color: #7aa2f7;
+  border-color: #88c0d0;
 }
 #input image {
-  color: #565f89;
+  color: #7b88a1;
 }
 
 #scroll,
@@ -47,10 +47,10 @@ window {
   outline: none;
 }
 #entry:hover {
-  background-color: #24283b;
+  background-color: #3b4252;
 }
 #entry:selected {
-  background-color: #7aa2f7;
+  background-color: #88c0d0;
 }
 
 #entry image {
@@ -58,11 +58,11 @@ window {
 }
 
 #text {
-  color: #c0caf5;
+  color: #eceff4;
 }
 #text:selected,
 #entry:selected #text {
-  color: #1a1b26;
+  color: #2e3440;
   font-weight: bold;
   background: transparent;
 }

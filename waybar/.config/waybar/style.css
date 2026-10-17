@@ -1,16 +1,16 @@
-/* Tokyo Night */
-@define-color bg      #1a1b26;
-@define-color bg-alt  #24283b;
-@define-color border  #2f354d;
-@define-color fg      #c0caf5;
-@define-color subtle  #a9b1d6;
-@define-color muted   #565f89;
-@define-color blue    #7aa2f7;
-@define-color cyan    #7dcfff;
-@define-color green   #9ece6a;
-@define-color magenta #bb9af7;
-@define-color red     #f7768e;
-@define-color yellow  #e0af68;
+/* Nord */
+@define-color bg      #2e3440;
+@define-color bg-alt  #3b4252;
+@define-color border  #434c5e;
+@define-color fg      #eceff4;
+@define-color subtle  #d8dee9;
+@define-color muted   #7b88a1;
+@define-color blue    #88c0d0;
+@define-color cyan    #8fbcbb;
+@define-color green   #a3be8c;
+@define-color magenta #b48ead;
+@define-color red     #bf616a;
+@define-color yellow  #ebcb8b;
 
 * {
   font-family: "JetBrainsMono Nerd Font";

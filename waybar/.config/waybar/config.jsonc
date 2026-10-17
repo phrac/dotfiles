@@ -65,15 +65,15 @@
 
   "clock": {
     "interval": 60,
-    "format": "<span color='#7aa2f7'>󰃭</span> {:%a %b %d  <span color='#7aa2f7'>󰥔</span> %I:%M %p}",
+    "format": "<span color='#88c0d0'>󰃭</span> {:%a %b %d  <span color='#88c0d0'>󰥔</span> %I:%M %p}",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "mode": "month",
       "format": {
-        "months": "<span weight='bold' color='#c0caf5'>{}</span>",
-        "weekdays": "<span color='#565f89'>{}</span>",
-        "days": "<span color='#a9b1d6'>{}</span>",
-        "today": "<span color='#7aa2f7'><b><u>{}</u></b></span>",
+        "months": "<span weight='bold' color='#eceff4'>{}</span>",
+        "weekdays": "<span color='#7b88a1'>{}</span>",
+        "days": "<span color='#d8dee9'>{}</span>",
+        "today": "<span color='#88c0d0'><b><u>{}</u></b></span>",
       },
     },
   },
@@ -84,20 +84,20 @@
     "input-filename": "temp1_input",
     "critical-threshold": 80,
     "interval": 2,
-    "format": "<span color='#e0af68'></span> {temperatureC}°",
-    "format-critical": "<span color='#f7768e'></span> {temperatureC}°",
+    "format": "<span color='#ebcb8b'></span> {temperatureC}°",
+    "format-critical": "<span color='#bf616a'></span> {temperatureC}°",
     "format-icons": ["", "", ""],
   },
 
   "cpu": {
     "interval": 2,
     "tooltip-format": "CPU\nUsage  {usage}%\nLoad   {load}",
-    "format": "<span color='#7aa2f7'></span> {usage:>2}%",
+    "format": "<span color='#88c0d0'></span> {usage:>2}%",
   },
 
   "memory": {
     "interval": 2,
-    "format": "<span color='#bb9af7'>󰍛</span> {used:0.1f}G",
+    "format": "<span color='#b48ead'>󰍛</span> {used:0.1f}G",
     "tooltip-format": "Memory\nRAM   {used:0.1f} / {total:0.1f} GB\nSwap  {swapUsed:0.1f} / {swapTotal:0.1f} GB",
   },
 
@@ -116,10 +116,10 @@
     // "interface": "wlp2*", // (Optional) To force the use of this interface
     "interval": 2,
     "format-wifi": " {bandwidthTotalBytes:>2}", //({essid} {signalStrength}%)
-    "format-ethernet": "<span color='#7dcfff'>󰛳</span> {bandwidthDownBytes}<span color='#565f89'>↓</span> {bandwidthUpBytes}<span color='#565f89'>↑</span>",
-    "tooltip-format-ethernet": "<span weight='bold' color='#c0caf5'>Network</span>\n<span color='#565f89'>Interface</span>  {ifname}\n<span color='#565f89'>Address  </span>  {ipaddr}/{cidr}\n<span color='#565f89'>Gateway  </span>  {gwaddr}",
-    "tooltip-format-wifi": "<span weight='bold' color='#c0caf5'>Wi-Fi</span>\n<span color='#565f89'>Network</span>  {essid}\n<span color='#565f89'>Signal </span>  {signalStrength}%",
-    "tooltip-format": "<span weight='bold' color='#c0caf5'>Network</span>\n<span color='#565f89'>Interface</span>  {ifname}",
+    "format-ethernet": "<span color='#8fbcbb'>󰛳</span> {bandwidthDownBytes}<span color='#7b88a1'>↓</span> {bandwidthUpBytes}<span color='#7b88a1'>↑</span>",
+    "tooltip-format-ethernet": "<span weight='bold' color='#eceff4'>Network</span>\n<span color='#7b88a1'>Interface</span>  {ifname}\n<span color='#7b88a1'>Address  </span>  {ipaddr}/{cidr}\n<span color='#7b88a1'>Gateway  </span>  {gwaddr}",
+    "tooltip-format-wifi": "<span weight='bold' color='#eceff4'>Wi-Fi</span>\n<span color='#7b88a1'>Network</span>  {essid}\n<span color='#7b88a1'>Signal </span>  {signalStrength}%",
+    "tooltip-format": "<span weight='bold' color='#eceff4'>Network</span>\n<span color='#7b88a1'>Interface</span>  {ifname}",
     "format-linked": "󰀦 {ifname} (No IP)",
     "format-disconnected": "󰀦 Disconnected", //Disconnected ⚠
     "format-alt": "{ifname}: {gwaddr}/{cidr}",
@@ -269,8 +269,8 @@
     "format-paused": "{status_icon} <i>{artist} — {title}</i>",
     "format-stopped": "",
     "status-icons": {
-      "playing": "<span color='#bb9af7'>󰎈</span>",
-      "paused": "<span color='#565f89'>󰏤</span>",
+      "playing": "<span color='#b48ead'>󰎈</span>",
+      "paused": "<span color='#7b88a1'>󰏤</span>",
     },
     "artist-len": 25,
     "title-len": 40,
@@ -309,13 +309,13 @@
     "tooltip": true,
     "format": "{icon}",
     "format-icons": {
-      "notification": "󰂚<span color='#f7768e'><sup>●</sup></span>",
+      "notification": "󰂚<span color='#bf616a'><sup>●</sup></span>",
       "none": "󰂚",
-      "dnd-notification": "󰂛<span color='#f7768e'><sup>●</sup></span>",
+      "dnd-notification": "󰂛<span color='#bf616a'><sup>●</sup></span>",
       "dnd-none": "󰂛",
-      "inhibited-notification": "󰂚<span color='#f7768e'><sup>●</sup></span>",
+      "inhibited-notification": "󰂚<span color='#bf616a'><sup>●</sup></span>",
       "inhibited-none": "󰂚",
-      "dnd-inhibited-notification": "󰂛<span color='#f7768e'><sup>●</sup></span>",
+      "dnd-inhibited-notification": "󰂛<span color='#bf616a'><sup>●</sup></span>",
       "dnd-inhibited-none": "󰂛",
     },
     "return-type": "json",
@@ -394,7 +394,7 @@
   "disk#root": {
     "path": "/",
     "interval": 60,
-    "format": "<span color='#7dcfff'>󰋊</span> {percentage_used}%",
+    "format": "<span color='#8fbcbb'>󰋊</span> {percentage_used}%",
     "tooltip-format": "System disk\nMount  /\nUsed   {used} of {total} ({percentage_used}%)\nFree   {free}\n\nClick: open in Thunar",
     "on-click": "thunar /",
     "states": { "warning": 85, "critical": 95 },
@@ -403,15 +403,15 @@
   "disk#nas": {
     "path": "/mnt/nas",
     "interval": 300,
-    "format": "<span color='#7dcfff'>󰒍</span> {free}",
+    "format": "<span color='#8fbcbb'>󰒍</span> {free}",
     "tooltip-format": "NAS\nMount  /mnt/nas\nUsed   {used} of {total} ({percentage_used}%)\nFree   {free}\n\nClick: open in Thunar",
     "on-click": "thunar /mnt/nas",
     "states": { "warning": 85, "critical": 95 },
   },
 
   "wireplumber": {
-    "format": "<span color='#bb9af7'>{icon}</span> {volume}%",
-    "format-muted": "<span color='#565f89'>󰖁</span> muted",
+    "format": "<span color='#b48ead'>{icon}</span> {volume}%",
+    "format-muted": "<span color='#7b88a1'>󰖁</span> muted",
     "format-icons": ["󰕿", "󰖀", "󰕾"],
     "tooltip-format": "Volume\nLevel   {volume}%\nOutput  {node_name}\n\nClick: mute · Scroll: volume",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
@@ -429,7 +429,7 @@
 
   "custom/screenshot": {
     "format": "󰹑",
-    "tooltip-format": "<span weight='bold' color='#c0caf5'>Screenshot</span>\n\n<span size='small' color='#565f89'>Click: region · Right-click: screen · Middle: window</span>",
+    "tooltip-format": "<span weight='bold' color='#eceff4'>Screenshot</span>\n\n<span size='small' color='#7b88a1'>Click: region · Right-click: screen · Middle: window</span>",
     "on-click": "niri msg action screenshot",
     "on-click-right": "niri msg action screenshot-screen",
     "on-click-middle": "niri msg action screenshot-window",
@@ -456,8 +456,8 @@
       "activated": "󰅶",
       "deactivated": "󰾪",
     },
-    "tooltip-format-activated": "<span weight='bold' color='#c0caf5'>Keep awake</span>\n<span color='#565f89'>Status</span>  on — screen won't lock\n\n<span size='small' color='#565f89'>Click: turn off</span>",
-    "tooltip-format-deactivated": "<span weight='bold' color='#c0caf5'>Keep awake</span>\n<span color='#565f89'>Status</span>  off\n\n<span size='small' color='#565f89'>Click: turn on</span>",
+    "tooltip-format-activated": "<span weight='bold' color='#eceff4'>Keep awake</span>\n<span color='#7b88a1'>Status</span>  on — screen won't lock\n\n<span size='small' color='#7b88a1'>Click: turn off</span>",
+    "tooltip-format-deactivated": "<span weight='bold' color='#eceff4'>Keep awake</span>\n<span color='#7b88a1'>Status</span>  off\n\n<span size='small' color='#7b88a1'>Click: turn on</span>",
   },
 
   "tray": {
@@ -467,8 +467,8 @@
   },
 
   "custom/power": {
-    "format": "<span color='#f7768e'>󰐥</span>",
-    "tooltip-format": "<span weight='bold' color='#c0caf5'>Power</span>\n\n<span size='small' color='#565f89'>Click: lock · suspend · log out · reboot · shut down</span>",
+    "format": "<span color='#bf616a'>󰐥</span>",
+    "tooltip-format": "<span weight='bold' color='#eceff4'>Power</span>\n\n<span size='small' color='#7b88a1'>Click: lock · suspend · log out · reboot · shut down</span>",
     "on-click": "$HOME/.config/waybar/scripts/power",
   },
 }

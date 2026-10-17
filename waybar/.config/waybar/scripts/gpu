@@ -25,7 +25,7 @@ class=normal
 (( busy >= 80 )) && class=busy
 (( junc >= 95 )) && class=hot
 
-text="<span color='#9ece6a'>󰢮</span> $(printf '%2d' "$busy")%  ${vram}G  ${junc}°"
+text="<span color='#a3be8c'>󰢮</span> $(printf '%2d' "$busy")%  ${vram}G  ${junc}°"
 tooltip="RX 7900 XTX\nLoad   ${busy}%\nVRAM   ${vram} / ${vtotal} GB\nTemp   edge ${edge}° · junction ${junc}° · mem ${mem}°\nPower  ${power} / ${cap} W\nFan    ${fan} RPM\nClock  ${sclk} MHz core · ${mclk} MHz mem\n\nClick: open btop"
 
 printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$text" "$tooltip" "$class"

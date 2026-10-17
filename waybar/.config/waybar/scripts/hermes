@@ -10,7 +10,7 @@ jq -c '
   | ([$p[] | select(.needs_attention or .state != "connected")] | length) as $bad
   | (.active_agents // 0) as $a
   | {
-      text: ("<span color=\"#bb9af7\">󰚩</span> hermes"
+      text: ("<span color=\"#b48ead\">󰚩</span> hermes"
              + (if .gateway_state != "running" then " · \(.gateway_state)"
                 elif $bad > 0 then " · attention"
                 elif $a > 0 then " · \($a) active"

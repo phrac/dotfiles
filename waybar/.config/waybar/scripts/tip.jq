@@ -4,15 +4,15 @@
 #   "Click…/Right-click…/…"   -> small dim hint
 # Everything is escaped, so data from services can't break the markup.
 def esc: gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub(">"; "&gt;");
-def dim: "<span color=\"#565f89\">\(.)</span>";
+def dim: "<span color=\"#7b88a1\">\(.)</span>";
 def line:
-  if test("^(Click|Right-click|Middle|Scroll)") then "<span size=\"small\" color=\"#565f89\">\(esc)</span>"
+  if test("^(Click|Right-click|Middle|Scroll)") then "<span size=\"small\" color=\"#7b88a1\">\(esc)</span>"
   elif test("^\\S.*?\\S  +\\S") then
     (capture("^(?<k>\\S.*?\\S)(?<sp>  +)(?<v>\\S.*)$") | "\(.k | esc | dim)\(.sp)\(.v | esc)")
   else esc end;
 
 if (.tooltip // "") == "" then . else
   .tooltip |= (split("\n") | to_entries
-    | map(if .key == 0 then "<span weight=\"bold\" color=\"#c0caf5\">\(.value | esc)</span>" else (.value | line) end)
+    | map(if .key == 0 then "<span weight=\"bold\" color=\"#eceff4\">\(.value | esc)</span>" else (.value | line) end)
     | join("\n"))
 end

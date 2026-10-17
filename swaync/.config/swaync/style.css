@@ -1,36 +1,36 @@
-/* swaync — macOS-style Notification Center in Tokyo Night.
+/* swaync — macOS-style Notification Center in Nord.
    Builds on the stock theme and overrides it. */
 @import url("file:///etc/xdg/swaync/style.css");
 
 :root {
-  --tn-bg: 26, 27, 38;          /* #1a1b26 */
-  --tn-card: 36, 40, 59;        /* #24283b */
-  --tn-card-hover: 47, 53, 77;  /* #2f354d */
-  --tn-border: #2f354d;
-  --tn-fg: #c0caf5;
-  --tn-subtle: #a9b1d6;
-  --tn-muted: #565f89;
-  --tn-blue: #7aa2f7;
-  --tn-red: #f7768e;
+  --nord-bg: 46, 52, 64;          /* #2e3440 */
+  --nord-card: 59, 66, 82;        /* #3b4252 */
+  --nord-card-hover: 67, 76, 94;  /* #434c5e */
+  --nord-border: #434c5e;
+  --nord-fg: #eceff4;
+  --nord-subtle: #d8dee9;
+  --nord-muted: #7b88a1;
+  --nord-blue: #88c0d0;
+  --nord-red: #bf616a;
 
-  --cc-bg: rgb(var(--tn-bg));
-  --noti-bg: var(--tn-card);
+  --cc-bg: rgb(var(--nord-bg));
+  --noti-bg: var(--nord-card);
   --noti-bg-alpha: 0.92;
-  --noti-bg-darker: rgb(var(--tn-bg));
-  --noti-bg-hover: rgb(var(--tn-card-hover));
+  --noti-bg-darker: rgb(var(--nord-bg));
+  --noti-bg-hover: rgb(var(--nord-card-hover));
   --noti-bg-focus: transparent;
-  --noti-close-bg: rgba(var(--tn-bg), 0.9);
-  --noti-close-bg-hover: rgb(var(--tn-card-hover));
+  --noti-close-bg: rgba(var(--nord-bg), 0.9);
+  --noti-close-bg-hover: rgb(var(--nord-card-hover));
   --noti-border-color: rgba(255, 255, 255, 0.06);
-  --text-color: var(--tn-fg);
-  --text-color-disabled: var(--tn-muted);
-  --bg-selected: var(--tn-blue);
+  --text-color: var(--nord-fg);
+  --text-color-disabled: var(--nord-muted);
+  --bg-selected: var(--nord-blue);
   --border-radius: 14px;
   --notification-icon-size: 56px;
   --notification-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
   --font-size-summary: 15.5px;
   --font-size-body: 14.5px;
-  --mpris-album-art-overlay: rgba(var(--tn-card), 0.72);
+  --mpris-album-art-overlay: rgba(var(--nord-card), 0.72);
   --mpris-album-art-icon-size: 64px;
   --mpris-album-art-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
@@ -42,14 +42,14 @@
 /* ── Panel ─────────────────────────────────────────── */
 .control-center {
   background: var(--cc-bg);
-  border: 1px solid var(--tn-border);
+  border: 1px solid var(--nord-border);
   border-radius: 20px;
   padding: 6px 2px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .control-center .control-center-list-placeholder {
-  color: var(--tn-muted);
+  color: var(--nord-muted);
   opacity: 1;
   font-size: 13px;
 }
@@ -71,21 +71,21 @@
 .widget-title > label {
   font-size: 15px;
   font-weight: bold;
-  color: var(--tn-fg);
+  color: var(--nord-fg);
 }
 .widget-title > button {
   font-size: 11px;
-  color: var(--tn-subtle);
-  background: rgba(var(--tn-card), 0.9);
-  border: 1px solid var(--tn-border);
+  color: var(--nord-subtle);
+  background: rgba(var(--nord-card), 0.9);
+  border: 1px solid var(--nord-border);
   border-radius: 999px;
   padding: 2px 12px;
   min-height: 22px;
   box-shadow: none;
 }
 .widget-title > button:hover {
-  color: var(--tn-fg);
-  background: rgb(var(--tn-card-hover));
+  color: var(--nord-fg);
+  background: rgb(var(--nord-card-hover));
 }
 
 /* ── Notification cards ───────────────────────────── */
@@ -99,7 +99,7 @@
   background: rgba(var(--noti-bg), var(--noti-bg-alpha));
 }
 .notification-row .notification-background .notification.critical {
-  border-left: 3px solid var(--tn-red);
+  border-left: 3px solid var(--nord-red);
 }
 
 .notification-row .notification-background .notification .notification-default-action {
@@ -109,16 +109,16 @@
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
   font-size: var(--font-size-summary);
   font-weight: bold;
-  color: var(--tn-fg);
+  color: var(--nord-fg);
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
   font-size: var(--font-size-body);
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   margin-top: 5px;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
   font-size: 12px;
-  color: var(--tn-muted);
+  color: var(--nord-muted);
   margin-right: 28px;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .image {
@@ -131,11 +131,11 @@
 
 /* Action buttons under a notification */
 .notification-row .notification-background .notification .notification-action > button {
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   border-radius: 10px;
 }
 .notification-row .notification-background .notification .notification-action > button:hover {
-  color: var(--tn-fg);
+  color: var(--nord-fg);
 }
 
 /* Close "x": small, only on hover (macOS) */
@@ -145,9 +145,9 @@
   margin-top: 6px;
   margin-right: 6px;
   font-size: 10px;
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   background: var(--noti-close-bg);
-  border: 1px solid var(--tn-border);
+  border: 1px solid var(--nord-border);
   opacity: 0;
   transition: opacity 120ms ease;
 }
@@ -159,11 +159,11 @@
 
 /* Groups */
 .notification-group .notification-group-headers .notification-group-header {
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   font-weight: bold;
 }
 .notification-group .notification-group-buttons button {
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   border-radius: 999px;
 }
 
@@ -178,7 +178,7 @@
 }
 .floating-notifications .notification-row .notification-background .notification {
   background: rgb(var(--noti-bg));
-  border: 1px solid var(--tn-border);
+  border: 1px solid var(--nord-border);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
 }
 
@@ -206,18 +206,18 @@
 }
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
   font-size: 13px;
-  color: var(--tn-fg);
+  color: var(--nord-fg);
 }
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
   font-size: 12px;
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
 }
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button {
-  color: var(--tn-fg);
+  color: var(--nord-fg);
   border-radius: 999px;
 }
 .widget-mpris > box > button {
-  color: var(--tn-muted);
+  color: var(--nord-muted);
 }
 
 /* Volume */
@@ -230,20 +230,20 @@
 }
 .widget-volume > box > label {
   font-size: 16px;
-  color: var(--tn-subtle);
+  color: var(--nord-subtle);
   margin-right: 6px;
 }
 .widget-volume scale trough {
-  background: rgba(var(--tn-bg), 0.9);
+  background: rgba(var(--nord-bg), 0.9);
   border-radius: 999px;
   min-height: 6px;
 }
 .widget-volume scale highlight {
-  background: var(--tn-blue);
+  background: var(--nord-blue);
   border-radius: 999px;
 }
 .widget-volume scale slider {
-  background: var(--tn-fg);
+  background: var(--nord-fg);
   border-radius: 999px;
   min-width: 14px;
   min-height: 14px;
@@ -259,7 +259,7 @@
   background: rgba(var(--noti-bg), var(--noti-bg-alpha));
   border: 1px solid var(--noti-border-color);
   border-radius: var(--border-radius);
-  color: var(--tn-fg);
+  color: var(--nord-fg);
   padding: 10px 12px;
   margin: 2px;
   box-shadow: none;
@@ -269,9 +269,9 @@
   background: var(--noti-bg-hover);
 }
 .widget-buttons-grid flowboxchild > button.toggle:checked {
-  background: var(--tn-blue);
-  color: rgb(var(--tn-bg));
-  border-color: var(--tn-blue);
+  background: var(--nord-blue);
+  color: rgb(var(--nord-bg));
+  border-color: var(--nord-blue);
 }
 .widget-buttons-grid flowboxchild > button > label {
   font-size: 12.5px;

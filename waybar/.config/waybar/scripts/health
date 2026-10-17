@@ -9,7 +9,7 @@ load=$(cut -d' ' -f1-3 /proc/loadavg)
 jq -nc --arg n "$n" --arg f "$failed" --arg up "$up" --arg load "$load" '
   ($n|tonumber) as $n
   | {
-      text: (if $n == 0 then "󰄬" else "<span color=\"#f7768e\">󰀦</span> \($n)" end),
+      text: (if $n == 0 then "󰄬" else "<span color=\"#bf616a\">󰀦</span> \($n)" end),
       class: (if $n == 0 then "ok" else "failed" end),
       tooltip: ("System health\nUptime  \($up)\nLoad    \($load)\nFailed  \($n)"
         + (if $n == 0 then "" else "\n\n\($f)" end) + "\n\nClick: show failed units")

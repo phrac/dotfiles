@@ -61,9 +61,9 @@ jq -nc \
   def n: tonumber? // 0;
   def gb: (n / 1073741824 * 10 | round / 10 | tostring);
   ($running|n) as $r | ($waiting|n) as $w | ($rate|n) as $tps
-  | (if $l0 == "" then "" else " <span color=\"#9ece6a\">󰢮</span> \($l0)% \($l1)%" end) as $gpu
+  | (if $l0 == "" then "" else " <span color=\"#a3be8c\">󰢮</span> \($l0)% \($l1)%" end) as $gpu
   | {
-      text: ("<span color=\"#7aa2f7\">󰒋</span> \($h.model) · "
+      text: ("<span color=\"#88c0d0\">󰒋</span> \($h.model) · "
              + (if $r > 0 then "\($tps) t/s · \($r) req" + (if $w > 0 then " (+\($w))" else "" end)
                 else "idle" end)
              + $gpu),
