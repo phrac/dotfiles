@@ -41,6 +41,7 @@ All three monitors on a normal day. Private content (chat messages, browser tabs
 - **Bottom bar**: a homelab and system dashboard. It has a window taskbar (only the focused window shows its title, so the centre stays put), live LLM-server stats (tokens/s, queue, per-GPU load), agent and ComfyUI status, disks and NAS, audio output switching, screenshots, failed-unit health, pending updates, the tray and a power menu.
 - **Notification center**: swaync restyled after macOS. It has cards with a hover-only close button, a Now Playing widget, a volume slider and quick-toggle tiles. It opens with <kbd>Super</kbd>+<kbd>N</kbd>.
 - **Themed tooltips**: every tooltip is a small card with a title, aligned labels and click hints. For the script modules, one `jq` filter adds a bold title, dim labels and small hints.
+- **Quick Look in Thunar**: select a file and press <kbd>Space</kbd> to preview it, like Finder on macOS. GNOME Sushi does the previewing (images, video, audio, PDFs, text and code), and niri floats the preview in front.
 - **One theme everywhere**: Waybar, swaync, the wofi launcher and menus, kitty and Doom Emacs (doom-nord) all use Nord and JetBrains Mono Nerd Font.
 
 ## Gallery
@@ -81,6 +82,8 @@ All three monitors on a normal day. Private content (chat messages, browser tabs
 | `swaync` | `~/.config/swaync/` | Notification daemon and macOS-style control panel |
 | `wofi` | `~/.config/wofi/` | Launcher theme, shared with the bars' menus |
 | `kitty` | `~/.config/kitty/` | Terminal |
+| `thunar` | `~/.config/Thunar/` | File manager: Quick Look custom action, bound to <kbd>Space</kbd> |
+| `bin` | `~/.local/bin/` | `quicklook`, the Sushi helper the Thunar action calls |
 | `zsh` | `~/.zshrc` | Shell (oh-my-zsh) |
 | `emacs` | `~/.doom.d/` | Doom Emacs |
 
@@ -114,7 +117,7 @@ Everything is a [GNU stow](https://www.gnu.org/software/stow/) package:
 ```sh
 git clone https://github.com/phrac/dotfiles ~/dotfiles
 cd ~/dotfiles
-stow niri waybar swaync wofi kitty zsh
+stow niri waybar swaync wofi kitty thunar bin zsh
 ```
 
 If a config file already exists, stow refuses to overwrite it. Move the file out of the way first, or run `stow --adopt` and then use `git diff` to review what it pulled in.
@@ -124,7 +127,7 @@ Dependencies (Arch):
 ```sh
 sudo pacman -S niri waybar swaync wofi kitty swaybg swaylock swayidle \
   jq curl playerctl pacman-contrib wireplumber pipewire-pulse \
-  ttf-jetbrains-mono-nerd thunar btop
+  ttf-jetbrains-mono-nerd thunar sushi btop
 yay -S nordzy-icon-theme   # taskbar and launcher icons
 ```
 
@@ -163,11 +166,13 @@ If you don't run some of these services, drop the matching module from `config.j
 | <kbd>Super</kbd>+<kbd>F</kbd> | Maximize column |
 | <kbd>Super</kbd>+<kbd>Q</kbd> | Close window |
 | <kbd>Super</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> | All keybinds |
+| <kbd>Space</kbd> (in Thunar) | Quick Look the selected file |
 
 ## Notes
 
 - **One Waybar process for both bars.** `config.jsonc` is an array holding the top and bottom bars. With two separate Waybar processes, a reload (`SIGUSR2`) aborts one of them in GLib's D-Bus code.
 - **Some tooltips can't be styled.** Waybar shows the `cpu`, `memory`, `temperature`, `disk`, `wireplumber` and `wlr/taskbar` tooltips as plain text, so Pango markup there appears as raw `<span>` tags. Those modules use the same layout in plain text. Custom modules and `clock` render markup, which is why Now Playing is a script rather than the built-in `mpris` module, and the notification module must not set `"escape": true`, because `tip.jq` already escapes.
+- **Thunar overwrites `accels.scm` on exit,** which replaces the stow symlink with a regular file. The Space binding survives, but later shortcut changes won't reach the repo until you copy the file back.
 - **swaync replaces mako.** Only one notification daemon can own `org.freedesktop.Notifications`.
 - Waybar runs each module once per monitor. Anything that keeps state (tokens/s deltas, `checkupdates`) needs the take-turns-and-share-the-result pattern described above.
 

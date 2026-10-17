@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# macOS-style Quick Look: preview a file with GNOME Sushi.
+# Running it again on the same file closes the preview, so one key toggles it.
+#   quicklook FILE
+[[ -e $1 ]] || exit 1
+uri=$(python3 -c 'import sys, pathlib; print(pathlib.Path(sys.argv[1]).resolve().as_uri())' "$1")
+call() {
+  gdbus call --session --dest org.gnome.NautilusPreviewer --object-path /org/gnome/NautilusPreviewer \
+    --method "$@" >/dev/null 2>&1
+}
+# Sushi 46+ takes (uri, window handle, close-if-shown, activation token); older versions an X11 window id.
+call org.gnome.NautilusPreviewer2.ShowFile "$uri" "" true "${XDG_ACTIVATION_TOKEN:-}" ||
+  call org.gnome.NautilusPreviewer.ShowFile "$uri" 0 true ||
+  notify-send -a Thunar "Quick Look unavailable" "Install sushi: sudo pacman -S sushi"

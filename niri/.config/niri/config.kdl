@@ -752,3 +752,10 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+// Quick Look (GNOME Sushi, Space in Thunar): float it in front like macOS.
+window-rule {
+    match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
+    open-floating true
+    open-focused true
+}
