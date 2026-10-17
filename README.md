@@ -12,11 +12,11 @@ macOS-style notification center, and one consistent Nord look across everything.
 
 ## In use
 
-All three monitors on a normal day. Private content (chat messages, file names, browser tabs, the terminal) is blurred.
+All three monitors on a normal day. Private content (chat messages, browser tabs, terminals and taskbar window titles) is blurred.
 
 ![Live, all three monitors](screenshots/live-triple.jpg)
 
-| Left: chat | Centre: browser | Right: files and terminal |
+| Left: chat | Centre: browser | Right: terminals |
 |---|---|---|
 | ![Left monitor](screenshots/live-left.jpg) | ![Centre monitor](screenshots/live-center.jpg) | ![Right monitor](screenshots/live-right.jpg) |
 
